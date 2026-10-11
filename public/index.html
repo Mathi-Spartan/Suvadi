@@ -18,9 +18,9 @@
    SUVADI · design tokens (see DESIGN.md)
    Colour meanings
      --blue      DigiCert blue: primary actions, links, focus, selected state
-     --nl-blue   Dutch blue: brand surfaces (Kural widget, header mark)
-     --orange    Dutch orange: PDF downloads, highlights, "new" accents
-     --red       Dutch red: kept / saved state only
+     --nl-blue   deep blue: brand surfaces (Kural widget, logo)
+     --orange    orange: PDF downloads, highlights
+     --red       red: kept / saved state only
    Section colours (SEC table in the script) are for book tiles and covers only.
    ===================================================================== */
 :root{
@@ -84,9 +84,9 @@ a{color:inherit}
 .top.scrolled{border-color:var(--line)}
 .top-in{display:flex;align-items:center;gap:12px;height:68px}
 .brand{display:flex;align-items:center;gap:11px;text-decoration:none;margin-right:12px}
-.brand .mk{width:36px;height:36px;border-radius:11px;overflow:hidden;display:grid;grid-template-rows:1fr 1fr 1fr;box-shadow:inset 0 0 0 1px var(--line-2)}
-.brand .mk i:nth-child(1){background:var(--red)}.brand .mk i:nth-child(2){background:#fff;display:grid;place-items:center}.brand .mk i:nth-child(3){background:var(--nl-blue)}
-.brand .mk b{font:800 11px/1 var(--f-ta);color:#0B1B3A}
+.brand .mk{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(140deg,var(--blue),var(--nl-blue));box-shadow:0 6px 16px -8px var(--blue),inset 0 1px 0 rgba(255,255,255,.35);transition:transform var(--dur-3) var(--ease-spring)}
+.brand:hover .mk{transform:rotate(-8deg) scale(1.05)}
+.brand .mk b{font:800 17px/1 var(--f-ta);color:#fff}
 .brand strong{display:block;font:800 18px/1 var(--f-ui);letter-spacing:-.02em}
 .brand small{display:block;margin-top:3px;font:500 12px/1 var(--f-tb);color:var(--ink-3)}
 .nav{display:flex;gap:2px}
@@ -113,8 +113,7 @@ a{color:inherit}
 /* ---------------- hero ---------------- */
 .hero{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,56px);align-items:center;padding-block:clamp(28px,5vw,64px) clamp(24px,4vw,44px)}
 .pill{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px 0 6px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);font-size:13px;font-weight:600;color:var(--ink-2)}
-.pill .flag{display:inline-grid;grid-template-rows:repeat(3,1fr);width:22px;height:16px;border-radius:4px;overflow:hidden;box-shadow:0 0 0 1px var(--line)}
-.pill .flag i:nth-child(1){background:var(--red)}.pill .flag i:nth-child(2){background:#fff}.pill .flag i:nth-child(3){background:var(--nl-blue)}
+.pill .dot{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--blue-soft);color:var(--blue)}
 .hero h1{margin:20px 0 0;font:800 var(--step-4)/1.08 var(--f-ta);font-stretch:112%;letter-spacing:-.015em}
 .hero h1 .hl{background:linear-gradient(100deg,var(--blue),var(--nl-blue) 55%,var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero h1 .en{display:block;margin-top:10px;font:700 clamp(1.15rem,.9rem + 1.1vw,1.7rem)/1.3 var(--f-ui);letter-spacing:-.02em;color:var(--ink-2);font-stretch:100%}
@@ -138,13 +137,35 @@ a{color:inherit}
 .mos-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:12px}
 .mos-head b{font:700 15px var(--f-ui);letter-spacing:-.01em}
 .mos-head span{font-size:12.5px;color:var(--ink-3)}
-.mosaic{display:grid;grid-template-columns:repeat(var(--cols,46),1fr);gap:2px}
-.mosaic .t{aspect-ratio:1;border-radius:2px;background:var(--c);cursor:pointer;transition:opacity var(--dur-2),transform var(--dur-2) var(--ease-spring);animation:tile var(--dur-4) var(--ease-out) backwards;animation-delay:calc(var(--d) * 9ms)}
+.mos-stage{position:relative}
+.mosaic{position:relative;display:grid;grid-template-columns:repeat(var(--cols,46),1fr);gap:2px}
+.mosaic .t{position:relative;aspect-ratio:1;border-radius:2px;background:var(--c);cursor:pointer;transform:scale(var(--s,1));filter:brightness(var(--b,1));
+  transition:opacity var(--dur-3) var(--ease-out),transform 260ms var(--ease-out),filter 260ms var(--ease-out),border-radius 260ms var(--ease-out),box-shadow 260ms;animation:tile var(--dur-4) var(--ease-out) backwards;animation-delay:calc(var(--d) * 9ms)}
 @keyframes tile{from{opacity:0;transform:scale(.2)}}
-.mosaic .t:hover{transform:scale(1.9);z-index:2;box-shadow:0 0 0 1.5px var(--surface),0 4px 10px rgba(0,0,0,.3);position:relative}
 :root[data-theme="dark"] .mosaic .t{box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+/* the lens: tiles near the pointer swell; the one under it lifts with a ring */
+.mosaic .t.lens{z-index:1;border-radius:3px}
+.mosaic .t.focus{z-index:3;border-radius:5px;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--c),0 10px 22px -4px rgba(0,0,0,.45)}
+/* section glow: the hovered book's whole section brightens, the rest settles back */
+.mosaic.sec .t{opacity:.42}
+.mosaic.sec .t.on{opacity:1}
 .mosaic.dim .t{opacity:.12}
 .mosaic.dim .t.on{opacity:1}
+.mosaic.ready .t{animation:none}
+/* click ripple */
+.mosaic .t.ping{animation:ping 620ms var(--ease-out) both;animation-delay:var(--pd,0ms)}
+@keyframes ping{0%{transform:scale(var(--s,1))}35%{transform:scale(1.3);filter:brightness(1.18) saturate(1.1)}100%{transform:scale(var(--s,1))}}
+/* ambient life: random twinkles and a slow shimmer */
+.mosaic .t.tw{animation:tw 1200ms var(--ease-in-out)}
+@keyframes tw{0%,100%{transform:scale(1);filter:brightness(1)}45%{transform:scale(1.45);filter:brightness(1.5);border-radius:50%}}
+.shim{position:absolute;inset:-2px;overflow:hidden;border-radius:6px;pointer-events:none;z-index:4}
+.shim::before{content:"";position:absolute;top:-50%;bottom:-50%;width:22%;left:-30%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.38),transparent);transform:skewX(-18deg);mix-blend-mode:soft-light;animation:shim 7s var(--ease-in-out) 1.6s infinite}
+@keyframes shim{0%{left:-30%}45%,100%{left:120%}}
+.mos-stage:hover .shim::before{animation-play-state:paused;opacity:0}
+.mos-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px;min-height:22px;font-size:12.5px;color:var(--ink-3)}
+.mos-foot b{display:inline-flex;align-items:center;gap:7px;font:600 13px var(--f-tb);color:var(--ink)}
+.mos-foot b i{width:10px;height:10px;border-radius:3px;background:var(--c)}
+.mos-foot b,.mos-foot span{transition:opacity var(--dur-2)}
 .legend{display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:14px}
 .legend button{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px 0 8px;border-radius:var(--r-pill);border:1px solid transparent;background:var(--surface-2);cursor:pointer;font:600 12.5px var(--f-tb);color:var(--ink-2);transition:border-color var(--dur-2),background var(--dur-2),color var(--dur-2)}
 .legend button i{width:9px;height:9px;border-radius:3px;background:var(--c)}
@@ -219,9 +240,7 @@ a{color:inherit}
 .cover .ini{position:absolute;right:-6cqw;bottom:-14cqw;font:800 92cqw/1 var(--f-ta);font-stretch:125%;color:rgba(255,255,255,.16);white-space:nowrap}
 .cover .cno{position:absolute;left:12cqw;top:10cqw;font:500 7.5cqw/1 var(--f-mono);opacity:.85}
 .cover .ct{position:absolute;left:12cqw;right:10cqw;top:24cqw;font:700 calc(var(--tz,12) * 1cqw)/1.3 var(--f-ta);display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;text-shadow:0 1px 10px rgba(0,0,0,.2)}
-.cover .bar3{position:absolute;left:12cqw;bottom:10cqw;display:flex;gap:2cqw}
-.cover .bar3 i{width:7cqw;height:2cqw;border-radius:1cqw}
-.cover .bar3 i:nth-child(1){background:var(--red)}.cover .bar3 i:nth-child(2){background:#fff}.cover .bar3 i:nth-child(3){background:var(--orange)}
+.cover .bar3{position:absolute;left:12cqw;bottom:10cqw;width:16cqw;height:2cqw;border-radius:1cqw;background:rgba(255,255,255,.75)}
 
 /* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:var(--r-2);border:1px solid var(--line-2);background:var(--surface);font-weight:600;font-size:14.5px;text-decoration:none;cursor:pointer;white-space:nowrap;transition:background var(--dur-2),border-color var(--dur-2),color var(--dur-2),transform var(--dur-2) var(--ease-spring),box-shadow var(--dur-2)}
@@ -399,8 +418,6 @@ a{color:inherit}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 footer{border-top:1px solid var(--line);padding:28px 0 40px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--ink-3)}
 footer a{color:var(--blue);font-weight:600}
-footer .tri{display:inline-flex;height:6px;width:48px;border-radius:3px;overflow:hidden}
-footer .tri i{flex:1}footer .tri i:nth-child(1){background:var(--red)}footer .tri i:nth-child(2){background:#fff;box-shadow:inset 0 0 0 1px var(--line)}footer .tri i:nth-child(3){background:var(--nl-blue)}footer .tri i:nth-child(4){background:var(--orange)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:1ms!important;animation-delay:0ms!important;transition-duration:1ms!important;scroll-behavior:auto!important}}
 </style>
 <script>try{var t=localStorage.getItem('suvadi.theme');if(t)document.documentElement.dataset.theme=JSON.parse(t)}catch(e){}</script>
@@ -409,7 +426,7 @@ footer .tri i{flex:1}footer .tri i:nth-child(1){background:var(--red)}footer .tr
 <header class="top" id="top">
   <div class="wrap top-in">
     <a class="brand" href="#" data-act="home" aria-label="Suvadi home">
-      <span class="mk" aria-hidden="true"><i></i><i><b>சு</b></i><i></i></span>
+      <span class="mk" aria-hidden="true"><b>சு</b></span>
       <span><strong>Suvadi</strong><small>சுவடி · தமிழ் நூலகம்</small></span>
     </a>
     <nav class="nav" aria-label="Main"><a href="#today">Today</a><a href="#library">Library</a><a href="#library" data-act="showMine">My shelf</a></nav>
@@ -423,7 +440,7 @@ footer .tri i{flex:1}footer .tri i:nth-child(1){background:var(--red)}footer .tr
 <main>
   <section class="wrap hero">
     <div>
-      <span class="pill"><span class="flag" aria-hidden="true"><i></i><i></i><i></i></span>Free · from Project Madurai</span>
+      <span class="pill"><span class="dot" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M3 5.5C6 4 9 4 12 6c3-2 6-2 9-.5V19c-3-1.5-6-1.5-9 .5-3-2-6-2-9-.5z"/></svg></span>Free · from Project Madurai</span>
       <h1>தமிழின் <span class="hl">நூலகம்</span><span class="en">1,281 Tamil books, <em>one click</em> from reading.</span></h1>
       <form class="hsearch" id="hform" role="search">
         <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
@@ -435,7 +452,8 @@ footer .tri i{flex:1}footer .tri i:nth-child(1){background:var(--red)}footer .tr
     </div>
     <div class="mos-card">
       <div class="mos-head"><b>The whole collection, one tile per book</b><span id="mosHint">Hover a tile to see the book</span></div>
-      <div class="mosaic" id="mosaic" aria-hidden="true"></div>
+      <div class="mos-stage"><div class="mosaic" id="mosaic" aria-hidden="true"></div><div class="shim" aria-hidden="true"></div></div>
+      <div class="mos-foot" aria-live="polite"><b id="mosSec" style="--c:var(--blue)"><i></i><span>14 sections · 1,281 books</span></b><span id="mosPos"></span></div>
       <div class="legend" id="legend" role="group" aria-label="Show a section"></div>
     </div>
   </section>
@@ -480,7 +498,7 @@ footer .tri i{flex:1}footer .tri i:nth-child(1){background:var(--red)}footer .tr
     </div>
   </section>
 </main>
-<footer class="wrap"><span>Texts and PDFs are hosted by <a href="https://www.projectmadurai.org/" target="_blank" rel="noopener">Project Madurai</a>. Every button opens their original files.</span><span class="tri" aria-hidden="true"><i></i><i></i><i></i><i></i></span></footer>
+<footer class="wrap"><span>Texts and PDFs are hosted by <a href="https://www.projectmadurai.org/" target="_blank" rel="noopener">Project Madurai</a>. Every button opens their original files.</span><span>சுவடி · Suvadi</span></footer>
 
 <div class="tip" id="tip" aria-hidden="true"><b></b><span><i></i><em></em></span></div>
 
@@ -518,7 +536,7 @@ var BASE='https://www.projectmadurai.org/pm_etexts/';
 var COLL=window.Intl&&Intl.Collator?new Intl.Collator('ta'):{compare:function(a,b){return a<b?-1:a>b?1:0}};
 function pad(n){return ('000'+n).slice(-4)}function nf(n){return n.toLocaleString('en-US')}
 
-/* sections, in the order the literature developed; colours stay inside the DigiCert/Dutch family */
+/* sections, in the order the literature developed; colours stay inside one blue / orange / red family */
 var SEC=[
  ['sangam','சங்க இலக்கியம்','Sangam classics','#21468B'],['ethics','நீதி இலக்கியம்','Ethics & wisdom','#0174C3'],['saiva','சைவம்','Saiva canon','#FF7F00'],
  ['vaish','வைணவம்','Vaishnava canon','#4FA3E0'],['siddhar','சித்தர் பாடல்கள்','Siddhar songs','#33415E'],['faiths','பிற சமயங்கள்','Other faiths','#7A8FB8'],
@@ -542,7 +560,7 @@ function ordered(k){if(ORD[k])return ORD[k];var L=B.slice();
   if(k==='author')L.sort(function(x,y){if(!x.ak!==!y.ak)return x.ak?-1:1;return COLL.compare(x.ak,y.ak)||COLL.compare(x.tt,y.tt)});
   return ORD[k]=L}
 function tz(t){var n=Array.from(t).length;return n<=10?16:n<=18?13.5:n<=30?11.5:10}
-function coverHTML(b){return '<div class="cover" style="--c:'+b.c+';--tz:'+tz(b.t)+'" aria-hidden="true"><span class="ini">'+esc(b.ini)+'</span><span class="cno">Nº '+pad(b.no)+'</span><span class="ct">'+esc(b.t)+'</span><span class="bar3"><i></i><i></i><i></i></span></div>'}
+function coverHTML(b){return '<div class="cover" style="--c:'+b.c+';--tz:'+tz(b.t)+'" aria-hidden="true"><span class="ini">'+esc(b.ini)+'</span><span class="cno">Nº '+pad(b.no)+'</span><span class="ct">'+esc(b.t)+'</span><span class="bar3"></span></div>'}
 var IC_R='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M3 5.5C6 4 9 4 12 6c3-2 6-2 9-.5V19c-3-1.5-6-1.5-9 .5-3-2-6-2-9-.5z"/><path d="M12 6v13.5"/></svg>';
 var IC_P='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 20h14"/></svg>';
 function quick(b,sm){var c=sm?' sm':'';return (b.uni.length?'<a class="btn pri'+c+'" href="'+BASE+'utf8/pmuni'+b.uni[0]+'.html" target="_blank" rel="noopener">'+IC_R+(b.uni.length>1?'Read · '+b.uni.length+' parts':'Read')+'</a>':'')+(b.pdf.length?'<a class="btn pdf'+c+'" href="'+BASE+'pdf/pm'+b.pdf[0]+'.pdf" target="_blank" rel="noopener">'+IC_P+'PDF</a>':'')}
@@ -559,17 +577,42 @@ function buildMosaic(){var cols=innerWidth<560?38:innerWidth<980?44:46,L=ordered
   mos.innerHTML=L.map(function(b,k){var r=Math.floor(k/cols),c=k%cols;return '<span class="t" data-i="'+b.i+'" data-s="'+b.s+'" style="--c:'+b.c+';--d:'+(r+c)+'"></span>'}).join('');
   var cnt={};B.forEach(function(b){cnt[b.s]=(cnt[b.s]||0)+1});
   $('#legend').innerHTML=SEC.map(function(s){return '<button data-s="'+s[0]+'" style="--c:'+s[3]+'"><i></i>'+s[1]+' <em>'+cnt[s[0]]+'</em></button>'}).join('');
-  if(!FINE)$('#mosHint').textContent='Tap a tile to open the book'}
-function hl(s){if(!s){mos.classList.remove('dim');$$('.t.on',mos).forEach(function(t){t.classList.remove('on')});$$('#legend button').forEach(function(x){x.classList.remove('on')});return}
+  tiles=$$('.t',mos);mos.classList.remove('ready');setTimeout(function(){mos.classList.add('ready')},REDUCED?0:(cols+Math.ceil(L.length/cols))*9+800);B.forEach(function(b){cnt0[b.s]=(cnt0[b.s]||0)+1});
+  if(!FINE)$('#mosHint').textContent='Tap a tile to open the book';else $('#mosHint').textContent='Move across the tiles · click to open'}
+function hl(s){legendHl=!!s;if(!s){mos.classList.remove('dim');$$('.t.on',mos).forEach(function(t){t.classList.remove('on')});$$('#legend button').forEach(function(x){x.classList.remove('on')});return}
   mos.classList.add('dim');$$('.t',mos).forEach(function(t){t.classList.toggle('on',t.dataset.s===s)});$$('#legend button').forEach(function(x){x.classList.toggle('on',x.dataset.s===s)})}
 function showTip(b,el){tip.querySelector('b').textContent=b.t;tip.querySelector('em').textContent='Nº '+pad(b.no)+' · '+SEC[SI[b.s]][2];tip.querySelector('i').style.setProperty('--c',b.c);
   var r=el.getBoundingClientRect(),w=Math.min(300,tip.offsetWidth||240),h=tip.offsetHeight||60,x=Math.max(10,Math.min(innerWidth-w-10,r.left+r.width/2-w/2)),y=r.top-h-12;if(y<74)y=r.bottom+12;
   tip.style.setProperty('--x',x+'px');tip.style.setProperty('--y',y+'px');tip.classList.add('on')}
 function hideTip(){tip.classList.remove('on')}
-mos.addEventListener('pointerover',function(e){var t=e.target.closest('.t');if(t&&FINE)showTip(B[+t.dataset.i],t)});
-mos.addEventListener('pointerleave',hideTip);
+/* lens: work out which tile is under the pointer from the grid maths, then swell its neighbours */
+var lensOn=[],lensRaf=0,lensPt=null,secOn=null,legendHl=false,tiles=[];
+function grid(){var r=mos.getBoundingClientRect(),cols=+getComputedStyle(mos).getPropertyValue('--cols')||46,gap=parseFloat(getComputedStyle(mos).columnGap)||2,w=(r.width-gap*(cols-1))/cols;return {r:r,cols:cols,step:w+gap,w:w}}
+function at(x,y){var g=grid(),c=Math.floor((x-g.r.left)/g.step),rw=Math.floor((y-g.r.top)/g.step);if(c<0||c>=g.cols||rw<0)return null;var k=rw*g.cols+c;return k<tiles.length?{k:k,c:c,r:rw,g:g}:null}
+function lens(){lensRaf=0;var next=[];
+  if(lensPt){var h=at(lensPt.x,lensPt.y);if(h){var R=3;for(var dr=-R;dr<=R;dr++)for(var dc=-R;dc<=R;dc++){var rr=h.r+dr,cc=h.c+dc;if(cc<0||cc>=h.g.cols||rr<0)continue;var k=rr*h.g.cols+cc;if(k>=tiles.length)continue;
+      var d2=dr*dr+dc*dc;if(d2>R*R+1)continue;var f=Math.exp(-d2/2.4),t=tiles[k];t.style.setProperty('--s',(1+.95*f).toFixed(3));t.style.setProperty('--b',(1+.28*f).toFixed(3));t.classList.add('lens');t.classList.toggle('focus',d2===0);next.push(t)}
+    var cur=tiles[h.k];if(cur!==lensPt.last){lensPt.last=cur;var b=B[+cur.dataset.i];showTip(b,cur);section(b.s);foot(b)}}}
+  lensOn.forEach(function(t){if(next.indexOf(t)<0){t.style.removeProperty('--s');t.style.removeProperty('--b');t.classList.remove('lens','focus')}});lensOn=next}
+function section(s){if(legendHl||s===secOn)return;secOn=s;if(!s){mos.classList.remove('sec');$$('.t.on',mos).forEach(function(t){t.classList.remove('on')});return}
+  mos.classList.add('sec');tiles.forEach(function(t){t.classList.toggle('on',t.dataset.s===s)});$$('#legend button').forEach(function(x){x.classList.toggle('on',x.dataset.s===s)})}
+var cnt0={};
+function foot(b){var el=$('#mosSec');if(!b){el.style.setProperty('--c','var(--blue)');el.querySelector('span').textContent='14 sections · 1,281 books';$('#mosPos').textContent='';return}
+  var s=SEC[SI[b.s]];el.style.setProperty('--c',b.c);el.querySelector('span').textContent=s[1]+' · '+s[2];$('#mosPos').textContent=nf(cnt0[b.s]||0)+' books in this section'}
+if(FINE&&!REDUCED){
+  mos.addEventListener('pointermove',function(e){lensPt={x:e.clientX,y:e.clientY,last:lensPt&&lensPt.last};if(!lensRaf)lensRaf=requestAnimationFrame(lens)});
+  mos.addEventListener('pointerleave',function(){lensPt=null;if(!lensRaf)lensRaf=requestAnimationFrame(lens);hideTip();$$('#legend button').forEach(function(x){x.classList.remove('on')});section(null);foot(null)});
+}else{mos.addEventListener('pointerover',function(e){var t=e.target.closest('.t');if(t&&FINE)showTip(B[+t.dataset.i],t)});mos.addEventListener('pointerleave',hideTip)}
 addEventListener('scroll',hideTip,{passive:true});
-mos.addEventListener('click',function(e){var t=e.target.closest('.t');if(t){hideTip();openBook(+t.dataset.i)}});
+/* ripple: a wave runs out from the tapped tile, then the book opens */
+function ripple(k){if(REDUCED)return 0;var g=grid(),r0=Math.floor(k/g.cols),c0=k%g.cols,R=14;
+  for(var dr=-R;dr<=R;dr++)for(var dc=-R;dc<=R;dc++){var d=Math.sqrt(dr*dr+dc*dc);if(d>R)continue;var rr=r0+dr,cc=c0+dc;if(cc<0||cc>=g.cols||rr<0)continue;var kk=rr*g.cols+cc;if(kk>=tiles.length)continue;
+    (function(t,dl){t.style.setProperty('--pd',dl+'ms');t.classList.remove('ping');void t.offsetWidth;t.classList.add('ping');setTimeout(function(){t.classList.remove('ping')},640+dl)})(tiles[kk],Math.round(d*26))}
+  return 260}
+mos.addEventListener('click',function(e){var t=e.target.closest('.t');if(!t)return;hideTip();var k=tiles.indexOf(t),wait=ripple(k);setTimeout(function(){openBook(+t.dataset.i)},wait)});
+/* twinkle: a few random tiles breathe while nobody is pointing at the mosaic */
+if(!REDUCED){setInterval(function(){if(lensPt||document.hidden||mos.classList.contains('dim'))return;var r=mos.getBoundingClientRect();if(r.bottom<0||r.top>innerHeight)return;
+  for(var n=0;n<3;n++){var t=tiles[Math.floor(Math.random()*tiles.length)];if(!t||t.classList.contains('tw'))continue;t.classList.add('tw');(function(x){setTimeout(function(){x.classList.remove('tw')},1250)})(t)}},700)}
 $('#legend').addEventListener('pointerover',function(e){var b=e.target.closest('button');if(b&&FINE)hl(b.dataset.s)});
 $('#legend').addEventListener('pointerleave',function(){if(FINE)hl(null)});
 $('#legend').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;S.secs=[b.dataset.s];S.letter=null;S.mine=false;update();goLib()});

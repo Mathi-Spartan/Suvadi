@@ -1,14 +1,14 @@
 # Suvadi · design notes
 
-A modern, app-style Tamil library in DigiCert blue and the Dutch tricolour, light and dark.
+A modern, app-style Tamil library in DigiCert blue with deep blue, orange and red accents, light and dark. No flag imagery.
 
 ## Colour meanings
 | Token | Meaning |
 |---|---|
 | `--blue` (#0174C3, DigiCert blue) | primary actions (Read), links, focus ring, selected state, letter heatmap scale |
-| `--nl-blue` (#21468B, Dutch blue) | brand surfaces: logo mark, Kural of the day widget |
-| `--orange` (#FF7F00, Dutch orange) | PDF downloads, highlights, widget markers |
-| `--red` (#AE1C28, Dutch red) | saved / "on my shelf" state only |
+| `--nl-blue` (#21468B, deep blue) | brand surfaces: logo mark, Kural of the day widget |
+| `--orange` (#FF7F00, orange) | PDF downloads, highlights, widget markers |
+| `--red` (#AE1C28, red) | saved / "on my shelf" state only |
 | `--bg`, `--surface*`, `--ink*`, `--line*` | page, cards, text and borders; redefined for dark mode |
 | Section colours (`SEC` in the script) | book tiles, covers and section swatches only, all drawn from the same blue/orange/red family |
 
@@ -19,7 +19,7 @@ A modern, app-style Tamil library in DigiCert blue and the Dutch tricolour, ligh
 - **JetBrains Mono**: numbers, release Nº, keyboard hints
 
 ## Signature
-The hero mosaic: every one of the 1,281 books is one tile, coloured by section. Hover shows the title, click opens the book, legend chips highlight a section.
+The hero mosaic: every one of the 1,281 books is one tile, coloured by section. Hover acts as a magnifying lens (nearby tiles swell), the hovered book's section glows and its name shows below; a click sends a ripple across the tiles before the book opens. When idle, a slow shimmer passes and a few tiles twinkle. Legend chips highlight a section.
 
 ## Layout
 Header (search palette ⌘K / Ctrl K, My shelf, theme) → hero (headline, search, mosaic) → Today bento (Kural of the day, book of the day, collection stats, letter heatmap, recently opened) → Library (filter rail + cards/list) → quick-view drawer for every book.
