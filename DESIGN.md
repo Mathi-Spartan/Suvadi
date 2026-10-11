@@ -1,38 +1,40 @@
 # Suvadi · design notes
 
-Every Project Madurai book on its own palm-leaf (ஓலைச்சுவடி) cover, in a light editorial page.
+A modern, app-style Tamil library in DigiCert blue and the Dutch tricolour, light and dark.
 
 ## Colour meanings
 | Token | Meaning |
 |---|---|
-| `--paper`, `--card` | page and surfaces |
-| `--ink`, `--ink-2`, `--ink-3` | text, secondary text, labels |
-| `--blue` | the one interface accent: primary action (Read online), focus ring, active filter |
-| `--orange` | PDF downloads, and the "kept" ribbon |
-| `--yellow` | active-filter chips, highlight stats |
-| Section colours (`SPAL` in the script) | book covers only, one colour per section, like a publisher's series. Never used for interface chrome. |
+| `--blue` (#0174C3, DigiCert blue) | primary actions (Read), links, focus ring, selected state, letter heatmap scale |
+| `--nl-blue` (#21468B, Dutch blue) | brand surfaces: logo mark, Kural of the day widget |
+| `--orange` (#FF7F00, Dutch orange) | PDF downloads, highlights, widget markers |
+| `--red` (#AE1C28, Dutch red) | saved / "on my shelf" state only |
+| `--bg`, `--surface*`, `--ink*`, `--line*` | page, cards, text and borders; redefined for dark mode |
+| Section colours (`SEC` in the script) | book tiles, covers and section swatches only, all drawn from the same blue/orange/red family |
 
 ## Type roles
-- **Anek Tamil**: headings and UI Tamil
-- **Noto Serif Tamil**: book titles on covers and palm leaves, cover initials
-- **Bricolage Grotesque**: English UI
-- **Instrument Serif (italic)**: English sub-labels next to Tamil
-- **JetBrains Mono**: numbers, release Nº, small labels
+- **Anek Tamil** (width axis): Tamil display, hero, Kural, covers
+- **Hind Madurai**: Tamil body text, titles in cards and lists
+- **Onest**: English UI and headings
+- **JetBrains Mono**: numbers, release Nº, keyboard hints
 
-Fluid sizes use `--step-*` tokens (utopia-style clamps).
+## Signature
+The hero mosaic: every one of the 1,281 books is one tile, coloured by section. Hover shows the title, click opens the book, legend chips highlight a section.
+
+## Layout
+Header (search palette ⌘K / Ctrl K, My shelf, theme) → hero (headline, search, mosaic) → Today bento (Kural of the day, book of the day, collection stats, letter heatmap, recently opened) → Library (filter rail + cards/list) → quick-view drawer for every book.
 
 ## Motion scale
-Easing: `--ease-out`, `--ease-spring`, `--ease-in-out`.
-Durations: `--dur-1` 120ms (hover feedback), `--dur-2` 240ms (state changes), `--dur-3` 450ms (panels, chips), `--dur-4` 720ms (page transitions, cover flip).
-The script reads these tokens with `tok()` / `ms()`. Never hard-code a bezier or a millisecond value. Everything turns off under `prefers-reduced-motion`.
+`--dur-1` 120ms hover · `--dur-2` 220ms state · `--dur-3` 420ms panels · `--dur-4` 700ms drawer and mosaic entry.
+Easing: `--ease-out`, `--ease-spring`, `--ease-in-out`. The script reads tokens with `tok()` / `ms()`. All motion stops under `prefers-reduced-motion`.
 
 ## Radius scale
-`--r-1` 4 · `--r-2` 8 · `--r-3` 14 · `--r-4` 22 · `--r-pill`.
+`--r-1` 6 · `--r-2` 10 · `--r-3` 16 · `--r-4` 24 · `--r-pill`.
 
 ## Data
-- Neon Postgres: tables `sections` and `books` (pm_no, title, author, genre, section, pdf_ids[], unicode_ids[]).
-- `/api/books` serves the catalogue; `public/data/books.json` is the offline fallback copy.
-- Read and PDF buttons link to the original files on projectmadurai.org. No texts are copied.
+- Neon Postgres: tables `sections` and `books`. `/api/books` serves the catalogue; `public/data/books.json` is the fallback.
+- Read and PDF buttons link to the original files on projectmadurai.org.
+- My shelf, recently opened, view and theme are stored in the visitor's browser only.
 
 ## Checks
-`npm run check` (also the Vercel build command) fails the deploy if the page loader, the fallback catalogue or any CSS token is broken.
+`npm run check` (the Vercel build command) fails the deploy if the loader, the fallback catalogue or a CSS token is broken.
