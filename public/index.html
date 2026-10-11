@@ -117,12 +117,17 @@ a{color:inherit}
 .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(24px,4vw,56px);align-items:center;padding-block:clamp(28px,4.5vw,60px) clamp(20px,3vw,32px)}
 .pill{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 14px 0 6px;border-radius:var(--r-pill);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1);font-size:13px;font-weight:600;color:var(--ink-2)}
 .pill .dot{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--blue-soft);color:var(--blue)}
-.hero h1{margin:18px 0 0;font:800 var(--step-4)/1.32 var(--f-ta);font-stretch:112%;letter-spacing:-.015em}
+.hero h1{margin:18px 0 0;font:800 clamp(2.1rem,1.2rem + 3.1vw,4.1rem)/1.32 var(--f-ta);font-stretch:112%;letter-spacing:-.015em}
 .hero h1 .ln{display:block}
-.hero h1 .ln>span{display:inline-block;padding-bottom:.08em;animation:up var(--dur-4) var(--ease-out) backwards}
+.hero h1 .ln>span{display:inline-block;white-space:nowrap;padding-bottom:.08em;animation:up var(--dur-4) var(--ease-out) backwards}
 .hero h1 .ln:nth-child(2)>span{animation-delay:120ms}
 @keyframes up{from{opacity:0;transform:translateY(24px)}}
 .hero h1 .hl{background:linear-gradient(100deg,var(--blue),var(--nl-blue) 45%,var(--orange) 110%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .byline{margin:10px 0 0;animation:fade var(--dur-4) var(--ease-out) 200ms backwards}
+.hero .byline button{display:inline-flex;flex-wrap:wrap;align-items:center;gap:4px 10px;text-align:left;padding:0;border:0;background:none;cursor:pointer;font:700 clamp(1rem,.9rem + .4vw,1.2rem) var(--f-ta);color:var(--ink)}
+.hero .byline .bar{width:34px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--orange))}
+.hero .byline small{flex-basis:100%;padding-left:44px;font:500 13px var(--f-ui);color:var(--ink-3);transition:color var(--dur-2)}
+.hero .byline button:hover small{color:var(--blue)}
 .hero .lede{margin:16px 0 0;max-width:46ch;font:500 var(--step-1)/1.5 var(--f-ui);color:var(--ink-2);animation:fade var(--dur-4) var(--ease-out) 240ms backwards}
 .hero .lede b{color:var(--ink)}
 @keyframes fade{from{opacity:0;transform:translateY(10px)}}
@@ -617,8 +622,9 @@ footer a{color:var(--blue);font-weight:600}
   <section class="wrap hero">
     <div>
       <span class="pill"><span class="dot" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M3 5.5C6 4 9 4 12 6c3-2 6-2 9-.5V19c-3-1.5-6-1.5-9 .5-3-2-6-2-9-.5z"/></svg></span>Free · from Project Madurai</span>
-      <h1><span class="ln"><span>தமிழைப் படி,</span></span><span class="ln"><span class="hl">தலை நிமிர்.</span></span></h1>
-      <p class="lede">Read Tamil, stand tall. <b>Two thousand years</b> of Tamil writing, from the Sangam poets to Bharathi, free to read and one tap away.</p>
+      <h1 lang="ta"><span class="ln"><span>தமிழுக்கும்</span></span><span class="ln"><span><span class="hl">அமுதென்று</span> பேர்</span></span></h1>
+      <p class="byline"><button data-act="poet" data-q="பாரதிதாசன்"><span class="bar"></span>பாவேந்தர் பாரதிதாசன்<small>Bharathidasan · read his works →</small></button></p>
+      <p class="lede">“Tamil has another name: <b>nectar</b>.” Two thousand years of it, from the Sangam poets to Bharathi, free to read and one tap away.</p>
       <form class="hsearch" id="hform" role="search">
         <svg class="ic" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
         <label class="sr" for="hq">Search by title, author or number</label>
