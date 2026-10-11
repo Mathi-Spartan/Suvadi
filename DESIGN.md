@@ -22,7 +22,10 @@ A modern, app-style Tamil library in DigiCert blue with deep blue, orange and re
 The hero pairs a pride statement (தமிழைப் படி, தலை நிமிர் · Read Tamil, stand tall) with a rotating card of famous lines from the classics, each linking to its book.
 
 ## Layout
-Header → hero (headline, search, rotating classics card) → counters (2,000+ years, books, authors, sections) → Did you know? fact cards with count-up numbers → Shelves (Start here, Sangam, Bhakti, Epics, Ethics, Modern) → My reading (Kural of the day, book of the day, reading journey, recently opened, collection, titles by first letter) → Library → quick-view drawer.
+Header → hero (headline, search, rotating classics card) → counters → Did you know? → Journey through time (7 eras, each with people, story and books) → Literary map of Tamil Nadu (13 places, guided tour) → Shelves → My reading (Kural of the day with share-as-image, book of the day, reading journey, recently opened, collection, titles by first letter, badges) → Library → quick-view drawer.
+
+Map boundaries: DataMeet India states GeoJSON (public), simplified to `public/data/tn-map.json`.
+Badges and streaks live in the visitor's browser (localStorage).
 
 ## Motion scale
 `--dur-1` 120ms hover · `--dur-2` 220ms state · `--dur-3` 420ms panels · `--dur-4` 700ms drawer and mosaic entry.

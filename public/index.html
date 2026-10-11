@@ -194,6 +194,102 @@ a{color:inherit}
 @media(max-width:1100px){.dyk{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.dyk{grid-template-columns:1fr 1fr;gap:10px}.fact{padding:16px 14px 14px}.fact p{font-size:13px}.fact .ta2{font-size:13px}.fact .go2{font-size:12.5px;text-align:left}}
 
+/* ---------------- timeline ---------------- */
+.tl{position:relative;padding:22px clamp(18px,3vw,32px) 26px;border-radius:var(--r-4);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1)}
+.track{position:relative;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;padding-top:4px}
+.track::before{content:"";position:absolute;left:calc(100%/14);right:calc(100%/14);top:23px;height:4px;border-radius:2px;background:var(--surface-3)}
+.track .fill{position:absolute;left:calc(100%/14);top:23px;height:4px;border-radius:2px;width:calc((100% - 100%/7) * var(--p,0));background:linear-gradient(90deg,var(--blue),var(--orange));transition:width var(--dur-4) var(--ease-out)}
+.era{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 4px;border:0;background:none;cursor:pointer;text-align:center}
+.era .dot{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:3px solid var(--surface-3);font:700 12px var(--f-mono);color:var(--ink-3);transition:all var(--dur-3) var(--ease-spring)}
+.era.past .dot{border-color:var(--c);color:var(--c)}
+.era[aria-selected="true"] .dot{width:40px;height:40px;margin-top:-4px;background:var(--c);border-color:var(--c);color:#fff;box-shadow:0 0 0 6px color-mix(in srgb,var(--c) 22%,transparent)}
+.era b{font:700 14px/1.3 var(--f-ta)}
+.era small{font:500 11.5px/1.3 var(--f-ui);color:var(--ink-3)}
+.era:hover .dot{transform:scale(1.12)}
+.tlp{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(18px,3vw,40px);margin-top:24px;padding-top:22px;border-top:1px solid var(--line)}
+.tlp>*{min-width:0}
+.tlp.in .tl-l,.tlp.in .tl-r{animation:qin var(--dur-4) var(--ease-out) both}
+.tlp.in .tl-r{animation-delay:90ms}
+.tl-l .when{display:inline-flex;align-items:center;gap:8px;padding:4px 12px;border-radius:var(--r-pill);background:color-mix(in srgb,var(--c) 14%,var(--surface));color:var(--c);font:700 12.5px var(--f-ui)}
+.tl-l h3{margin:12px 0 0;font:800 clamp(1.6rem,1.2rem + 1.4vw,2.3rem)/1.3 var(--f-ta)}
+.tl-l h3 small{display:block;font:700 15px var(--f-ui);color:var(--ink-2);letter-spacing:-.01em}
+.tl-l p{margin:12px 0 0;font-size:15.5px;line-height:1.6;color:var(--ink-2)}
+.people{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.people span{padding:5px 11px;border-radius:var(--r-pill);background:var(--surface-2);font:600 13px var(--f-tb)}
+.tl-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.tl-r .lab2{font:600 11.5px var(--f-ui);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);margin-bottom:10px}
+.tl-r .row{grid-auto-columns:118px;padding-bottom:6px}
+.tlnote{margin-top:14px;font-size:12px;color:var(--ink-3)}
+@media(max-width:860px){.track{grid-template-columns:repeat(7,118px);overflow-x:auto;scrollbar-width:none;padding:6px 0 6px}.track::before,.track .fill{display:none}.tlp{grid-template-columns:1fr}.era small{font-size:11px}.tl-acts .btn{flex:1 1 auto}.tl{padding:18px 16px 20px}}
+
+/* ---------------- map ---------------- */
+.mapw{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(16px,3vw,36px);align-items:start}
+.mapc{position:relative;border-radius:var(--r-4);background:radial-gradient(80% 60% at 70% 40%,color-mix(in srgb,var(--blue) 10%,var(--surface)),var(--surface));border:1px solid var(--line);box-shadow:var(--shadow-1);padding:12px;overflow:hidden}
+.mapc svg{display:block;width:100%;height:auto;max-height:640px}
+.mapc .land{fill:color-mix(in srgb,var(--blue) 9%,var(--surface));stroke:var(--blue);stroke-width:1.4;stroke-linejoin:round}
+.mapc .pdy{fill:color-mix(in srgb,var(--orange) 18%,var(--surface));stroke:var(--orange);stroke-width:1}
+.mapc .nb{fill:var(--surface-2);stroke:var(--line-2);stroke-width:.8}
+.mapc .sea{font:italic 600 13px var(--f-ui);fill:var(--ink-3);letter-spacing:.12em}
+.mapc .land{stroke-dasharray:2400;stroke-dashoffset:2400;animation:drawmap 2.4s var(--ease-out) .2s forwards}
+@keyframes drawmap{to{stroke-dashoffset:0}}
+.pin{cursor:pointer;outline:none}
+.pin .ring{fill:none;stroke:var(--c);stroke-width:2;opacity:0;transform-origin:center;transform-box:fill-box}
+.pin .core{fill:var(--c);stroke:#fff;stroke-width:2.5;transition:r var(--dur-2) var(--ease-spring)}
+.pin text{font:700 11.5px var(--f-ta);fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round;opacity:0;transition:opacity var(--dur-2)}
+.pin:hover text,.pin:focus-visible text,.pin.on text,.mapc.labels .pin text{opacity:1}
+.pin:hover .core,.pin.on .core{r:9}
+.pin.on .ring{animation:ping2 1.8s var(--ease-out) infinite}
+@keyframes ping2{0%{opacity:.8;transform:scale(1)}100%{opacity:0;transform:scale(3.2)}}
+.pin{animation:pinin var(--dur-4) var(--ease-spring) backwards;animation-delay:calc(1.2s + var(--k) * 90ms)}
+@keyframes pinin{from{opacity:0;transform:translateY(-14px)}}
+.maptools{position:absolute;left:16px;top:14px;display:flex;gap:6px}
+.maptools .btn{min-height:34px;font-size:13px}
+.mapcredit{display:block;text-align:right;padding:0 6px 2px;font-size:10.5px;color:var(--ink-3)}
+.place{position:sticky;top:90px;padding:clamp(20px,2.6vw,30px);border-radius:var(--r-4);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1)}
+.place.in .pi{animation:qin var(--dur-4) var(--ease-out) both}
+.place .pk{display:flex;align-items:center;gap:8px;font:600 12px var(--f-ui);letter-spacing:.05em;text-transform:uppercase;color:var(--c)}
+.place .pk i{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.place h3{margin:10px 0 0;font:800 clamp(1.6rem,1.2rem + 1.2vw,2.2rem)/1.3 var(--f-ta)}
+.place h3 small{display:block;font:700 15px var(--f-ui);color:var(--ink-2)}
+.place p{margin:12px 0 0;font-size:15.5px;line-height:1.6;color:var(--ink-2)}
+.place .lab2{margin:18px 0 10px;font:600 11.5px var(--f-ui);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3)}
+.plist{display:flex;flex-direction:column;gap:8px}
+.pbk{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:12px;align-items:center;padding:8px;border-radius:var(--r-2);border:1px solid var(--line);background:var(--surface);cursor:pointer;text-align:left;transition:border-color var(--dur-2),transform var(--dur-2) var(--ease-out)}
+.pbk:hover{border-color:var(--blue);transform:translateX(3px)}
+.pbk .cover{width:44px;border-radius:3px 6px 6px 3px}
+.pbk .cover .ct,.pbk .cover .cno,.pbk .cover .bar3{display:none}
+.pbk .cover .ini{left:50%;right:auto;top:50%;bottom:auto;transform:translate(-50%,-50%);font-size:58cqw;color:rgba(255,255,255,.95);font-stretch:100%}
+.pbk b{display:block;font:600 14.5px/1.35 var(--f-tb)}
+.pbk small{display:block;font:500 12.5px var(--f-tb);color:var(--ink-3)}
+.pnav{display:flex;gap:8px;margin-top:18px}
+@media(max-width:900px){.mapw{grid-template-columns:1fr}.place{position:relative;top:0}.mapc svg{max-height:520px}}
+
+/* ---------------- badges + share ---------------- */
+.w-badges{grid-column:span 12}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:14px}
+.bdg{display:grid;grid-template-columns:44px minmax(0,1fr);gap:10px;align-items:center;padding:10px;border-radius:var(--r-3);border:1px solid var(--line);background:var(--surface-2);transition:transform var(--dur-3) var(--ease-spring)}
+.bdg .md{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:800 15px var(--f-ta);color:#fff;background:conic-gradient(from 210deg,var(--c),color-mix(in srgb,var(--c) 55%,#fff),var(--c));box-shadow:inset 0 0 0 3px rgba(255,255,255,.35),0 6px 14px -6px var(--c)}
+.bdg b{display:block;font:700 13.5px/1.3 var(--f-tb)}
+.bdg small{display:block;font-size:11.5px;line-height:1.35;color:var(--ink-3)}
+.bdg.lock{opacity:.55}
+.bdg.lock .md{background:var(--surface-3);color:var(--ink-3);box-shadow:none}
+.bdg:not(.lock):hover{transform:translateY(-3px) rotate(-1deg)}
+.bdg.new{animation:pop2 900ms var(--ease-spring)}
+@keyframes pop2{0%{transform:scale(.6)}60%{transform:scale(1.08)}100%{transform:none}}
+.bmeta{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:4px;font-size:13px;color:var(--ink-3)}
+.confetti{position:fixed;z-index:120;width:9px;height:14px;border-radius:2px;pointer-events:none;animation:conf 1300ms var(--ease-out) forwards}
+@keyframes conf{to{transform:translate(var(--dx),var(--dy)) rotate(var(--r));opacity:0}}
+.share{position:fixed;inset:0;z-index:96;display:grid;place-items:center;padding:16px;visibility:hidden}
+.share.on{visibility:visible}
+.share .sc{position:absolute;inset:0;background:rgba(7,18,38,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;transition:opacity var(--dur-2)}
+.share.on .sc{opacity:1}
+.sbox{position:relative;width:min(460px,100%);max-height:calc(100vh - 32px);overflow:auto;padding:18px;border-radius:var(--r-4);background:var(--surface);box-shadow:var(--shadow-3);opacity:0;transform:translateY(12px) scale(.98);transition:opacity var(--dur-2),transform var(--dur-3) var(--ease-out)}
+.share.on .sbox{opacity:1;transform:none}
+.sbox h3{margin:0 0 12px;font:700 17px var(--f-ui)}
+.sbox canvas{display:block;width:100%;height:auto;border-radius:var(--r-3);box-shadow:var(--shadow-2)}
+.sbox .dgrp{margin-top:14px}
+.sbox .x{position:absolute;top:12px;right:12px}
+
 /* ---------------- shelves ---------------- */
 .shelf{margin-bottom:28px}
 .sh-h{display:flex;align-items:end;gap:12px;margin-bottom:12px}
@@ -398,7 +494,7 @@ a{color:inherit}
   .scrim{display:block;position:fixed;inset:0;z-index:79;background:rgba(7,18,38,.45);opacity:0;pointer-events:none;transition:opacity var(--dur-3)}
   .rail.open~.scrim{opacity:1;pointer-events:auto}
   .lgrid{grid-template-columns:repeat(9,1fr)}
-  .lr{grid-template-columns:minmax(0,1fr) auto}.lr .no,.lr .s,.lr .a{display:none}
+  .lr{grid-template-columns:minmax(0,1fr);gap:8px}.lr .no,.lr .s,.lr .a{display:none}
 }
 @media(max-width:560px){.cards{grid-template-columns:1fr}.rbar h2{flex-basis:100%}.lgrid{grid-template-columns:repeat(6,1fr)}}
 
@@ -481,7 +577,7 @@ footer a{color:var(--blue);font-weight:600}
       <span class="mk" aria-hidden="true"><b>சு</b></span>
       <span><strong>Suvadi</strong><small>சுவடி · தமிழ் நூலகம்</small></span>
     </a>
-    <nav class="nav" aria-label="Main"><a href="#facts">Did you know</a><a href="#shelves">Shelves</a><a href="#today">My reading</a><a href="#library">Library</a></nav>
+    <nav class="nav" aria-label="Main"><a href="#timeline">Timeline</a><a href="#map">Map</a><a href="#shelves">Shelves</a><a href="#today">My reading</a><a href="#library">Library</a></nav>
     <span class="spacer"></span>
     <button class="kbtn" data-act="cmd" aria-label="Search books"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><span>Search books…</span><kbd id="kbdHint">Ctrl K</kbd></button>
     <button class="ibtn" data-act="showMine" aria-label="My shelf"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span class="n" id="cnt" hidden>0</span></button>
@@ -524,6 +620,25 @@ footer a{color:var(--blue);font-weight:600}
     <div class="dyk" id="dyk"></div>
   </section>
 
+  <section class="wrap" id="timeline">
+    <div class="sec-h"><h2>Journey through time<span class="ta">காலப் பயணம்</span></h2><p>2,000 years of Tamil writing, era by era</p></div>
+    <div class="tl">
+      <div class="track" id="track" role="tablist" aria-label="Eras of Tamil literature"><span class="fill" id="tlfill"></span></div>
+      <div class="tlp" id="tlp" aria-live="polite"></div>
+      <p class="tlnote">Dates are approximate; scholars place several of these works differently.</p>
+    </div>
+  </section>
+
+  <section class="wrap" id="map">
+    <div class="sec-h"><h2>Literary map of Tamil Nadu<span class="ta">இலக்கிய வரைபடம்</span></h2><p>Tap a place to see the works born there</p></div>
+    <div class="mapw">
+      <div class="mapc" id="mapc"><svg id="tnmap" viewBox="0 0 480 567" role="group" aria-label="Map of Tamil Nadu with literary places"></svg>
+        <div class="maptools"><button class="btn sm" data-act="tour" id="tourBtn">▶ Take the tour</button><button class="btn sm" data-act="labels" aria-pressed="false">Show names</button></div>
+        <span class="mapcredit">Boundaries: DataMeet</span></div>
+      <article class="place" id="place" aria-live="polite"></article>
+    </div>
+  </section>
+
   <section class="wrap" id="shelves">
     <div class="sec-h"><h2>Shelves<span class="ta">அலமாரிகள்</span></h2><p>Slide along, tap a cover to open</p></div>
     <div id="shelfList"></div>
@@ -535,13 +650,15 @@ footer a{color:var(--blue);font-weight:600}
       <article class="w w-kural" aria-label="Kural of the day">
         <div class="lab"><i></i>Kural of the day · இன்றைய குறள்</div>
         <div id="kural"></div>
-        <div class="kfoot"><span class="no" id="kno"></span><button data-act="kprev" aria-label="Previous kural">←</button><button data-act="knext" aria-label="Next kural">→</button><a href="#" data-act="openKural">Open Thirukkural</a></div>
+        <div class="kfoot"><span class="no" id="kno"></span><button data-act="kprev" aria-label="Previous kural">←</button><button data-act="knext" aria-label="Next kural">→</button><button data-act="shareKural">Share as image</button><a href="#" data-act="openKural">Open Thirukkural</a></div>
       </article>
       <article class="w w-book" aria-label="Book of the day" id="wbook"></article>
       <article class="w w-journey" aria-label="Your reading journey" id="wjourney"></article>
       <article class="w w-stats w-recent" aria-label="Recently opened"><div class="lab"><i></i>Recently opened</div><div id="recent"></div></article>
       <article class="w w-stats" aria-label="The collection in numbers" id="wstats"></article>
       <article class="w w-journey" aria-label="Titles by first letter"><div class="lab"><i></i>Titles by first letter · tap to browse</div><div class="lheat" id="lheat"></div><div class="scale"><span>few</span><i></i><span>many</span></div></article>
+      <article class="w w-badges" aria-label="Your badges" id="wbadges"></article>
+
     </div>
   </section>
 
@@ -593,6 +710,13 @@ footer a{color:var(--blue);font-weight:600}
     <div class="cfoot"><span><span class="kbd">↑</span> <span class="kbd">↓</span> move</span><span><span class="kbd">Enter</span> open</span><span><span class="kbd">⇧ Enter</span> show all results</span></div>
   </div>
 </div>
+<div class="share" id="share" role="dialog" aria-modal="true" aria-labelledby="shTitle">
+  <div class="sc" data-act="shareClose"></div>
+  <div class="sbox"><button class="ibtn x" data-act="shareClose" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <h3 id="shTitle">Share today's Kural</h3><canvas id="kcanvas" width="1080" height="1350" aria-label="Kural card image"></canvas>
+    <div class="dgrp"><button class="btn pri" data-act="shareNative" id="shNative">Share</button><button class="btn" data-act="shareDownload">Download image</button><a class="btn" id="shWa" target="_blank" rel="noopener">WhatsApp</a></div>
+  </div>
+</div>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -632,7 +756,7 @@ function ordered(k){if(ORD[k])return ORD[k];var L=B.slice();
   return ORD[k]=L}
 /* shrink a title until its longest word fits on one line, so no Tamil word is ever split */
 function fit(el,min){var fs=parseFloat(getComputedStyle(el).fontSize),n=0,lo=min||11;if(!el.clientWidth)return;while(el.scrollWidth>el.clientWidth+1&&fs>lo&&n<24){fs-=Math.max(.5,fs*.05);el.style.fontSize=fs.toFixed(2)+'px';n++}if(el.scrollWidth>el.clientWidth+1)el.style.overflowWrap='break-word'}
-function fitAll(root){$$('.card h4,.lr .t,.w-book h3,.jnext b,.sbk .bt,.recent b,.ci b,.pb h2,.fact .ta2',root).forEach(function(e){fit(e)});$$('.cover .ct',root).forEach(function(e){if(!e.dataset.fit){e.dataset.fit=1;fit(e,7)}})}
+function fitAll(root){$$('.card h4,.lr .t,.w-book h3,.jnext b,.sbk .bt,.recent b,.ci b,.pb h2,.fact .ta2',root).forEach(function(e){fit(e,e.matches('.sbk .bt,.lr .t')?9:11)});$$('.cover .ct',root).forEach(function(e){if(!e.dataset.fit){e.dataset.fit=1;fit(e,7)}})}
 var fitRaf=0;new MutationObserver(function(){if(!fitRaf)fitRaf=requestAnimationFrame(function(){fitRaf=0;fitAll(document)})}).observe(document.body,{childList:true,subtree:true});
 function lwStyle(t){var lw=0;t.split(/[\s\/,;:()\-–]+/).forEach(function(w){lw=Math.max(lw,Array.from(w).length)});return lw>22?' style="font-size:12.5px"':lw>16?' style="font-size:14px"':''}
 function tz(t){var words=t.split(/[\s\/,;:()\-–]+/),lw=0,n=Array.from(t).length;words.forEach(function(w){lw=Math.max(lw,Array.from(w).length)});
@@ -695,6 +819,127 @@ function facts(){var F=[
     return '<article class="fact" style="--c:'+f[3]+'"><div class="n" data-count="'+f[0]+'"'+(f[6]?' data-year':'')+'>0</div><div class="ta2">'+f[1]+'</div><p>'+f[2]+'</p><button class="go2" '+act+'>'+f[5]+ARW+'</button></article>'}).join('');
   watchCounts($('#dyk'))}
 
+
+/* ---------- timeline: eras of Tamil literature ---------- */
+var ERAS=[
+ {ta:'சங்க காலம்',en:'The Sangam age',when:'c. 300 BCE – 250 CE',c:'#21468B',secs:['sangam','grammar'],
+  d:'Poems of love (அகம்) and of war, kings and giving (புறம்), gathered in the Eight Anthologies and the Ten Idylls. The Tolkappiyam, the oldest surviving Tamil grammar, comes from this early world.',
+  who:['கபிலர்','பரணர்','ஔவையார்','நக்கீரர்','கணியன் பூங்குன்றனார்'],works:['புறநானூறு','குறுந்தொகை','நற்றிணை','கலித்தொகை','பட்டினப்பாலை','தொல்காப்பியம்']},
+ {ta:'நீதி இலக்கியம்',en:'The age of ethics',when:'c. 250 – 600 CE',c:'#0174C3',secs:['ethics'],
+  d:'The Eighteen Minor Classics (பதினெண் கீழ்க்கணக்கு) teach how to live well. The most loved of them is the Thirukkural: 1,330 couplets on virtue, wealth and love.',
+  who:['திருவள்ளுவர்','சமண முனிவர்கள்','பூதஞ்சேந்தனார்','நல்லாதனார்'],works:['திருக்குறள்','நாலடியார்','இனியவை நாற்பது','திரிகடுகம்']},
+ {ta:'காப்பியங்கள்',en:'The great epics',when:'c. 5th – 10th century',c:'#AE1C28',secs:['epic'],
+  d:'Long story-poems: Silappatikaram, the tale of Kannagi and Kovalan across three Tamil kingdoms; Manimekalai, its Buddhist sequel; and Civaka Cintamani.',
+  who:['இளங்கோ அடிகள்','சீத்தலைச் சாத்தனார்','திருத்தக்கதேவர்'],works:['சிலப்பதிகாரம்','மணிமேகலை','சீவக','வளையாபதி','குண்டலகேசி']},
+ {ta:'பக்தி காலம்',en:'The age of devotion',when:'c. 6th – 9th century',c:'#FF7F00',secs:['saiva','vaish'],
+  d:'The Nayanmars sang for Shiva and the Alvars for Vishnu, travelling from temple to temple. Their hymns, the Thevaram, Thiruvasagam and the Divya Prabandham, are still sung every day.',
+  who:['அப்பர்','சம்பந்தர்','சுந்தரர்','மாணிக்கவாசகர்','ஆண்டாள்','நம்மாழ்வார்'],works:['தேவாரம்','திருவாசகம்','திருப்பாவை','நாலாயிர','திருமந்திரம்']},
+ {ta:'சோழர் காலம்',en:'The Chola age',when:'c. 10th – 13th century',c:'#7B2233',secs:['epic','saiva'],
+  d:'Under the Cholas came Kambar’s Ramayanam, Sekkizhar’s Periya Puranam on the lives of the 63 Nayanmars, and the war poem Kalingathu Parani.',
+  who:['கம்பர்','சேக்கிழார்','செயங்கொண்டார்','ஒட்டக்கூத்தர்'],works:['இராமாயணம் /1. பாலகாண்டம்','பெரிய புராணம்','கலிங்கத்துப்பரணி']},
+ {ta:'பிற்காலம்',en:'Later medieval',when:'c. 14th – 18th century',c:'#3D5A80',secs:['prab','siddhar'],
+  d:'Arunagirinathar’s Thiruppugazh, the questioning songs of the Siddhars, and new forms such as pillaitamil, kalambakam, ula and kuravanji.',
+  who:['அருணகிரிநாதர்','பட்டினத்தார்','குமரகுருபரர்','திரிகூடராசப்பக் கவிராயர்'],works:['திருப்புகழ்','சித்தர் பாடல்கள் தொகுப்பு','திருக்குற்றாலக் குறவஞ்சி']},
+ {ta:'நவீன காலம்',en:'The modern age',when:'19th century – today',c:'#E85D04',secs:['poetry','fiction','essays'],
+  d:'Bharathi woke a nation with song. Bharathidasan, Kalki and Pudhumaipithan brought poetry, the historical novel and the short story into every Tamil home.',
+  who:['பாரதியார்','பாரதிதாசன்','கல்கி','புதுமைப்பித்தன்'],works:['பாரதியார் பாடல்கள்','பாஞ்சாலி சபதம்','குயில் பாட்டு','அழகின் சிரிப்பு','பொன்னியின் செல்வன்','புதுமைப்பித்தன் படைப்புகள்']}];
+var ei=0;
+function eraBooks(e){return e.works.map(function(t){return find(t,'ஆங்கில')}).filter(Boolean)}
+function eras(){var tr=$('#track');tr.insertAdjacentHTML('beforeend',ERAS.map(function(e,k){return '<button class="era" role="tab" data-k="'+k+'" style="--c:'+e.c+'"><span class="dot">'+(k+1)+'</span><b>'+e.ta+'</b><small>'+e.when+'</small></button>'}).join(''));era(0)}
+function era(k){ei=(k+ERAS.length)%ERAS.length;var e=ERAS[ei],bk=eraBooks(e);
+  $$('.era').forEach(function(x,j){x.setAttribute('aria-selected',j===ei);x.classList.toggle('past',j<=ei)});$('#tlfill').style.setProperty('--p',ei/(ERAS.length-1));
+  var el=$('#tlp');el.style.setProperty('--c',e.c);
+  el.innerHTML='<div class="tl-l"><span class="when">'+e.when+'</span><h3>'+e.ta+'<small>'+e.en+'</small></h3><p>'+e.d+'</p><div class="people">'+e.who.map(function(w){return '<span>'+w+'</span>'}).join('')+'</div>'+
+    '<div class="tl-acts"><button class="btn pri" data-act="seeAll" data-secs="'+e.secs.join(',')+'">Browse this era</button><button class="btn" data-act="eraPrev"'+(ei?'':' disabled')+'>← Earlier</button><button class="btn" data-act="eraNext"'+(ei<ERAS.length-1?'':' disabled')+'>Later →</button></div></div>'+
+    '<div class="tl-r"><div class="lab2">Read from this era</div><div class="row">'+bk.map(shelfBook).join('')+'</div></div>';
+  el.classList.remove('in');void el.offsetWidth;el.classList.add('in');
+  var sel=$('.era[data-k="'+ei+'"]');if(sel&&innerWidth<860)sel.scrollIntoView({inline:'center',block:'nearest',behavior:REDUCED?'auto':'smooth'})}
+$('#track').addEventListener('click',function(e){var b=e.target.closest('.era');if(b)era(+b.dataset.k)});
+$('#track').addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();era(ei+(e.key==='ArrowRight'?1:-1));$('.era[data-k="'+ei+'"]').focus()}});
+
+/* ---------- literary map ---------- */
+var PLACES=[
+ ['மதுரை','Madurai',9.925,78.12,'#AE1C28','By tradition the seat of the Tamil Sangams, the great assemblies of poets. The city’s life fills the second book of Silappatikaram.',['சிலப்பதிகாரம் /பாகம் 2','தமிழ் விடுதூது']],
+ ['பூம்புகார்','Poompuhar',11.14,79.855,'#21468B','The great Chola port where the Kaveri meets the sea. Silappatikaram begins here, and Pattinappalai sings of its busy harbour.',['சிலப்பதிகாரம் /பாகம் 1','பட்டினப்பாலை','மணிமேகலை']],
+ ['சிதம்பரம்','Chidambaram (Thillai)',11.399,79.693,'#FF7F00','Home of Nataraja. Manikkavasagar’s Thiruvasagam is bound up with Thillai, and tradition holds that Sekkizhar first presented the Periya Puranam here.',['திருவாசகம்','பெரிய புராணம்']],
+ ['திருவரங்கம்','Srirangam',10.862,78.69,'#4FA3E0','The shrine sung most often in the Divya Prabandham. By tradition, Kambar first presented his Ramayanam here.',['நாலாயிர திவ்ய பிரபந்தம்','இராமாயணம் /1. பாலகாண்டம்']],
+ ['ஸ்ரீவில்லிபுத்தூர்','Srivilliputhur',9.509,77.633,'#E85D04','Birthplace of Andal, the only woman among the twelve Alvars. Her Thiruppavai is sung every Margazhi morning.',['திருப்பாவை','நாச்சியார் திருமொழி']],
+ ['காஞ்சிபுரம்','Kanchipuram',12.834,79.703,'#7B2233','The Pallava capital of temples, sung by both Nayanmars and Alvars, and the setting of Kalki’s Sivakamiyin Sapatham.',['தேவாரம்','சிவகாமியின் சபதம்']],
+ ['தஞ்சாவூர்','Thanjavur',10.787,79.138,'#3D5A80','The Chola capital. Its Saraswathi Mahal Library still keeps thousands of palm-leaf manuscripts.',['கலிங்கத்துப்பரணி','பொன்னியின் செல்வன்']],
+ ['திருவாரூர்','Thiruvarur',10.772,79.636,'#2B8BD6','Where, by tradition, Sundarar sang the Thiruthondar Thogai, the list of devotees that Sekkizhar later expanded into the Periya Puranam.',['திருத்தொண்டர் புராணம்','தேவாரம்']],
+ ['திருவண்ணாமலை','Tiruvannamalai',12.231,79.067,'#0174C3','The temple town linked by tradition to Arunagirinathar, poet of the Thiruppugazh.',['திருப்புகழ்']],
+ ['மயிலாப்பூர்','Mylapore, Chennai',13.034,80.27,'#21468B','Traditionally held to be the home of Thiruvalluvar, author of the Thirukkural.',['திருக்குறள்']],
+ ['எட்டயபுரம்','Ettayapuram',9.148,77.995,'#E85D04','Birthplace of Subramania Bharathi in 1882.',['பாரதியார் பாடல்கள்','குயில் பாட்டு']],
+ ['புதுச்சேரி','Puducherry',11.934,79.83,'#FF7F00','Bharathi lived here in exile from 1908, writing some of his finest songs. Bharathidasan was born here in 1891.',['பாஞ்சாலி சபதம்','அழகின் சிரிப்பு']],
+ ['கன்னியாகுமரி','Kanyakumari',8.078,77.553,'#0174C3','A 133-foot statue of Thiruvalluvar, one foot for each chapter of the Kural, stands on a rock off the shore.',['திருக்குறள்','நாலடியார்']]];
+var pi=0,tour=0;
+function xy(lat,lon){return [((lon-76.15)*0.98163*100).toFixed(1),((13.62-lat)*100).toFixed(1)]}
+function mapInit(){fetch('/data/tn-map.json').then(function(r){return r.json()}).then(function(m){var P=m.paths,svg=$('#tnmap');
+  svg.innerHTML='<path class="nb" d="'+P['Kerala']+P['Karnataka']+P['Andhra Pradesh']+'"/><path class="land" d="'+P['Tamil Nadu']+'"/><path class="pdy" d="'+P['Puducherry']+'"/>'+
+   '<text class="sea" x="432" y="300" text-anchor="middle">BAY OF</text><text class="sea" x="432" y="318" text-anchor="middle">BENGAL</text><text class="sea" x="360" y="545" text-anchor="middle">INDIAN OCEAN</text><text class="sea" x="30" y="545">ARABIAN SEA</text>'+
+   PLACES.map(function(p,k){var c=xy(p[2],p[3]),left=+c[0]>300;return '<g class="pin" tabindex="0" role="button" aria-label="'+p[1]+'" data-k="'+k+'" style="--c:'+p[4]+';--k:'+k+'"><circle class="ring" cx="'+c[0]+'" cy="'+c[1]+'" r="7"/><circle class="core" cx="'+c[0]+'" cy="'+c[1]+'" r="6.5"/><text x="'+(+c[0]+(left?-12:12))+'" y="'+(+c[1]+4)+'" text-anchor="'+(left?'end':'start')+'">'+p[0]+'</text></g>'}).join('');
+  place(0)}).catch(function(){$('#mapc').style.display='none'})}
+function place(k){pi=(k+PLACES.length)%PLACES.length;var p=PLACES[pi],bk=p[6].map(function(t){return find(t,'ஆங்கில')}).filter(Boolean);
+  $$('#tnmap .pin').forEach(function(g){g.classList.toggle('on',+g.dataset.k===pi)});
+  var el=$('#place');el.style.setProperty('--c',p[4]);
+  el.innerHTML='<div class="pi"><div class="pk"><i></i>Place '+(pi+1)+' of '+PLACES.length+'</div><h3>'+p[0]+'<small>'+p[1]+'</small></h3><p>'+p[5]+'</p>'+
+   (bk.length?'<div class="lab2">Read the works</div><div class="plist">'+bk.map(function(b){return '<button class="pbk" data-act="open" data-i="'+b.i+'" style="--c:'+b.c+'">'+coverHTML(b)+'<span><b>'+esc(b.t)+'</b><small>'+esc(b.a||SEC[SI[b.s]][1])+'</small></span><span aria-hidden="true">→</span></button>'}).join('')+'</div>':'')+
+   '<div class="pnav"><button class="btn" data-act="placePrev">← Previous</button><button class="btn" data-act="placeNext">Next place →</button></div></div>';
+  el.classList.remove('in');void el.offsetWidth;el.classList.add('in')}
+$('#tnmap').addEventListener('click',function(e){var g=e.target.closest('.pin');if(g){stopTour();place(+g.dataset.k)}});
+$('#tnmap').addEventListener('keydown',function(e){var g=e.target.closest('.pin');if(g&&(e.key==='Enter'||e.key===' ')){e.preventDefault();stopTour();place(+g.dataset.k)}});
+function stopTour(){clearInterval(tour);tour=0;$('#tourBtn').textContent='▶ Take the tour'}
+function toggleTour(){if(tour){stopTour();return}$('#tourBtn').textContent='❚❚ Pause tour';place(pi+1);tour=setInterval(function(){place(pi+1)},4500)}
+
+/* ---------- badges ---------- */
+var BADGES=[
+ ['மு','முதல் நூல்','Open your first book','#0174C3',function(x){return x.op>=1}],
+ ['5','ஐந்து நூல்கள்','Open 5 books','#21468B',function(x){return x.op>=5}],
+ ['20','நூல் ஆர்வலர்','Open 20 books','#3D5A80',function(x){return x.op>=20}],
+ ['கு','குறள் அன்பர்','Open the Thirukkural','#0174C3',function(x){return x.has('திருக்குறள்')}],
+ ['ச','சங்கச் சுவை','Open 3 Sangam works','#21468B',function(x){return (x.sec.sangam||0)>=3}],
+ ['கா','காப்பியப் பயணி','Open all five great epics','#AE1C28',function(x){return ['சிலப்பதிகாரம்','மணிமேகலை','சீவக','வளையாபதி','குண்டலகேசி'].every(function(t){return x.has(t)})}],
+ ['ப','பக்தி வழி','Open a Saiva and a Vaishnava work','#FF7F00',function(x){return x.sec.saiva&&x.sec.vaish}],
+ ['தே','தேடல்','Explore 5 sections','#2B8BD6',function(x){return x.ns>=5}],
+ ['14','முழு நூலகம்','Explore all 14 sections','#E85D04',function(x){return x.ns>=14}],
+ ['3','மூன்று நாள்','Read 3 days in a row','#7B2233',function(x){return x.streak>=3}],
+ ['7','ஒரு வாரம்','Read 7 days in a row','#AE1C28',function(x){return x.streak>=7}],
+ ['பா','படிப்பாளர்','Start reading 10 texts','#4FA3E0',function(x){return x.reads>=10}]];
+function stats2(){var op=S.opened,sec={},titles=op.map(function(i){return B[i]?B[i].t:''});op.forEach(function(i){if(B[i])sec[B[i].s]=(sec[B[i].s]||0)+1});
+  var days=store.get('days',[]),set={},d=Date.now(),streak=0;days.forEach(function(x){set[x]=1});if(!set[iso(d)])d-=864e5;while(set[iso(d)]){streak++;d-=864e5}
+  return {op:op.length,sec:sec,ns:Object.keys(sec).length,streak:streak,reads:store.get('reads',0),has:function(t){return titles.some(function(x){return x.indexOf(t)>-1})}}}
+function badges(celebrate){var x=stats2(),had=store.get('badges',[]),now=[],fresh=[];
+  BADGES.forEach(function(b,k){if(b[4](x)){now.push(k);if(had.indexOf(k)<0)fresh.push(k)}});
+  $('#wbadges').innerHTML='<div class="lab"><i></i>Badges · விருதுகள்</div><div class="bmeta"><span>'+now.length+' of '+BADGES.length+' earned. Keep reading to unlock the rest.</span></div><div class="badges">'+
+    BADGES.map(function(b,k){var on=now.indexOf(k)>-1;return '<div class="bdg'+(on?'':' lock')+(fresh.indexOf(k)>-1&&celebrate?' new':'')+'" style="--c:'+b[3]+'" title="'+b[2]+'"><span class="md">'+(on?b[0]:'🔒')+'</span><span><b>'+b[1]+'</b><small>'+b[2]+'</small></span></div>'}).join('')+'</div>';
+  if(fresh.length){store.set('badges',now);if(celebrate){var b=BADGES[fresh[0]];toast('Badge earned: '+b[1]);confetti()}}}
+function confetti(){if(REDUCED)return;var cols=['#0174C3','#FF7F00','#AE1C28','#21468B','#FFB04D'];for(var i=0;i<40;i++){var c=document.createElement('i');c.className='confetti';
+  c.style.cssText='left:50%;top:60%;background:'+cols[i%5]+';--dx:'+((Math.random()-.5)*600).toFixed(0)+'px;--dy:'+(-150-Math.random()*400).toFixed(0)+'px;--r:'+(Math.random()*720).toFixed(0)+'deg';document.body.appendChild(c);setTimeout(c.remove.bind(c),1400)}}
+document.addEventListener('click',function(e){var a=e.target.closest('a[href*="projectmadurai.org/pm_etexts"]');if(!a)return;store.set('reads',store.get('reads',0)+1);
+  var dd=store.get('days',[]),td=iso(Date.now());if(dd.indexOf(td)<0){dd.push(td);store.set('days',dd.slice(-400))}setTimeout(function(){journey();badges(true)},50)},true);
+
+/* ---------- share the Kural as an image ---------- */
+function wrapText(g,t,maxW){var words=t.split(' '),lines=[],cur='';words.forEach(function(w){var tt=cur?cur+' '+w:w;if(g.measureText(tt).width>maxW&&cur){lines.push(cur);cur=w}else cur=tt});if(cur)lines.push(cur);return lines}
+function drawKural(){var k=KURALS[ki],cv=$('#kcanvas'),g=cv.getContext('2d'),W=1080,H=1350;
+  var bg=g.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#14306B');bg.addColorStop(.6,'#21468B');bg.addColorStop(1,'#0E2350');g.fillStyle=bg;g.fillRect(0,0,W,H);
+  var gl=g.createRadialGradient(W*.92,H*.92,0,W*.92,H*.92,700);gl.addColorStop(0,'rgba(255,127,0,.45)');gl.addColorStop(1,'rgba(255,127,0,0)');g.fillStyle=gl;g.fillRect(0,0,W,H);
+  var gl2=g.createRadialGradient(0,0,0,0,0,600);gl2.addColorStop(0,'rgba(59,160,240,.35)');gl2.addColorStop(1,'rgba(59,160,240,0)');g.fillStyle=gl2;g.fillRect(0,0,W,H);
+  g.fillStyle='rgba(255,255,255,.07)';g.font='800 560px Georgia,serif';g.fillText('“',W-360,470);
+  g.fillStyle='#FF7F00';g.beginPath();g.arc(100,132,9,0,7);g.fill();
+  g.fillStyle='rgba(255,255,255,.75)';g.font='600 30px Onest, sans-serif';g.fillText('KURAL OF THE DAY  ·  இன்றைய குறள்',124,142);
+  g.fillStyle='#fff';g.font='700 68px "Anek Tamil", sans-serif';var y=300;
+  [k[1],k[2]].forEach(function(line){wrapText(g,line,W-180).forEach(function(l){g.fillText(l,90,y);y+=104})});
+  y+=30;g.fillStyle='rgba(255,255,255,.85)';g.font='500 38px Onest, sans-serif';wrapText(g,k[3],W-180).forEach(function(l){g.fillText(l,90,y);y+=56});
+  y+=34;g.fillStyle='#FFC48A';g.font='600 34px "Hind Madurai", sans-serif';g.fillText('— திருவள்ளுவர் · திருக்குறள் '+k[0],90,y);
+  g.fillStyle='rgba(255,255,255,.12)';g.fillRect(90,H-170,W-180,2);
+  g.fillStyle='#fff';g.font='800 44px Onest, sans-serif';g.fillText('Suvadi',90,H-90);g.fillStyle='rgba(255,255,255,.7)';g.font='500 32px "Hind Madurai", sans-serif';g.fillText('சுவடி · தமிழ் நூலகம்',250,H-92);
+  g.fillStyle='rgba(255,255,255,.7)';g.font='500 28px Onest, sans-serif';g.textAlign='right';g.fillText(location.host||'suvadi',W-90,H-92);g.textAlign='left'}
+function openShare(){var sh=$('#share');Promise.all(['700 68px "Anek Tamil"','600 34px "Hind Madurai"','800 44px Onest'].map(function(f){return document.fonts.load(f,'அஆ')})).catch(function(){}).then(function(){drawKural()});
+  var k=KURALS[ki];$('#shWa').href='https://wa.me/?text='+encodeURIComponent(k[1]+'\n'+k[2]+'\n\n'+k[3]+'\n— திருக்குறள் '+k[0]+'\n'+location.origin);
+  $('#shNative').hidden=!(navigator.share);sh.classList.add('on');document.body.classList.add('locked')}
+function closeShare(){$('#share').classList.remove('on');if(!dr.classList.contains('on'))document.body.classList.remove('locked')}
+function kBlob(cb){$('#kcanvas').toBlob(cb,'image/png')}
+
 /* ---------- shelves ---------- */
 function shelfBook(b,k){return '<button class="sbk" data-act="open" data-i="'+b.i+'" style="--k:'+Math.min(k,10)+'" aria-label="'+esc(b.t)+'"><div class="cwrap">'+coverHTML(b)+'<span class="open">Open</span></div><span class="bt">'+esc(b.t)+'</span><span class="ba">'+esc(b.a||SEC[SI[b.s]][1])+'</span></button>'}
 function shelves(){
@@ -718,7 +963,13 @@ var KURALS=[
  [391,'கற்க கசடறக் கற்பவை கற்றபின்','நிற்க அதற்குத் தக','Learn thoroughly what is worth learning, then live by what you have learned.'],
  [396,'தொட்டனைத் தூறும் மணற்கேணி மாந்தர்க்குக்','கற்றனைத் தூறும் அறிவு','Dig a well in sand and water rises the deeper you go; learn, and wisdom rises the more you learn.'],
  [423,'எப்பொருள் யார்யார்வாய்க் கேட்பினும் அப்பொருள்','மெய்ப்பொருள் காண்பது அறிவு','Whatever is said, whoever says it, wisdom is finding the truth within it.'],
- [100,'இனிய உளவாக இன்னாத கூறல்','கனியிருப்பக் காய்கவர்ந் தற்று','Speaking harsh words when kind ones are at hand is picking unripe fruit when ripe fruit is there.']];
+ [100,'இனிய உளவாக இன்னாத கூறல்','கனியிருப்பக் காய்கவர்ந் தற்று','Speaking harsh words when kind ones are at hand is picking unripe fruit when ripe fruit is there.'],
+ [2,'கற்றதனால் ஆய பயனென்கொல் வாலறிவன்','நற்றாள் தொழாஅர் எனின்','What is the use of learning, if one does not bow at the feet of the One of pure knowledge?'],
+ [72,'அன்பிலார் எல்லாம் தமக்குரியர் அன்புடையார்','என்பும் உரியர் பிறர்க்கு','The loveless keep everything for themselves; the loving give even their bones to others.'],
+ [314,'இன்னாசெய் தாரை ஒறுத்தல் அவர்நாண','நன்னயம் செய்து விடல்','To punish those who hurt you, do them a kindness and let them feel ashamed.'],
+ [411,'செல்வத்துட் செல்வம் செவிச்செல்வம் அச்செல்வம்','செல்வத்து ளெல்லாந் தலை','The wealth of listening is the wealth of wealth; it is the greatest of all riches.'],
+ [619,'தெய்வத்தான் ஆகா தெனினும் முயற்சிதன்','மெய்வருத்தக் கூலி தரும்','Even when fate does not allow it, effort pays the wages of one’s toil.'],
+ [664,'சொல்லுதல் யார்க்கும் எளிய அரியவாம்','சொல்லிய வண்ணம் செயல்','To say is easy for anyone; to do as one has said is hard.']];
 var day=day0(),ki=day%KURALS.length;
 function kural(anim){var k=KURALS[ki],el=$('#kural');el.innerHTML='<p class="kural">'+k[1]+'<br>'+k[2]+'</p><p class="kural-en">'+k[3]+'</p>';$('#kno').textContent='Thirukkural · '+k[0];if(anim){el.classList.remove('kfade');void el.offsetWidth;el.classList.add('kfade')}}
 var thiru=B.filter(function(b){return b.no===1})[0]||B[0];
@@ -833,7 +1084,7 @@ function openBook(i,swap){var b=B[i];if(!b)return;S.cur=i;pb.innerHTML=drawerHTM
   if(!dr.classList.contains('on')){dr.classList.add('on');document.body.classList.add('locked');setTimeout(function(){var f=$('.btn',pb);if(f)f.focus({preventScroll:true})},ms('--dur-3'))}
   var h='#book-'+b.no+'-'+i;if(location.hash!==h)history.replaceState(null,'',h);
   S.recent=[i].concat(S.recent.filter(function(x){return x!==i})).slice(0,12);store.set('recent',S.recent);recent();
-  if(S.opened.indexOf(i)<0){S.opened.push(i);store.set('opened',S.opened)}var dd=store.get('days',[]),td=iso(Date.now());if(dd.indexOf(td)<0){dd.push(td);store.set('days',dd.slice(-400))}journey()}
+  if(S.opened.indexOf(i)<0){S.opened.push(i);store.set('opened',S.opened)}var dd=store.get('days',[]),td=iso(Date.now());if(dd.indexOf(td)<0){dd.push(td);store.set('days',dd.slice(-400))}journey();badges(true)}
 function closeBook(){if(!dr.classList.contains('on'))return;dr.classList.remove('on');document.body.classList.remove('locked');history.replaceState(null,'',location.pathname+location.search);
   var el=out.querySelector('[data-i="'+S.cur+'"]');if(el)el.focus({preventScroll:true})}
 function step(d){var L=ctx(),p=L.indexOf(B[S.cur])+d;if(p<0||p>=L.length)return;openBook(L[p].i,true)}
@@ -864,11 +1115,18 @@ document.addEventListener('click',function(e){var a=e.target.closest('[data-act]
   if(k==='qnext')quote(qi+1);
   if(k==='qopen'){var qb=a.dataset.i;if(qb!=='')openBook(+qb);else{S.q=QUOTES[qi][3];$('#hq').value=S.q;update();goLib()}}
   if(k==='seeAll'){S.secs=a.dataset.secs?a.dataset.secs.split(','):[];S.q='';$('#hq').value='';S.letter=null;S.mine=false;update();goLib()}
-  if(k==='shL')shelfScroll(a,-1);if(k==='shR')shelfScroll(a,1)});
+  if(k==='shL')shelfScroll(a,-1);if(k==='shR')shelfScroll(a,1);
+  if(k==='eraPrev')era(ei-1);if(k==='eraNext')era(ei+1);
+  if(k==='placePrev'){stopTour();place(pi-1)}if(k==='placeNext'){stopTour();place(pi+1)}if(k==='tour')toggleTour();
+  if(k==='labels'){var on=$('#mapc').classList.toggle('labels');a.setAttribute('aria-pressed',on);a.textContent=on?'Hide names':'Show names'}
+  if(k==='shareKural')openShare();if(k==='shareClose')closeShare();
+  if(k==='shareDownload')kBlob(function(b){var u=URL.createObjectURL(b),l=document.createElement('a');l.href=u;l.download='kural-'+KURALS[ki][0]+'.png';l.click();setTimeout(function(){URL.revokeObjectURL(u)},2000);toast('Image saved')});
+  if(k==='shareNative')kBlob(function(b){var f=new File([b],'kural-'+KURALS[ki][0]+'.png',{type:'image/png'}),d={title:'இன்றைய குறள்',text:KURALS[ki][1]+' '+KURALS[ki][2]};if(navigator.canShare&&navigator.canShare({files:[f]}))d.files=[f];else d.url=location.origin;navigator.share(d).catch(function(){})})});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&$('#share').classList.contains('on'))closeShare()});
 
 /* ---------- start ---------- */
 var au0={};B.forEach(function(b){if(b.a)au0[b.a]=1});$('#cBooks').dataset.count=B.length;$('#cAuthors').dataset.count=Object.keys(au0).length;
-quote(qi);facts();shelves();watchCounts();kural(false);bookOfDay((day*37)%B.length);stats();heat();recent();journey();counter(false);update();
+quote(qi);facts();eras();mapInit();shelves();badges(false);watchCounts();kural(false);bookOfDay((day*37)%B.length);stats();heat();recent();journey();counter(false);update();
 var m=/^#book-\d+-(\d+)$/.exec(location.hash);if(m&&B[+m[1]])openBook(+m[1]);
 window.__lib={open:openBook,S:S,cmd:openCmd,theme:setTheme,quote:quote,covers:function(){return B.map(coverHTML)}};
 };
