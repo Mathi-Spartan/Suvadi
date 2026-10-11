@@ -610,6 +610,15 @@ a{color:inherit}
 .cr-text b{color:var(--ink)}
 .cr-en{margin:18px 0 0;font-size:14px;font-style:italic;color:var(--ink-3)}
 .cr-sign{margin:10px 0 0;font:700 16px var(--f-ta);color:var(--ink)}
+.cr-thanks{position:relative;margin-top:22px;padding:clamp(22px,3.5vw,40px);border-radius:var(--r-4);background:linear-gradient(135deg,color-mix(in srgb,var(--orange) 9%,var(--surface)),color-mix(in srgb,var(--blue) 7%,var(--surface)));border:1px solid color-mix(in srgb,var(--orange) 30%,var(--line))}
+.cr-thanks h3{margin:8px 0 0;font:800 clamp(1.35rem,1.1rem + 1vw,1.9rem)/1.4 var(--f-ta);color:var(--ink)}
+.cr-thanks .cr-text{max-width:860px}
+.cr-thanks .cr-text p{margin-top:12px}
+.cr-names{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0 0;padding:0;list-style:none}
+.cr-names li{padding:10px 14px;border-radius:14px;background:var(--surface);border:1px solid var(--line);font:700 14.5px/1.5 var(--f-ta);color:var(--ink);transition:transform var(--dur-2,.2s) var(--ease-out,ease),box-shadow var(--dur-2,.2s)}
+.cr-names li:hover{transform:translateY(-2px);box-shadow:var(--shadow-2)}
+.cr-names li small{display:block;font:500 12px var(--f-ui);color:var(--ink-3)}
+.cr-thanks .cr-en a{color:var(--blue);font-weight:600}
 @media(max-width:640px){.cr-card{grid-template-columns:1fr}.cr-mark{width:68px;height:68px;border-radius:20px;font-size:24px}.cr-text p{font-size:15.5px}}
 footer{border-top:1px solid var(--line);padding:28px 0 40px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--ink-3)}
 footer a{color:var(--blue);font-weight:600}
@@ -756,6 +765,21 @@ footer a{color:var(--blue);font-weight:600}
       <p class="cr-en">Made with love for Tamil, so the next generation can read it, learn it and enjoy it.</p>
       <p class="cr-sign" lang="ta">— அன்புடன், மதிவாணன்</p>
     </div>
+  </div>
+  <div class="cr-thanks" id="pm-thanks">
+    <span class="cr-k" lang="ta">நன்றியும் வணக்கமும் · With gratitude</span>
+    <h3 lang="ta">மதுரைத் திட்டக் குழுவினருக்கு என் தலைவணக்கம்</h3>
+    <div class="cr-text" lang="ta">
+      <p>இந்தச் சுவடியில் நீங்கள் படிக்கும் ஒவ்வொரு நூலும் <b>மதுரைத் திட்டம் (Project Madurai)</b> குழுவினரின் உழைப்பின் கொடை. 1998 முதல், உலகெங்கும் உள்ள தமிழன்பர்கள் எந்தப் பலனும் எதிர்பாராமல், ஆயிரக்கணக்கான நூல்களை ஒவ்வொரு எழுத்தாகத் தட்டச்சு செய்து, பிழை திருத்தி, ஒருங்குறியில் (Unicode) மாற்றி, அனைவருக்கும் இலவசமாக வழங்கி வருகிறார்கள்.</p>
+      <p>இணையத்தில் தமிழ் இலக்கியம் இன்று இவ்வளவு எளிதாகக் கிடைப்பதற்கு அடித்தளம் இட்டவர்கள் அவர்களே. நூல்களைத் தொகுத்து, வரிசைப்படுத்தி, பாதுகாத்த உண்மையான முன்னோடிகள் அவர்கள். சுவடி, அவர்களின் அந்த அரும்பணியின் மேல் கட்டப்பட்ட ஒரு சிறு வாசல் மட்டுமே; மக்கள் இன்னும் எளிதாகப் படிக்க ஒரு புதிய வழி.</p>
+      <p>தமிழுக்காகத் தம் நேரத்தையும் அன்பையும் தந்த ஒவ்வொரு தன்னார்வலருக்கும் என் நெஞ்சார்ந்த நன்றி. “செய்யாமல் செய்த உதவிக்கு வையகமும் வானகமும் ஆற்றல் அரிது” என்று வள்ளுவர் சொன்ன உதவி இதுவே.</p>
+    </div>
+    <ul class="cr-names">
+      <li>முனைவர் கல்யாணசுந்தரம்<small>Dr. K. Kalyanasundaram · Project Leader</small></li>
+      <li>முனைவர் குமார் மல்லிகார்ஜுனன்<small>Dr. P. Kumar Mallikarjunan · Deputy Project Leader</small></li>
+      <li>உலகெங்கும் உள்ள தன்னார்வலர்கள்<small>Every volunteer who typed, proofread and preserved</small></li>
+    </ul>
+    <p class="cr-en">Every book here was typed, proofread and converted to Unicode by the volunteers of <a href="https://www.projectmadurai.org/" target="_blank" rel="noopener">Project Madurai</a>. Suvadi is only a new doorway built on their work. With respect and love.</p>
   </div>
 </section>
 
