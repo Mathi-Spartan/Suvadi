@@ -1,0 +1,13 @@
+{
+  "name": "suvadi",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "check": "node scripts/check.js",
+    "build": "node scripts/check.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0"
+  },
+  "engines": { "node": ">=20" }
+}

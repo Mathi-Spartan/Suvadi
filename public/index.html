@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Suvadi Library</title>
+<meta name="description" content="Every book from Project Madurai on its own palm-leaf cover. Search, browse by section or letter, read online or download the PDF.">
+<meta name="theme-color" content="#F5EFE4">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="Suvadi · தமிழ் நூலகம்">
+<meta property="og:description" content="1,281 Tamil books from Project Madurai. Read online or download the PDF.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Tamil:wght@400;500;600;700;800&family=Noto+Serif+Tamil:wght@500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* =====================================================================
+   SUVADI — every book on its own palm leaf (ஓலைச்சுவடி)
+   Colour meanings
+     --paper / --ink      page and text
+     --blue               the interface accent: primary action, focus, active
+     --orange             PDF download only
+     section colours      book covers only, one colour per section, like a publisher's series
+   ===================================================================== */
+:root{
+  --paper:#F5EFE4; --paper-2:#EDE4D2; --card:#FBF8F2;
+  --ink:#14183A; --ink-2:#4A4E6E; --ink-3:#8A8AA0; --line:rgba(20,24,58,.12); --line-2:rgba(20,24,58,.2);
+  --navy:#141B4D; --blue:#2340C8; --blue-2:#3B5BFF; --orange:#FF5A1F; --teal:#0F9488; --yellow:#FFC233; --cream:#EFE4CF;
+
+  --f-ta:'Anek Tamil','Noto Sans Tamil',sans-serif; --f-tserif:'Noto Serif Tamil','Latha',serif;
+  --leaf:#EBD9A6; --leaf-2:#D9BF7F; --leaf-ink:#3B2A12; --cord:#B88A3A;
+  --f-ui:'Bricolage Grotesque',system-ui,sans-serif;
+  --f-it:'Instrument Serif',Georgia,serif;
+  --f-mono:'JetBrains Mono',ui-monospace,monospace;
+
+  /* motion tokens — CSS and JS both read these */
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.34,1.5,.55,1);
+  --ease-in-out:cubic-bezier(.7,0,.3,1);
+  --dur-1:120ms; --dur-2:240ms; --dur-3:450ms; --dur-4:720ms; --dur-draw:1600ms;
+
+  /* radius tokens */
+  --r-1:4px; --r-2:8px; --r-3:14px; --r-4:22px; --r-pill:999px;
+
+  /* fluid type (utopia-style) */
+  --step--1:clamp(.78rem,.76rem + .1vw,.84rem);
+  --step-0:clamp(.95rem,.92rem + .18vw,1.05rem);
+  --step-1:clamp(1.12rem,1.04rem + .4vw,1.35rem);
+  --step-2:clamp(1.4rem,1.2rem + .9vw,1.9rem);
+  --step-4:clamp(2.6rem,1.6rem + 4.6vw,6rem);
+}
+*{box-sizing:border-box}
+html{background:var(--paper);-webkit-text-size-adjust:100%;scroll-behavior:smooth;overflow-x:clip}
+body{margin:0;background:var(--paper);color:var(--ink);font:var(--step-0)/1.55 var(--f-ui);-webkit-font-smoothing:antialiased;overflow-x:clip}
+body.locked{overflow:hidden}
+button,input,select{font:inherit;color:inherit}
+a{color:inherit}
+::selection{background:var(--yellow);color:var(--navy)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2.5px solid var(--blue);outline-offset:3px}
+.ta{font-family:var(--f-ta)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.wrap{max-width:1480px;margin:0 auto;padding-inline:clamp(16px,3.2vw,48px)}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.55;mix-blend-mode:multiply;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3 0 0 0 0 .25 0 0 0 0 .2 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ---------------- header ---------------- */
+.top{position:relative;z-index:5;display:flex;align-items:center;gap:18px;padding-block:18px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand svg{width:40px;height:40px;transition:transform var(--dur-4) var(--ease-spring)}
+.brand:hover svg{transform:rotate(90deg)}
+.brand b{display:block;font:800 19px/1 var(--f-ui);letter-spacing:-.02em}
+.brand span{display:block;font:500 13px/1.3 var(--f-ta);color:var(--ink-2)}
+.top nav{margin-left:auto;display:flex;align-items:center;gap:6px}
+.link{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px;border-radius:var(--r-pill);border:1px solid transparent;background:none;cursor:pointer;font-weight:600;font-size:15px;text-decoration:none;transition:background var(--dur-2),border-color var(--dur-2)}
+.link:hover{background:rgba(20,24,58,.06)}
+.link .n{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:var(--r-pill);background:var(--ink);color:var(--paper);font:500 11px var(--f-mono);transition:transform var(--dur-3) var(--ease-spring)}
+.link .n.bump{transform:scale(1.4)}
+.link[aria-pressed="true"]{border-color:var(--ink);background:var(--card)}
+@media(max-width:640px){.link .t{display:none}.link.about{display:none}}
+
+/* ---------------- hero ---------------- */
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,5vw,80px);align-items:center;padding-top:clamp(20px,5vw,60px);padding-bottom:clamp(36px,6vw,80px)}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:500 12px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.eyebrow i{width:28px;height:2px;background:var(--orange)}
+.hero h1{margin:18px 0 0;font:800 var(--step-4)/1.02 var(--f-ta);letter-spacing:-.02em}
+.hero h1 .w{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em}
+.hero h1 .w>span{display:inline-block;animation:up var(--dur-4) var(--ease-out) backwards}
+.hero h1 .w:nth-child(2)>span{animation-delay:90ms}
+.hero h1 .w:nth-child(3)>span{animation-delay:180ms}
+.hero h1 em{font:400 .62em/1 var(--f-it);font-style:italic;color:var(--blue);letter-spacing:0}
+@keyframes up{from{transform:translateY(105%)}}
+.hero p{margin:20px 0 0;max-width:46ch;font-size:var(--step-1);line-height:1.5;color:var(--ink-2);animation:fade var(--dur-4) var(--ease-out) 260ms backwards}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}}
+.search{position:relative;margin-top:30px;max-width:620px;animation:fade var(--dur-4) var(--ease-out) 360ms backwards}
+.search input{width:100%;height:64px;padding:0 140px 0 58px;border-radius:var(--r-pill);border:1.5px solid var(--ink);background:var(--card);font:500 18px var(--f-ui);box-shadow:6px 6px 0 var(--ink);transition:box-shadow var(--dur-2) var(--ease-out),transform var(--dur-2) var(--ease-out)}
+.search input::placeholder{color:var(--ink-3)}
+.search input::-webkit-search-cancel-button{-webkit-appearance:none;display:none}
+.search input:focus{outline:none;transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--blue)}
+.search .ic{position:absolute;left:22px;top:50%;transform:translateY(-50%);pointer-events:none}
+.search .go{position:absolute;right:8px;top:8px;bottom:8px;padding:0 20px;border-radius:var(--r-pill);border:0;background:var(--ink);color:var(--paper);font-weight:700;cursor:pointer;transition:background var(--dur-2),transform var(--dur-2) var(--ease-spring)}
+.search .go:hover{background:var(--blue)}
+.search .go:active{transform:scale(.95)}
+.quick{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;animation:fade var(--dur-4) var(--ease-out) 440ms backwards}
+.quick span{font-size:13px;color:var(--ink-3);align-self:center;margin-right:4px}
+.quick button{height:34px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--line-2);background:transparent;cursor:pointer;font:600 14px var(--f-ta);transition:background var(--dur-2),border-color var(--dur-2),transform var(--dur-2) var(--ease-spring)}
+.quick button:hover{background:var(--card);border-color:var(--ink);transform:translateY(-2px)}
+.art{position:relative;aspect-ratio:1;max-width:560px;width:100%;justify-self:center}
+.art .disc{position:absolute;inset:4%;border-radius:50%;background:var(--navy);box-shadow:inset 0 0 0 10px var(--paper),inset 0 0 0 11px var(--line-2)}
+.bundle{position:absolute;inset:10% 6% 14% 4%;transition:transform var(--dur-4) var(--ease-out)}
+.olai{position:absolute;left:4%;right:2%;top:43%;height:13%;border-radius:999px / 50%;transform-origin:10% 50%;
+  background:repeating-linear-gradient(180deg,rgba(110,80,30,.1) 0 1px,transparent 1px 6px),linear-gradient(180deg,#F6E8BE,var(--leaf) 45%,var(--leaf-2));
+  box-shadow:0 14px 22px -12px rgba(0,0,0,.6),inset 0 0 0 1.5px rgba(140,100,40,.25),inset 0 4px 6px -4px rgba(255,255,255,.7);
+  display:flex;align-items:center;padding:0 9% 0 24%;
+  transform:rotate(calc((var(--i) - 2) * var(--fan,9deg))) translateY(calc((var(--i) - 2) * var(--gap,6%)));transition:transform var(--dur-4) var(--ease-spring);animation:fan var(--dur-4) var(--ease-spring) backwards;animation-delay:calc(300ms + var(--i) * 110ms)}
+@keyframes fan{from{transform:rotate(0deg) translateY(0);opacity:0}}
+.olai::before,.olai::after{content:"";position:absolute;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:var(--navy);box-shadow:inset 0 2px 3px rgba(0,0,0,.6),0 0 0 2px rgba(140,100,40,.35)}
+.olai::before{left:5%}.olai::after{right:5%}
+.olai p{margin:0;width:100%;font:600 calc(clamp(11px,1.35vw,18px) * var(--fz,1))/1.2 var(--f-tserif);color:var(--leaf-ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:right;letter-spacing:.01em}
+.art:hover .bundle{--fan:12deg;--gap:9%}
+.thread{position:absolute;left:8%;top:30%;width:14%;height:62%;pointer-events:none;animation:fade var(--dur-4) var(--ease-out) 1000ms backwards}
+.thread path{fill:none;stroke:var(--cord);stroke-width:2.4;stroke-linecap:round}
+.art .stat{position:absolute;padding:12px 16px;border-radius:var(--r-3);background:var(--card);border:1.5px solid var(--ink);box-shadow:4px 4px 0 var(--ink);animation:pop var(--dur-4) var(--ease-spring) backwards}
+.art .stat b{display:block;font:800 26px/1 var(--f-ui);letter-spacing:-.02em}
+.art .stat span{font-size:12.5px;color:var(--ink-2)}
+.art .s1{left:-2%;top:12%;animation-delay:900ms}
+.art .s2{right:-2%;top:44%;animation-delay:1050ms;background:var(--yellow)}
+.art .s3{left:8%;bottom:4%;animation-delay:1200ms;background:var(--orange);color:#fff}
+.art .s3 span{color:rgba(255,255,255,.85)}
+@keyframes pop{from{opacity:0;transform:scale(.6) rotate(-8deg)}}
+.surprise{position:absolute;right:6%;bottom:8%;display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px;border-radius:var(--r-pill);border:1.5px solid var(--ink);background:var(--card);font-weight:700;cursor:pointer;box-shadow:4px 4px 0 var(--ink);animation:pop var(--dur-4) var(--ease-spring) 1350ms backwards;transition:transform var(--dur-2) var(--ease-out),box-shadow var(--dur-2) var(--ease-out)}
+.surprise:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--blue)}
+.surprise:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+@media(max-width:900px){.hero{grid-template-columns:1fr}.art{max-width:420px;order:-1;margin-top:-6px}.search input{height:58px;font-size:16px;padding-right:110px}.search .go{padding:0 16px}}
+@media(max-width:520px){.art{max-width:270px}.art .stat{padding:8px 11px}.art .stat b{font-size:19px}.art .stat span{font-size:11px}.surprise{height:38px;font-size:13px;padding:0 13px}}
+
+/* ---------------- marquee ---------------- */
+.marq{overflow:hidden;border-block:1.5px solid var(--ink);background:var(--ink);color:var(--paper);padding:12px 0}
+.marq div{display:flex;gap:40px;width:max-content;animation:marq 60s linear infinite;font:600 18px var(--f-ta);white-space:nowrap}
+.marq span{display:inline-flex;align-items:center;gap:40px}
+.marq span::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--yellow)}
+@keyframes marq{to{transform:translateX(-50%)}}
+.marq:hover div{animation-play-state:paused}
+
+/* ---------------- browse: filters + results ---------------- */
+.browse{display:grid;grid-template-columns:290px minmax(0,1fr);gap:clamp(24px,3vw,44px);align-items:start;padding-top:clamp(28px,4vw,48px)}
+.side{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;padding:20px;border-radius:var(--r-4);background:var(--card);border:1.5px solid var(--ink);box-shadow:5px 5px 0 var(--ink)}
+.side h3{display:flex;justify-content:space-between;align-items:center;margin:0 0 14px;font:800 18px var(--f-ui);letter-spacing:-.01em}
+.side h3 button{border:0;background:none;color:var(--blue);font-weight:700;font-size:13.5px;cursor:pointer;padding:4px 0;text-decoration:underline;text-underline-offset:3px}
+.side h3 button:disabled{color:var(--ink-3);text-decoration:none;cursor:default}
+.fgroup{padding:16px 0;border-top:1px solid var(--line)}
+.fgroup:first-of-type{border-top:0;padding-top:0}
+.flab{display:block;margin-bottom:10px;font:500 11px var(--f-mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3)}
+.fsearch{position:relative}
+.fsearch input{width:100%;height:44px;padding:0 14px 0 40px;border-radius:var(--r-2);border:1.5px solid var(--line-2);background:var(--paper);font-size:15px;transition:border-color var(--dur-2),box-shadow var(--dur-2)}
+.fsearch input:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(35,64,200,.15)}
+.fsearch input::-webkit-search-cancel-button{-webkit-appearance:none}
+.fsearch svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--ink-3);pointer-events:none}
+.secs{display:flex;flex-direction:column;gap:2px}
+.sopt{display:grid;grid-template-columns:20px 12px minmax(0,1fr) auto;align-items:center;gap:10px;width:100%;padding:8px 8px;border:0;border-radius:var(--r-2);background:none;text-align:left;cursor:pointer;transition:background var(--dur-2)}
+.sopt:hover{background:rgba(20,24,58,.05)}
+.sopt .box{width:20px;height:20px;border-radius:5px;border:1.5px solid var(--line-2);display:grid;place-items:center;background:var(--card);transition:background var(--dur-2),border-color var(--dur-2)}
+.sopt .box svg{opacity:0;transform:scale(.4);transition:opacity var(--dur-2),transform var(--dur-3) var(--ease-spring)}
+.sopt[aria-checked="true"] .box{background:var(--blue);border-color:var(--blue)}
+.sopt[aria-checked="true"] .box svg{opacity:1;transform:none}
+.sopt .sw{width:12px;height:12px;border-radius:3px;background:var(--c)}
+.sopt .nm b{display:block;font:600 14.5px/1.3 var(--f-ta)}
+.sopt .nm i{display:block;font-style:normal;font-size:12.5px;color:var(--ink-3)}
+.sopt em{font:500 12px var(--f-mono);font-style:normal;color:var(--ink-2);padding:2px 8px;border-radius:var(--r-pill);background:rgba(20,24,58,.06)}
+.sopt.zero{opacity:.4}
+.seg2{display:grid;grid-template-columns:repeat(3,1fr);padding:3px;border-radius:var(--r-pill);background:rgba(20,24,58,.06)}
+.seg2 button{height:34px;border:0;border-radius:var(--r-pill);background:none;cursor:pointer;font-weight:600;font-size:13.5px;color:var(--ink-2);transition:background var(--dur-2),color var(--dur-2),box-shadow var(--dur-2)}
+.seg2 button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:0 1px 0 var(--line-2),0 2px 6px -2px rgba(20,24,58,.3)}
+.lgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:4px}
+.lgrid button{height:38px;border:1px solid var(--line);border-radius:var(--r-2);background:var(--paper);cursor:pointer;font:600 16px var(--f-ta);transition:background var(--dur-2),color var(--dur-2),border-color var(--dur-2),transform var(--dur-2) var(--ease-spring)}
+.lgrid button:hover{border-color:var(--ink);transform:translateY(-1px)}
+.lgrid button[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.lgrid button:disabled{opacity:.28;pointer-events:none}
+.lgrid button.az{grid-column:span 2;font:600 13px var(--f-ui)}
+.res{min-width:0}
+.rhead{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:14px 0 12px;background:linear-gradient(var(--paper) 85%,rgba(245,239,228,0))}
+.rhead h2{margin:0;font:800 clamp(22px,2.4vw,30px)/1.2 var(--f-ui);letter-spacing:-.02em;margin-right:auto}
+.rhead h2 small{font:500 15px var(--f-ui);color:var(--ink-3);letter-spacing:0;margin-left:6px}
+.sel{position:relative}
+.sel select{appearance:none;-webkit-appearance:none;height:40px;padding:0 36px 0 14px;border-radius:var(--r-pill);border:1.5px solid var(--ink);background:var(--card);font-weight:600;font-size:14px;cursor:pointer}
+.sel::after{content:"";position:absolute;right:15px;top:50%;width:7px;height:7px;margin-top:-5px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg);pointer-events:none}
+.view{display:flex;padding:3px;border-radius:var(--r-pill);border:1.5px solid var(--ink);background:var(--card)}
+.view button{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border:0;border-radius:var(--r-pill);background:none;cursor:pointer;font-weight:600;font-size:13px;color:var(--ink-2);transition:background var(--dur-2),color var(--dur-2)}
+.view button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.fbtn{display:none;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:var(--r-pill);border:1.5px solid var(--ink);background:var(--ink);color:var(--paper);font-weight:700;cursor:pointer}
+.fbtn .n[hidden]{display:none}
+.fbtn .n{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;border-radius:var(--r-pill);background:var(--yellow);color:var(--navy);font:600 11px var(--f-mono)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;width:100%}
+.chips:empty{display:none}
+.chip{display:inline-flex;align-items:center;gap:8px;height:32px;padding:0 8px 0 12px;border-radius:var(--r-pill);border:1px solid var(--ink);background:var(--yellow);font:600 13px var(--f-ta);cursor:pointer;animation:pop var(--dur-3) var(--ease-spring)}
+.chip i{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--ink);color:var(--yellow);font-style:normal;font-size:11px}
+.chip:hover i{background:var(--orange);color:#fff}
+.side-x,.side-go{display:none}
+.scrim{display:none}
+@media(max-width:1000px){
+  .browse{grid-template-columns:1fr}
+  .fbtn{display:inline-flex}
+  .side{position:fixed;z-index:80;left:0;right:0;bottom:0;top:auto;max-height:86vh;border-radius:var(--r-4) var(--r-4) 0 0;box-shadow:0 -20px 60px -10px rgba(20,24,58,.45);border-width:1.5px 0 0;padding:22px 20px calc(90px + env(safe-area-inset-bottom,0px));transform:translateY(105%);transition:transform var(--dur-4) var(--ease-out);visibility:hidden}
+  .side.open{transform:none;visibility:visible}
+  .side-x{display:grid;place-items:center;width:36px;height:36px;border-radius:50%;border:1.5px solid var(--ink);background:var(--card);cursor:pointer}
+  .side-go{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:81;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));background:var(--card);border-top:1px solid var(--line);transform:translateY(105%);transition:transform var(--dur-4) var(--ease-out)}
+  .side.open~.side-go{transform:none}
+  .side-go .btn{flex:1}
+  .scrim{display:block;position:fixed;inset:0;z-index:79;background:rgba(20,24,58,.4);opacity:0;pointer-events:none;transition:opacity var(--dur-3)}
+  .side.open~.scrim{opacity:1;pointer-events:auto}
+  .lgrid{grid-template-columns:repeat(8,1fr)}
+}
+@media(max-width:560px){.view button span{display:none}.view button{padding:0 10px}.rhead h2{flex-basis:100%}.lgrid{grid-template-columns:repeat(6,1fr)}}
+
+/* ---------------- book cards (default view): full title always readable ---------------- */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;padding-bottom:30px}
+@media(max-width:560px){.cards{grid-template-columns:1fr;gap:10px}}
+.card{position:relative;display:grid;grid-template-columns:78px minmax(0,1fr);gap:16px;padding:14px;border-radius:var(--r-3);border:1.5px solid var(--line-2);background:var(--card);cursor:pointer;text-align:left;transition:border-color var(--dur-2),transform var(--dur-2) var(--ease-out),box-shadow var(--dur-2) var(--ease-out);animation:fade var(--dur-3) var(--ease-out) backwards;animation-delay:calc(var(--k,0) * 18ms)}
+.card:hover{border-color:var(--ink);transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+.card:focus-visible{outline-offset:2px}
+.thumb{position:relative;width:78px;aspect-ratio:2/3;border-radius:2px 6px 6px 2px;overflow:hidden;background:var(--bg);box-shadow:inset 3px 0 0 rgba(0,0,0,.16),0 8px 14px -8px rgba(20,24,58,.6)}
+.thumb .i{position:absolute;inset:0;display:grid;place-items:center;font:800 46px/1 var(--f-tserif);color:var(--fg);opacity:.92}
+.thumb .lf{position:absolute;left:8%;right:8%;bottom:16%;height:12%;border-radius:50%;background:linear-gradient(180deg,#F3E4B8,var(--leaf-2));box-shadow:0 3px 5px -2px rgba(0,0,0,.4)}
+.thumb .no{position:absolute;left:0;right:0;top:6px;text-align:center;font:500 8.5px var(--f-mono);color:var(--fg);opacity:.75}
+.card .body{display:flex;flex-direction:column;min-width:0}
+.card .meta{display:flex;align-items:center;gap:8px;font:500 11.5px var(--f-mono);color:var(--ink-3);letter-spacing:.02em}
+.card .meta i{width:8px;height:8px;border-radius:2px;background:var(--bg);flex:none}
+.card .meta span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card h4{margin:6px 0 0;font:700 16.5px/1.38 var(--f-ta);color:var(--ink);word-break:break-word}
+.card .au{margin-top:3px;font:500 14px/1.4 var(--f-ta);color:var(--ink-2)}
+.card .acts{display:flex;gap:6px;margin-top:auto;padding-top:12px}
+.card.is-kept::after{content:"";position:absolute;top:-1.5px;right:16px;width:14px;height:20px;background:var(--orange);clip-path:polygon(0 0,100% 0,100% 100%,50% 76%,0 100%)}
+.ghead{grid-column:1/-1;position:relative;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;padding:20px 0 6px;margin-top:8px;border-top:1.5px solid var(--ink)}
+.ghead:first-child{margin-top:0;border-top:0;padding-top:4px}
+.ghead b{font:700 var(--step-2)/1.2 var(--f-ta)}
+.ghead i{font:400 var(--step-1) var(--f-it);color:var(--ink-2)}
+.ghead em{margin-left:auto;font:500 12px var(--f-mono);font-style:normal;color:var(--ink-3)}
+.ghead .sw{align-self:center;width:14px;height:14px;border-radius:4px;background:var(--c)}
+/* ---------------- results ---------------- */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:clamp(18px,2vw,30px) clamp(14px,1.6vw,24px);padding-bottom:30px}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px}}
+.book{position:relative;display:block;width:100%;padding:0;border:0;background:none;text-align:left;cursor:pointer;perspective:900px;-webkit-tap-highlight-color:transparent;animation:in var(--dur-4) var(--ease-out) backwards;animation-delay:calc(var(--k,0) * 28ms)}
+@keyframes in{from{opacity:0;transform:translateY(22px)}}
+.cv{position:relative;aspect-ratio:2/3;border-radius:3px 8px 8px 3px;overflow:hidden;background:var(--bg);color:var(--fg);
+  box-shadow:inset 4px 0 0 rgba(0,0,0,.14),inset 6px 0 6px -4px rgba(255,255,255,.25),0 1px 0 rgba(20,24,58,.08),0 12px 22px -14px rgba(20,24,58,.55);
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);transform-style:preserve-3d;transition:transform var(--dur-3) var(--ease-out),box-shadow var(--dur-3) var(--ease-out)}
+.cv{container-type:inline-size;position:relative;aspect-ratio:2/3;border-radius:3px 8px 8px 3px;overflow:hidden;background:var(--bg);color:var(--fg);
+  box-shadow:inset 4px 0 0 rgba(0,0,0,.16),inset 6px 0 6px -4px rgba(255,255,255,.22),0 1px 0 rgba(20,24,58,.08),0 12px 22px -14px rgba(20,24,58,.55);
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);transition:transform var(--dur-3) var(--ease-out),box-shadow var(--dur-3) var(--ease-out)}
+.cv::before{content:"";position:absolute;inset:4.5cqw;border:1px solid var(--rule);border-radius:2px;pointer-events:none;z-index:2}
+.cv::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 70% at 15% 0%,rgba(255,255,255,.16),transparent 55%)}
+.cv .ini{position:absolute;right:-4cqw;top:-6cqw;font:800 90cqw/1 var(--f-tserif);color:var(--ghost);letter-spacing:-.04em;white-space:nowrap;pointer-events:none;transition:transform var(--dur-4) var(--ease-out)}
+.cv .tag{position:absolute;z-index:3;top:9cqw;left:10cqw;right:10cqw;display:flex;justify-content:space-between;align-items:baseline;gap:4cqw;font:500 4.4cqw/1 var(--f-mono);letter-spacing:.03em;color:var(--fg);opacity:.85}
+.cv .st{position:absolute;z-index:3;top:16cqw;left:10cqw;right:10cqw;font:600 5.6cqw/1.25 var(--f-ta);color:var(--fg);opacity:.92}
+.cv .cord{position:absolute;z-index:1;inset:0;width:100%;height:100%;pointer-events:none}
+.cv .cord path{fill:none;stroke:var(--cord);stroke-width:.9;stroke-linecap:round}
+.cv .leaf{position:absolute;z-index:3;left:3cqw;right:3cqw;top:60%;transform:translateY(-50%) rotate(-2deg);padding:4.2cqw 14cqw;border-radius:50% / 50%;text-align:center;color:var(--leaf-ink);
+  background:repeating-linear-gradient(180deg,rgba(110,80,30,.09) 0 1px,transparent 1px 3.4cqw),linear-gradient(180deg,#F3E4B8,var(--leaf) 45%,var(--leaf-2));
+  box-shadow:0 2.5cqw 5cqw -1.5cqw rgba(0,0,0,.5),inset 0 0 0 .6cqw rgba(140,100,40,.22),inset 0 1.2cqw 1.6cqw -1cqw rgba(255,255,255,.6);transition:transform var(--dur-3) var(--ease-out)}
+.cv .leaf::before,.cv .leaf::after{content:"";position:absolute;top:50%;width:3.4cqw;height:3.4cqw;margin-top:-1.7cqw;border-radius:50%;background:var(--bg);box-shadow:inset 0 .5cqw .6cqw rgba(0,0,0,.45),0 0 0 .5cqw rgba(140,100,40,.35)}
+.cv .leaf::before{left:5.2cqw}.cv .leaf::after{right:5.2cqw}
+.cv .under{transition:transform var(--dur-3) var(--ease-out);position:absolute;z-index:2;left:6cqw;right:1cqw;top:60%;height:16cqw;margin-top:-2cqw;border-radius:50%;transform:rotate(3deg);background:repeating-linear-gradient(180deg,rgba(90,60,20,.12) 0 1px,transparent 1px 3.4cqw),linear-gradient(180deg,#D6BE80,#BFA062);box-shadow:0 2cqw 4cqw -1.5cqw rgba(0,0,0,.5)}
+.cv .leaf b{font:700 calc(var(--tsz,8) * 1cqw)/1.32 var(--f-tserif);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-word;text-wrap:balance}
+.cv .au{position:absolute;z-index:3;left:10cqw;right:10cqw;bottom:9cqw;text-align:center;font:500 5cqw/1.3 var(--f-ta);color:var(--fg);opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cv .glare{position:absolute;z-index:4;inset:0;pointer-events:none;background:radial-gradient(circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.3),transparent 55%);opacity:0;transition:opacity var(--dur-3)}
+.cv .kept{position:absolute;z-index:5;top:0;right:12cqw;width:8cqw;height:12cqw;background:var(--orange);clip-path:polygon(0 0,100% 0,100% 100%,50% 76%,0 100%);transform:translateY(-100%);transition:transform var(--dur-3) var(--ease-spring)}
+.book.is-kept .cv .kept{transform:none}
+@media (hover:hover) and (pointer:fine){
+  .book:hover .cv{box-shadow:inset 4px 0 0 rgba(0,0,0,.16),0 30px 40px -20px rgba(20,24,58,.6);transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-8px) scale(1.03)}
+  .book:hover .glare{opacity:1}
+  .book:hover .leaf{transform:translateY(-58%) rotate(-3.5deg)}
+  .book:hover .under{transform:rotate(5deg) translateY(1cqw)}
+  .book:hover .ini{transform:translate(-3cqw,2cqw)}
+}
+.book:active .cv{transform:scale(.97)}
+.more{display:flex;justify-content:center;padding:10px 0 60px}
+.sentinel{height:1px}
+.empty{padding:80px 20px;text-align:center}
+.empty b{display:block;font:700 var(--step-2) var(--f-ta)}
+.empty p{color:var(--ink-2)}
+
+/* list view */
+.list{display:block;padding-bottom:40px}
+.lrow{display:grid;grid-template-columns:44px 64px minmax(0,2.2fr) minmax(0,1.3fr) minmax(0,1fr) 140px;align-items:center;gap:16px;padding:12px 8px;border-bottom:1px solid var(--line);cursor:pointer;transition:background var(--dur-2);animation:fade var(--dur-3) var(--ease-out) backwards;animation-delay:calc(var(--k,0) * 12ms)}
+.lrow:hover{background:var(--card)}
+.lrow .mini{width:44px}
+.lrow .mini .cv{border-radius:2px 4px 4px 2px;box-shadow:0 4px 8px -4px rgba(20,24,58,.5)}
+.lrow .mini .cv .tag,.lrow .mini .cv .st,.lrow .mini .cv .au{display:none}
+.lrow .no{font:500 13px var(--f-mono);color:var(--ink-3)}
+.lrow .t{font:600 16px/1.35 var(--f-ta)}
+.lrow .a,.lrow .s{font:500 14px/1.35 var(--f-ta);color:var(--ink-2)}
+.lrow .acts{display:flex;gap:6px;justify-content:flex-end}
+.lhead{display:grid;grid-template-columns:44px 64px minmax(0,2.2fr) minmax(0,1.3fr) minmax(0,1fr) 140px;gap:16px;padding:0 8px 10px;border-bottom:1.5px solid var(--ink);font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+@media(max-width:820px){.lhead{display:none}.lrow{grid-template-columns:44px minmax(0,1fr) auto!important;gap:12px}.lrow .no,.lrow .s{display:none}.lrow .a{grid-column:2;margin-top:-8px}.lrow .t{grid-column:2}.lrow .mini{grid-row:span 2}.lrow .acts{grid-column:3;grid-row:1/span 2}}
+
+/* buttons */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:50px;padding:0 24px;border-radius:var(--r-pill);border:1.5px solid var(--ink);background:var(--card);font-weight:700;font-size:15.5px;text-decoration:none;cursor:pointer;white-space:nowrap;transition:transform var(--dur-2) var(--ease-out),box-shadow var(--dur-2) var(--ease-out),background var(--dur-2),color var(--dur-2)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+.btn:active{transform:translate(1px,1px);box-shadow:0 0 0 var(--ink)}
+.btn.pri{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.pri:hover{box-shadow:4px 4px 0 var(--navy)}
+.btn.pdf{border-color:var(--orange);color:#C23A08}
+.btn.pdf:hover{background:var(--orange);color:#fff;box-shadow:4px 4px 0 #9A2D05}
+.btn.sm{min-height:34px;padding:0 13px;font-size:13px;border-width:1px}
+.btn.sm:hover{box-shadow:2px 2px 0 var(--ink)}
+.btn.sm.pdf:hover{box-shadow:2px 2px 0 #9A2D05}
+.btn[aria-pressed="true"]{background:var(--yellow)}
+
+/* ---------------- the book page ---------------- */
+.page{position:fixed;inset:0;z-index:60;overflow-y:auto;overscroll-behavior:contain;background:var(--paper);visibility:hidden;opacity:0;transition:opacity var(--dur-3) var(--ease-out),visibility 0s linear var(--dur-3)}
+.page.on{visibility:visible;opacity:1;transition:opacity var(--dur-3) var(--ease-out)}
+.page .wash{position:absolute;inset:0 0 auto 0;height:70vh;pointer-events:none;background:radial-gradient(60% 80% at 20% 0%,color-mix(in srgb,var(--bg) 26%,transparent),transparent 70%)}
+.ptop{position:sticky;top:0;z-index:3;display:flex;align-items:center;gap:10px;padding-block:14px;background:linear-gradient(var(--paper) 70%,rgba(245,239,228,0))}
+.ptop .back{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 18px 0 14px;border-radius:var(--r-pill);border:1.5px solid var(--ink);background:var(--card);font-weight:700;cursor:pointer;transition:transform var(--dur-2) var(--ease-out),box-shadow var(--dur-2) var(--ease-out)}
+.ptop .back:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+.ptop .pn{margin-left:auto;display:flex;gap:8px;align-items:center}
+.ptop .pos{font:500 12px var(--f-mono);color:var(--ink-3);margin-right:6px}
+.circ{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--ink);background:var(--card);display:grid;place-items:center;cursor:pointer;transition:transform var(--dur-2) var(--ease-spring),background var(--dur-2),color var(--dur-2)}
+.circ:hover{background:var(--ink);color:var(--paper)}
+.circ:active{transform:scale(.92)}
+.circ:disabled{opacity:.3;pointer-events:none}
+.detail{position:relative;display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:clamp(28px,5vw,80px);align-items:start;padding:16px 0 50px}
+.bigcv{position:sticky;top:90px;width:100%}
+.bigcv .cv{border-radius:4px 14px 14px 4px;box-shadow:inset 6px 0 0 rgba(0,0,0,.14),inset 9px 0 8px -5px rgba(255,255,255,.25),0 40px 60px -30px rgba(20,24,58,.7)}
+.bigcv .shadow{height:24px;margin:8px 10% 0;border-radius:50%;background:radial-gradient(closest-side,rgba(20,24,58,.25),transparent)}
+.info .eyebrow{color:var(--ink-2)}
+.info h1{margin:16px 0 0;font:800 clamp(30px,4.2vw,58px)/1.12 var(--f-ta);letter-spacing:-.01em;text-wrap:balance}
+.info .au{margin-top:12px;font:500 var(--step-1)/1.45 var(--f-ta);color:var(--ink-2)}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:32px 0;border-block:1.5px solid var(--ink)}
+.facts div{padding:16px 16px 16px 0}
+.facts div+div{padding-left:16px;border-left:1px solid var(--line-2)}
+.facts dt{font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.facts dd{margin:6px 0 0;font:600 16px/1.4 var(--f-ta)}
+.acts2 .lab{display:block;margin:22px 0 10px;font:500 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
+.acts2 .grp{display:flex;flex-wrap:wrap;gap:10px}
+.note{margin-top:26px;padding:16px 18px;border-radius:var(--r-3);background:var(--card);border:1px solid var(--line);font-size:14px;color:var(--ink-2)}
+.note a{color:var(--blue);font-weight:600}
+.rel{padding:34px 0 80px;border-top:1.5px solid var(--ink)}
+.rel h3{margin:0 0 18px;font:700 var(--step-2) var(--f-ta)}
+.rel h3 em{font:400 .9em var(--f-it);font-style:italic;color:var(--ink-2)}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(150px,170px);gap:18px;overflow-x:auto;padding:4px 4px 18px;scroll-snap-type:x mandatory;scrollbar-width:thin}
+.rail .book{scroll-snap-align:start}
+.flyer{position:fixed;z-index:70;left:0;top:0;pointer-events:none;transform-origin:0 0}
+.page.swap .info,.page.swap .bigcv{animation:fade var(--dur-3) var(--ease-out)}
+@media(max-width:820px){
+  .detail{grid-template-columns:1fr;gap:26px}
+  .bigcv{position:relative;top:0;max-width:260px;margin:0 auto}
+  .info h1{font-size:clamp(26px,7vw,40px)}
+  .facts{grid-template-columns:1fr 1fr 1fr}
+  .facts dd{font-size:14px}
+  .acts2 .grp .btn{flex:1 1 auto}
+  .ptop .pos{display:none}
+}
+
+.toast{position:fixed;left:50%;bottom:26px;z-index:90;transform:translate(-50%,24px);opacity:0;padding:12px 20px;border-radius:var(--r-pill);background:var(--ink);color:var(--paper);font-weight:600;font-size:14px;pointer-events:none;transition:opacity var(--dur-2),transform var(--dur-3) var(--ease-spring)}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+footer{border-top:1.5px solid var(--ink);padding:28px 0 50px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-size:14px;color:var(--ink-2)}
+footer a{color:var(--blue);font-weight:600}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:1ms!important;animation-delay:0ms!important;animation-iteration-count:1!important;transition-duration:1ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="wrap top">
+  <a class="brand" href="#" data-act="home" aria-label="Suvadi Library home">
+    <svg viewBox="0 0 40 40" aria-hidden="true"><rect width="40" height="40" rx="11" fill="#141B4D"/><rect x="5" y="13" width="30" height="7" rx="3.5" fill="#EBD9A6" transform="rotate(-8 20 16)"/><rect x="5" y="21" width="30" height="7" rx="3.5" fill="#D9BF7F"/><circle cx="10" cy="24.5" r="1.4" fill="#141B4D"/><circle cx="30" cy="24.5" r="1.4" fill="#141B4D"/><path d="M10 24.5 Q8 31 12 35" stroke="#FFC233" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>
+    <span><b>Suvadi</b><span>சுவடி · தமிழ் நூலகம்</span></span>
+  </a>
+  <nav>
+    <button class="link" id="mine" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg><span class="t">My shelf</span><span class="n" id="cnt">0</span></button>
+  </nav>
+</header>
+
+<main>
+  <section class="wrap hero">
+    <div>
+      <div class="eyebrow"><i></i>Project Madurai · free Tamil literature</div>
+      <h1><span class="w"><span>தமிழின்</span></span> <span class="w"><span>நூலகம்</span></span><br><span class="w"><span><em>for everyone</em></span></span></h1>
+      <p>1,281 Tamil books, from the Sangam poets to modern novels. Each one sits on its own palm leaf, the way Tamil was kept for centuries. Find a book, open it, read it online or take the PDF.</p>
+      <form class="search" id="sform" role="search">
+        <svg class="ic" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <label class="sr" for="q">Search the library</label>
+        <input id="q" type="search" autocomplete="off" spellcheck="false" placeholder="திருக்குறள், Bharathi, 0001…">
+        <button class="go" type="submit">Search</button>
+      </form>
+      <div class="quick" id="quick"><span>Try</span></div>
+    </div>
+    <div class="art" id="art" aria-hidden="true">
+      <div class="disc"></div>
+      <div class="bundle" id="bundle"></div>
+      <svg class="thread" viewBox="0 0 40 100" preserveAspectRatio="none"><path d="M18 2 C 30 20, 6 34, 20 52 S 10 84, 26 98"/><path d="M18 2 C 8 22, 32 40, 16 60 S 30 86, 12 98" opacity=".65"/></svg>
+      <div class="stat s1"><b>1,281</b><span>books, free</span></div>
+      <div class="stat s2"><b id="stAu">594</b><span>authors</span></div>
+      <div class="stat s3"><b>14</b><span>sections</span></div>
+    </div>
+    <button class="surprise" id="surprise" data-act="surprise"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>Surprise me</button>
+  </section>
+
+  <div class="marq" aria-hidden="true"><div id="marq"></div></div>
+
+  <section class="wrap browse" id="results">
+    <aside class="side" id="side" aria-label="Filters">
+      <h3><span>Find a book</span><span style="display:flex;gap:12px;align-items:center"><button id="clearAll" data-act="clear" disabled>Clear all</button><button class="side-x" data-act="sideClose" aria-label="Close filters"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></span></h3>
+      <div class="fgroup"><label class="flab" for="q2">Search</label><div class="fsearch"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q2" type="search" autocomplete="off" spellcheck="false" placeholder="Title, author or Nº"></div></div>
+      <div class="fgroup"><span class="flab">Section · pick one or more</span><div class="secs" id="secs" role="group" aria-label="Sections"></div></div>
+      <div class="fgroup"><span class="flab">Available as</span><div class="seg2" id="fmt" role="group" aria-label="Format"><button data-f="all" aria-pressed="true">Any</button><button data-f="uni" aria-pressed="false">Unicode</button><button data-f="pdf" aria-pressed="false">PDF</button></div></div>
+      <div class="fgroup"><span class="flab">Title starts with</span><div class="lgrid" id="letters" role="group" aria-label="Title starts with"></div></div>
+    </aside>
+    <div class="side-go"><button class="btn pri" data-act="sideClose" id="showN">Show books</button></div>
+    <div class="scrim" data-act="sideClose"></div>
+    <div class="res">
+      <div class="rhead" id="rhead">
+        <h2 id="heading"></h2>
+        <button class="fbtn" data-act="sideOpen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>Filters<span class="n" id="fcount" hidden></span></button>
+        <label class="sel"><span class="sr">Sort by</span><select id="sort"><option value="title">Title அ → ஔ</option><option value="shelf">Section</option><option value="author">Author</option><option value="no">Release Nº</option></select></label>
+        <div class="view" role="group" aria-label="View">
+          <button data-view="cards" aria-pressed="true"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/></svg><span>Cards</span></button>
+          <button data-view="grid" aria-pressed="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="9" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>Covers</span></button>
+          <button data-view="list" aria-pressed="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg><span>List</span></button>
+        </div>
+        <div class="chips" id="chips"></div>
+      </div>
+      <div id="out"></div>
+      <div class="sentinel" id="sentinel"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  <div>Texts and PDFs are hosted by <a href="https://www.projectmadurai.org/" target="_blank" rel="noopener">Project Madurai</a>, the open, voluntary initiative to put Tamil literature online. Every button opens their original files.</div>
+  <div class="mono" style="font-size:12px">Suvadi · சுவடி</div>
+</footer>
+
+<div class="page" id="page" role="dialog" aria-modal="true" aria-labelledby="pTitle">
+  <div class="wash"></div>
+  <div class="wrap ptop">
+    <button class="back" data-act="close"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>Library</button>
+    <div class="pn"><span class="pos" id="ppos"></span><button class="circ" data-act="prev" aria-label="Previous book"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><button class="circ" data-act="next" aria-label="Next book"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button></div>
+  </div>
+  <div class="wrap" id="pbody"></div>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+window.__boot=function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+var CS=getComputedStyle(document.documentElement);function tok(n){return CS.getPropertyValue(n).trim()}function ms(n){var v=tok(n);return v.indexOf('ms')>0?parseFloat(v):parseFloat(v)*1000}
+var REDUCED=matchMedia('(prefers-reduced-motion: reduce)').matches,FINE=matchMedia('(hover:hover) and (pointer:fine)').matches;
+var store={get:function(k,d){try{var v=localStorage.getItem('suvadi.'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set:function(k,v){try{localStorage.setItem('suvadi.'+k,JSON.stringify(v))}catch(e){}}};
+var BASE='https://www.projectmadurai.org/pm_etexts/';
+var COLL=window.Intl&&Intl.Collator?new Intl.Collator('ta'):{compare:function(a,b){return a<b?-1:a>b?1:0}};
+function pad(n){return ('000'+n).slice(-4)}function nf(n){return n.toLocaleString('en-US')}
+function hash(s){var h=2166136261;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function rng(seed){var a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;var t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return ((t^(t>>>14))>>>0)/4294967296}}
+
+var SEC=[
+ ['sangam','சங்க இலக்கியம்','Sangam classics'],['ethics','நீதி இலக்கியம்','Ethics & wisdom'],['saiva','சைவம்','Saiva canon'],['vaish','வைணவம்','Vaishnava canon'],
+ ['siddhar','சித்தர் பாடல்கள்','Siddhar songs'],['faiths','பிற சமயங்கள்','Other faiths'],['epic','காப்பியம் · புராணம்','Epics & Puranas'],['prab','சிற்றிலக்கியம்','Prabandham'],
+ ['grammar','இலக்கணம்','Grammar & lexicons'],['poetry','கவிதை · பாடல்','Poetry & song'],['fiction','நாவல் · சிறுகதை','Novels & stories'],['drama','நாடகம்','Drama'],
+ ['essays','கட்டுரை · வரலாறு','Essays & history'],['other','பிற நூல்கள்','Further volumes']];
+var SI={};SEC.forEach(function(s,i){SI[s[0]]=i});
+/* one colour per section, like a publisher's series: [cover, text, gilt rule, ghost letter] */
+var SPAL={sangam:['#0E5E58','#F3EBD6'],ethics:['#141B4D','#F3EBD6'],saiva:['#A9410F','#FBEBD8'],vaish:['#1F3FB8','#EEF1FF'],siddhar:['#2B2B35','#EDE6D6'],faiths:['#0F8A80','#F0FBF8'],
+  epic:['#7A1F2B','#F8E9E2'],prab:['#D9991E','#2A1D06'],grammar:['#3B4A5C','#EEF1F5'],poetry:['#E0571B','#FFF4EA'],fiction:['#E9DAB9','#1D2350'],drama:['#1B6E9C','#EEF7FF'],essays:['#6B4E2E','#F6EEE2'],other:['#4A4E6E','#EEEFF6']};
+var B=window.PMW.map(function(r,i){return {i:i,no:r[0],t:r[1],a:r[2],g:r[3],s:r[4],pdf:r[5],uni:r[6]}});
+var VOW=/[அ-ஔ]/,CON=/[க-ஹ]/;
+B.forEach(function(b){var h=hash(b.t+'|'+b.no);b.h=h;var sp=SPAL[b.s]||SPAL.other;b.p=[sp[0],sp[1]];
+  b.tk=b.t.replace(/^[^஀-௿A-Za-z0-9]+/,'');b.ak=(b.a||'').replace(/^[^஀-௿A-Za-z]+/,'');
+  b.tt=b.t.replace(/^[^\u0B85-\u0BB9]+/,'')||b.tk;var c=b.tt.charAt(0);b.L=VOW.test(c)?c:CON.test(c)?c:'A–Z';
+  var s=SEC[SI[b.s]];b.key=(b.t+' '+b.a+' '+b.g+' '+b.no+' '+pad(b.no)+' '+s[1]+' '+s[2]).toLowerCase()});
+
+/* ---------- covers ----------
+   A cover for each book, in its section's colour: the first Tamil letter of the
+   title set large like a classic edition, and the title written on a palm leaf
+   with its two binding holes and cord, the way Tamil texts were kept for centuries. */
+var SEG=window.Intl&&Intl.Segmenter?new Intl.Segmenter('ta',{granularity:'grapheme'}):null;
+function initial(t){var x=t.replace(/^[^\u0B85-\u0BB9]+/,'')||t.replace(/^[^A-Za-z0-9]+/,'');if(!x)return '';if(SEG){var it=SEG.segment(x)[Symbol.iterator]().next();return it.value?it.value.segment:x.charAt(0)}var m=/^[\u0B80-\u0BFF][\u0BBE-\u0BCD\u0BD7\u0B82]*/.exec(x);return m?m[0]:x.charAt(0)}
+function isLight(hex){var n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;return (r*299+g*587+b*114)/1000>150}
+function coverVars(b){var light=isLight(b.p[0]);return '--bg:'+b.p[0]+';--fg:'+b.p[1]+';--rule:'+(light?'rgba(30,20,0,.28)':'rgba(255,240,210,.3)')+';--ghost:'+(light?'rgba(30,20,0,.08)':'rgba(255,255,255,.08)')}
+function tsz(t){var n=Array.from(t).length;return n<=9?10:n<=16?8.6:n<=26?7.4:n<=40?6.6:6}
+var CORD='<svg class="cord" viewBox="0 0 100 150" preserveAspectRatio="none" aria-hidden="true"><path d="M10.6 90 C 6 104, 15 116, 9 128 S 12 144, 8 150"/></svg>';
+function coverHTML(b,big){var s=SEC[SI[b.s]];
+  return '<div class="cv" style="'+coverVars(b)+';--tsz:'+tsz(b.t)+'"><span class="ini" aria-hidden="true">'+esc(initial(b.t))+'</span>'+
+    '<div class="tag"><span>Nº '+pad(b.no)+'</span></div><div class="st">'+esc(s[1])+'</div>'+CORD+
+    '<span class="under" aria-hidden="true"></span><div class="leaf"><b>'+esc(b.t)+'</b></div><div class="au">'+esc(b.a||'')+'</div><span class="glare"></span><span class="kept"></span></div>'}
+function bookBtn(b,k){return '<button class="book'+(S.kept.indexOf(b.i)>-1?' is-kept':'')+'" data-i="'+b.i+'" style="--k:'+k+'" aria-label="'+esc(b.t)+(b.a?', '+esc(b.a):'')+'">'+coverHTML(b)+'</button>'}
+
+/* ---------- state ---------- */
+var S={q:'',secs:[],fmt:'all',letter:null,sort:'title',view:'cards',mine:false,kept:store.get('kept',[]).filter(function(i){return B[i]}),list:[],shown:0,cur:-1};
+var ORD={};
+function ordered(k){if(ORD[k])return ORD[k];var L=B.slice();
+  if(k==='shelf')L.sort(function(x,y){return SI[x.s]-SI[y.s]||COLL.compare(x.tk,y.tk)||x.no-y.no});
+  if(k==='title')L.sort(function(x,y){return (x.L==='A–Z')-(y.L==='A–Z')||COLL.compare(x.tt,y.tt)||x.no-y.no});
+  if(k==='no')L.sort(function(x,y){return x.no-y.no});
+  if(k==='author')L.sort(function(x,y){if(!x.ak!==!y.ak)return x.ak?-1:1;return COLL.compare(x.ak,y.ak)||COLL.compare(x.tt,y.tt)});
+  return ORD[k]=L}
+/* one filter function; `skip` leaves one filter out so each panel can show what is still available */
+function pass(b,skip,w){
+  if(S.mine&&S.kept.indexOf(b.i)<0)return false;
+  if(skip!=='sec'&&S.secs.length&&S.secs.indexOf(b.s)<0)return false;
+  if(skip!=='fmt'&&S.fmt==='uni'&&!b.uni.length)return false;
+  if(skip!=='fmt'&&S.fmt==='pdf'&&!b.pdf.length)return false;
+  if(skip!=='letter'&&S.letter&&b.L!==S.letter)return false;
+  for(var j=0;j<w.length;j++)if(b.key.indexOf(w[j])<0)return false;return true}
+function words(){return S.q.trim().toLowerCase().split(/\s+/).filter(Boolean)}
+
+/* ---------- filter panel ---------- */
+var LETTERS='அ ஆ இ ஈ உ ஊ எ ஏ ஐ ஒ ஓ ஔ க ங ச ஞ ட ண த ந ப ம ய ர ல வ ழ ள ற ன ஜ ஷ ஸ ஹ'.split(' ').concat(['A–Z']);
+var TICK='<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg>';
+function panel(){var w=words(),c={},lc={};
+  B.forEach(function(b){if(pass(b,'sec',w))c[b.s]=(c[b.s]||0)+1;if(pass(b,'letter',w))lc[b.L]=1});
+  $('#secs').innerHTML=SEC.map(function(s){var on=S.secs.indexOf(s[0])>-1,n=c[s[0]]||0;return '<button class="sopt'+(n?'':' zero')+'" role="checkbox" aria-checked="'+on+'" data-s="'+s[0]+'" style="--c:'+SPAL[s[0]][0]+'"><span class="box">'+TICK+'</span><span class="sw"></span><span class="nm"><b>'+s[1]+'</b><i>'+s[2]+'</i></span><em>'+n+'</em></button>'}).join('');
+  $('#letters').innerHTML=LETTERS.map(function(l){return '<button data-l="'+l+'"'+(l==='A–Z'?' class="az"':'')+' aria-pressed="'+(S.letter===l)+'"'+(lc[l]||S.letter===l?'':' disabled')+'>'+l+'</button>'}).join('');
+  $$('#fmt button').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.f===S.fmt)})}
+$('#secs').addEventListener('click',function(e){var t=e.target.closest('.sopt');if(!t)return;var k=S.secs.indexOf(t.dataset.s);if(k>-1)S.secs.splice(k,1);else S.secs.push(t.dataset.s);update(true)});
+$('#letters').addEventListener('click',function(e){var t=e.target.closest('button');if(!t)return;S.letter=S.letter===t.dataset.l?null:t.dataset.l;update(true)});
+$('#fmt').addEventListener('click',function(e){var t=e.target.closest('button');if(!t)return;S.fmt=t.dataset.f;update(true)});
+$('#sort').addEventListener('change',function(){S.sort=this.value;update(true)});
+$$('.view button').forEach(function(b){b.addEventListener('click',function(){S.view=b.dataset.view;$$('.view button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});store.set('view',S.view);update(false)})});
+$('#mine').addEventListener('click',function(){S.mine=!S.mine;this.setAttribute('aria-pressed',S.mine);update(true);goResults()});
+
+/* ---------- results ---------- */
+var out=$('#out'),PAGE=60;
+function chipsBar(){var c=[];
+  if(S.mine)c.push(['mine','★ My shelf']);
+  if(S.q)c.push(['q','“'+esc(S.q)+'”']);
+  S.secs.forEach(function(k){c.push(['sec:'+k,SEC[SI[k]][1]])});
+  if(S.fmt!=='all')c.push(['fmt',S.fmt==='uni'?'Unicode':'PDF']);
+  if(S.letter)c.push(['letter','Starts with '+esc(S.letter)]);
+  $('#chips').innerHTML=c.map(function(x){return '<button class="chip" data-chip="'+x[0]+'">'+x[1]+'<i aria-hidden="true">✕</i><span class="sr">remove</span></button>'}).join('');
+  var n=c.length-(S.mine?1:0);$('#fcount').hidden=!n;$('#fcount').textContent=n;$('#clearAll').disabled=!c.length}
+$('#chips').addEventListener('click',function(e){var t=e.target.closest('.chip');if(!t)return;var k=t.dataset.chip;
+  if(k==='mine'){S.mine=false;$('#mine').setAttribute('aria-pressed','false')}else if(k==='q'){S.q='';$('#q').value='';$('#q2').value=''}else if(k==='fmt')S.fmt='all';else if(k==='letter')S.letter=null;else if(k.indexOf('sec:')===0)S.secs.splice(S.secs.indexOf(k.slice(4)),1);update(true)});
+function heading(){var n=S.list.length;$('#heading').innerHTML=(S.mine?'My shelf':n===B.length?'All books':'Books found')+' <small>'+nf(n)+' of '+nf(B.length)+'</small>';$('#showN').textContent='Show '+nf(n)+' books'}
+function groupOf(b){
+  if(S.sort==='shelf'){var s=SEC[SI[b.s]];return {k:b.s,ta:s[1],en:s[2],c:SPAL[b.s][0]}}
+  if(S.sort==='title'){return {k:b.L,ta:b.L,en:b.L==='A–Z'?'Other titles':'Titles starting with '+b.L}}
+  if(S.sort==='author'){var a=b.ak?initial(b.ak)||'#':'—';return {k:'a'+a,ta:b.ak?a:'—',en:b.ak?'Authors':'Anonymous & collections'}}
+  var lo=Math.floor((b.no-1)/100)*100+1;return {k:'n'+lo,ta:'Nº '+pad(lo)+' – '+pad(lo+99),en:'Release numbers'}}
+var GC={};
+function update(scroll){var w=words();S.list=ordered(S.sort).filter(function(b){return pass(b,null,w)});S.shown=0;GC={};S.list.forEach(function(b){var k=groupOf(b).k;GC[k]=(GC[k]||0)+1});
+  panel();chipsBar();heading();out.innerHTML='';out.className=S.view==='grid'?'grid':S.view==='list'?'list':'cards';
+  if(!S.list.length){out.className='';out.innerHTML='<div class="empty"><b>'+(S.mine?'உங்கள் அலமாரி காலியாக உள்ளது':'எதுவும் கிடைக்கவில்லை')+'</b><p>'+(S.mine?'Open any book and choose “Keep on my shelf”.':'No book matches all of these. Remove a filter above, or clear all.')+'</p></div>';return}
+  if(S.view==='list')out.innerHTML='<div class="lhead"><span>Nº</span><span></span><span>Title · நூல்</span><span>Author</span><span>Section</span><span></span></div>';
+  more();if(scroll)goResults(true)}
+function goResults(onlyIfBelow){var y=$('#results').getBoundingClientRect().top+scrollY-8;if(!onlyIfBelow||scrollY>y)window.scrollTo({top:y,behavior:REDUCED?'auto':'smooth'})}
+function links(b){return (b.uni.length?'<a class="btn sm" href="'+BASE+'utf8/pmuni'+b.uni[0]+'.html" target="_blank" rel="noopener">'+(b.uni.length>1?'Read ('+b.uni.length+' parts)':'Read')+'</a>':'')+(b.pdf.length?'<a class="btn sm pdf" href="'+BASE+'pdf/pm'+b.pdf[0]+'.pdf" target="_blank" rel="noopener">'+(b.pdf.length>1?'PDF ('+b.pdf.length+')':'PDF')+'</a>':'')}
+function cardHTML(b,k){var s=SEC[SI[b.s]];
+  return '<div class="card'+(S.kept.indexOf(b.i)>-1?' is-kept':'')+'" data-i="'+b.i+'" role="button" tabindex="0" style="--k:'+k+';'+coverVars(b)+'" aria-label="'+esc(b.t)+'">'+
+    '<span class="thumb" aria-hidden="true"><span class="no">'+pad(b.no)+'</span><span class="i">'+esc(initial(b.t))+'</span><span class="lf"></span></span>'+
+    '<span class="body"><span class="meta"><i></i><span>Nº '+pad(b.no)+' · '+esc(s[2])+'</span></span><h4>'+esc(b.t)+'</h4><span class="au">'+esc(b.a||'—')+'</span><span class="acts">'+links(b)+'</span></span></div>'}
+function more(){if(S.shown>=S.list.length)return;var end=Math.min(S.list.length,S.shown+PAGE),html='',grouped=S.view!=='list';
+  for(var n=S.shown;n<end;n++){var b=S.list[n],k=n-S.shown,g=groupOf(b);
+    if(grouped&&(n===0||groupOf(S.list[n-1]).k!==g.k))html+='<div class="ghead">'+(g.c?'<span class="sw" style="--c:'+g.c+'"></span>':'')+'<b>'+esc(g.ta)+'</b><i>'+esc(g.en)+'</i><em>'+GC[g.k]+' books</em></div>';
+    if(S.view==='grid')html+=bookBtn(b,Math.min(k,24));
+    else if(S.view==='cards')html+=cardHTML(b,Math.min(k,24));
+    else{var sx=SEC[SI[b.s]];html+='<div class="lrow" data-i="'+b.i+'" style="--k:'+Math.min(k,30)+'" role="button" tabindex="0" aria-label="'+esc(b.t)+'"><span class="no">'+pad(b.no)+'</span><span class="mini">'+coverHTML(b)+'</span><span class="t">'+esc(b.t)+'</span><span class="a">'+esc(b.a||'—')+'</span><span class="s">'+sx[1]+'</span><span class="acts">'+links(b)+'</span></div>'}}
+  out.insertAdjacentHTML('beforeend',html);S.shown=end}
+if('IntersectionObserver' in window)new IntersectionObserver(function(es){if(es[0].isIntersecting)more()},{rootMargin:'1200px 0px'}).observe($('#sentinel'));
+var side=$('#side');
+document.addEventListener('click',function(e){var a=e.target.closest('[data-act]');if(!a)return;var k=a.dataset.act;
+  if(k==='clear'){S.q='';$('#q').value='';$('#q2').value='';S.secs=[];S.fmt='all';S.letter=null;S.mine=false;$('#mine').setAttribute('aria-pressed','false');update(true)}
+  if(k==='sideOpen'){side.classList.add('open');document.body.classList.add('locked')}
+  if(k==='sideClose'){side.classList.remove('open');document.body.classList.remove('locked');goResults(true)}
+  if(k==='surprise'){var b=B[Math.floor(Math.random()*B.length)];openBook(b.i,null)}
+  if(k==='home'){e.preventDefault();if(page.classList.contains('on'))closeBook();window.scrollTo({top:0,behavior:REDUCED?'auto':'smooth'})}});
+
+/* cover tilt follows the pointer */
+if(FINE&&!REDUCED){
+  document.addEventListener('pointermove',function(e){var bk=e.target.closest&&e.target.closest('.book');if(!bk)return;var cv=bk.querySelector('.cv'),r=cv.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+    cv.style.setProperty('--ry',((x-.5)*14).toFixed(2)+'deg');cv.style.setProperty('--rx',((.5-y)*12).toFixed(2)+'deg');cv.style.setProperty('--gx',(x*100).toFixed(0)+'%');cv.style.setProperty('--gy',(y*100).toFixed(0)+'%')});
+  document.addEventListener('pointerout',function(e){var bk=e.target.closest&&e.target.closest('.book');if(!bk||bk.contains(e.relatedTarget))return;var cv=bk.querySelector('.cv');cv.style.removeProperty('--rx');cv.style.removeProperty('--ry')});
+}
+out.addEventListener('click',function(e){if(e.target.closest('a'))return;var bk=e.target.closest('.book,.lrow,.card');if(bk)openBook(+bk.dataset.i,bk.querySelector('.cv,.mini,.thumb'))});
+out.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){var r=e.target.closest('.lrow,.card');if(r&&!e.target.closest('a')){e.preventDefault();openBook(+r.dataset.i,r.querySelector('.mini,.thumb'))}}});
+
+/* ---------- search ---------- */
+var qEl=$('#q'),qt=0;
+function onQ(el){clearTimeout(qt);qt=setTimeout(function(){S.q=el.value;(el===qEl?$('#q2'):qEl).value=el.value;S.letter=null;update(false)},160)}
+qEl.addEventListener('input',function(){onQ(qEl)});$('#q2').addEventListener('input',function(){onQ(this)});
+$('#sform').addEventListener('submit',function(e){e.preventDefault();S.q=qEl.value;$('#q2').value=qEl.value;S.letter=null;update(false);qEl.blur();goResults()});
+['திருக்குறள்','பாரதியார்','தேவாரம்','ஆண்டாள்','கம்பர்','புதுமைப்பித்தன்'].forEach(function(w){var b=document.createElement('button');b.type='button';b.textContent=w;b.addEventListener('click',function(){qEl.value=w;$('#sform').requestSubmit?$('#sform').requestSubmit():$('#sform').dispatchEvent(new Event('submit'))});$('#quick').appendChild(b)});
+document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement!==qEl&&!page.classList.contains('on')){e.preventDefault();qEl.focus();qEl.scrollIntoView({block:'center'})}});
+
+/* ---------- book page ---------- */
+var page=$('#page'),pbody=$('#pbody'),busy=false,from=null;
+var IC_READ='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M3 5.5C6 4 9 4 12 6c3-2 6-2 9-.5V19c-3-1.5-6-1.5-9 .5-3-2-6-2-9-.5z"/><path d="M12 6v13.5"/></svg>';
+var IC_PDF='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 4v11M7.5 10.5L12 15l4.5-4.5M5 20h14"/></svg>';
+function ctx(){return S.list.length?S.list:ordered(S.sort)}
+function pageHTML(b){var s=SEC[SI[b.s]],kept=S.kept.indexOf(b.i)>-1,L=ctx(),pos=L.indexOf(b);
+  var uni=b.uni.map(function(id,k){return '<a class="btn pri" href="'+BASE+'utf8/pmuni'+id+'.html" target="_blank" rel="noopener">'+IC_READ+(b.uni.length>1?'Part '+(k+1):'Read online')+'</a>'}).join('');
+  var pdf=b.pdf.map(function(id,k){return '<a class="btn pdf" href="'+BASE+'pdf/pm'+id+'.pdf" target="_blank" rel="noopener">'+IC_PDF+(b.pdf.length>1?'PDF part '+(k+1):'Download PDF')+'</a>'}).join('');
+  var same=ordered('shelf').filter(function(x){return x.s===b.s&&x!==b}),start=Math.max(0,same.findIndex(function(x){return COLL.compare(x.tk,b.tk)>0})-3),rel=same.slice(start,start+12);
+  return '<div class="detail"><div class="bigcv" id="bigcv">'+coverHTML(b,true)+'<div class="shadow"></div></div>'+
+    '<div class="info"><div class="eyebrow"><i></i>'+esc(s[1])+' · '+esc(s[2])+'</div><h1 id="pTitle">'+esc(b.t)+'</h1>'+(b.a?'<div class="au">'+esc(b.a)+'</div>':'')+
+    '<dl class="facts"><div><dt>Release</dt><dd class="mono">Nº '+pad(b.no)+'</dd></div><div><dt>Genre</dt><dd>'+esc(b.g||s[1])+'</dd></div><div><dt>Formats</dt><dd>'+[b.uni.length?'Unicode':'',b.pdf.length?'PDF':''].filter(Boolean).join(' · ')+'</dd></div></dl>'+
+    '<div class="acts2">'+(uni?'<span class="lab">Read online · Unicode text</span><div class="grp">'+uni+'</div>':'')+(pdf?'<span class="lab">Download</span><div class="grp">'+pdf+'</div>':'')+
+    '<span class="lab">Keep</span><div class="grp"><button class="btn" data-pact="keep" aria-pressed="'+kept+'">'+(kept?'★ On my shelf':'☆ Keep on my shelf')+'</button><button class="btn" data-pact="share">Copy link</button></div></div>'+
+    '<div class="note">Opens the original files on <a href="https://www.projectmadurai.org/" target="_blank" rel="noopener">projectmadurai.org</a>. Covers carry the book’s section colour and its title on a palm leaf, after the ஓலைச்சுவடி manuscripts these texts survived on.</div></div></div>'+
+    (rel.length?'<div class="rel"><h3>More from '+esc(s[1])+' <em>'+esc(s[2])+'</em></h3><div class="rail">'+rel.map(function(x,k){return bookBtn(x,k)}).join('')+'</div></div>':'');
+}
+function counter(){var L=ctx(),pos=L.indexOf(B[S.cur]);$('#ppos').textContent=pos>-1?nf(pos+1)+' / '+nf(L.length):'';$('[data-act=prev]').disabled=pos<=0;$('[data-act=next]').disabled=pos<0||pos>=L.length-1}
+function flip(fromEl,toEl,done){if(REDUCED||!fromEl||!toEl){done();return}
+  var a=fromEl.getBoundingClientRect(),z=toEl.getBoundingClientRect();if(!a.width||!z.width||a.bottom<0||a.top>innerHeight){done();return}
+  var f=toEl.cloneNode(true);f.classList.add('flyer');f.style.width=z.width+'px';f.style.height=z.height+'px';document.body.appendChild(f);toEl.style.visibility='hidden';
+  var A='translate('+a.left+'px,'+a.top+'px) scale('+(a.width/z.width)+','+(a.height/z.height)+')',Z='translate('+z.left+'px,'+z.top+'px) scale(1)';
+  f.animate([{transform:A},{transform:Z}],{duration:ms('--dur-4'),easing:tok('--ease-out'),fill:'forwards'}).onfinish=function(){toEl.style.visibility='';f.remove();done()}}
+function openBook(i,fromEl){var b=B[i];if(!b||busy)return;busy=true;S.cur=i;from=fromEl;
+  pbody.innerHTML=pageHTML(b);page.scrollTop=0;page.style.setProperty('--bg',b.p[0]);counter();
+  document.body.classList.add('locked');page.classList.add('on');
+  if(location.hash!=='#book-'+b.no+'-'+i)history.pushState({b:i},'','#book-'+b.no+'-'+i);
+  var big=$('#bigcv .cv');
+  requestAnimationFrame(function(){flip(fromEl,big,function(){busy=false;var f=page.querySelector('.btn.pri,.btn.pdf');if(f)f.focus({preventScroll:true})})})}
+function closeBook(fromHistory){if(!page.classList.contains('on'))return;page.classList.remove('on');document.body.classList.remove('locked');
+  if(!fromHistory&&location.hash.indexOf('#book-')===0)history.back();
+  var el=out.querySelector('.book[data-i="'+S.cur+'"],.lrow[data-i="'+S.cur+'"],.card[data-i="'+S.cur+'"]');if(el){var r=el.getBoundingClientRect();if(r.top<0||r.bottom>innerHeight)el.scrollIntoView({block:'center'});el.focus({preventScroll:true})}}
+function stepBook(d){var L=ctx(),pos=L.indexOf(B[S.cur]),n=pos+d;if(n<0||n>=L.length)return;var b=L[n];S.cur=b.i;
+  pbody.innerHTML=pageHTML(b);page.style.setProperty('--bg',b.p[0]);page.classList.remove('swap');void page.offsetWidth;page.classList.add('swap');page.scrollTop=0;counter();
+  history.replaceState({b:b.i},'','#book-'+b.no+'-'+b.i)}
+page.addEventListener('click',function(e){var a=e.target.closest('[data-act],[data-pact]');
+  if(a){var k=a.dataset.act||a.dataset.pact;if(k==='close')closeBook();if(k==='prev')stepBook(-1);if(k==='next')stepBook(1);if(k==='keep')keep(a);if(k==='share')share();return}
+  var bk=e.target.closest('.rail .book');if(bk){var b=B[+bk.dataset.i];S.cur=b.i;pbody.innerHTML=pageHTML(b);page.style.setProperty('--bg',b.p[0]);page.classList.remove('swap');void page.offsetWidth;page.classList.add('swap');page.scrollTo({top:0,behavior:REDUCED?'auto':'smooth'});counter();history.replaceState({b:b.i},'','#book-'+b.no+'-'+b.i)}});
+document.addEventListener('keydown',function(e){if(!page.classList.contains('on'))return;if(e.key==='Escape')closeBook();if(e.key==='ArrowRight')stepBook(1);if(e.key==='ArrowLeft')stepBook(-1)});
+var tx=null,ty=0;page.addEventListener('touchstart',function(e){if(e.touches.length===1){tx=e.touches[0].clientX;ty=e.touches[0].clientY}},{passive:true});
+page.addEventListener('touchend',function(e){if(tx==null)return;var dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;tx=null;if(e.target.closest('.rail'))return;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.6)stepBook(dx<0?1:-1)},{passive:true});
+addEventListener('popstate',function(){var m=/^#book-\d+-(\d+)$/.exec(location.hash);if(m){if(!page.classList.contains('on'))openBook(+m[1],null);else{S.cur=+m[1];pbody.innerHTML=pageHTML(B[S.cur]);counter()}}else closeBook(true)});
+function keep(btn){var b=B[S.cur],k=S.kept.indexOf(b.i),on=k<0;if(on)S.kept.push(b.i);else S.kept.splice(k,1);store.set('kept',S.kept);
+  btn.setAttribute('aria-pressed',on);btn.textContent=on?'★ On my shelf':'☆ Keep on my shelf';$$('.book[data-i="'+b.i+'"],.card[data-i="'+b.i+'"]').forEach(function(x){x.classList.toggle('is-kept',on)});
+  var c=$('#cnt');c.textContent=S.kept.length;c.classList.add('bump');setTimeout(function(){c.classList.remove('bump')},ms('--dur-3'));toast(on?'Kept on your shelf':'Taken off your shelf')}
+function share(){var u=location.href;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(u).then(function(){toast('Link copied')},function(){toast(u)});else toast(u)}
+function toast(m){var t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(function(){t.classList.remove('on')},2200)}
+
+/* ---------- hero: a bundle of palm leaves with lines every Tamil reader knows ---------- */
+(function(){var lines=['அகர முதல எழுத்தெல்லாம் ஆதி பகவன் முதற்றே உலகு','யாதும் ஊரே யாவரும் கேளிர்','அறம் செய விரும்பு','கற்றது கைம்மண் அளவு கல்லாதது உலகளவு','யாமறிந்த மொழிகளிலே தமிழ்மொழி போல் இனிதாவது எங்கும் காணோம்'];
+  $('#bundle').innerHTML=lines.map(function(l,i){return '<div class="olai" style="--i:'+i+';--fz:'+(l.length>40?.66:l.length>26?.82:1)+'"><p>'+l+'</p></div>'}).join('');
+  if(!REDUCED&&FINE){var art=$('#art'),bd=$('#bundle');art.addEventListener('pointermove',function(e){var r=art.getBoundingClientRect();bd.style.transform='rotate('+(((e.clientX-r.left)/r.width-.5)*6).toFixed(1)+'deg) translateY('+(((e.clientY-r.top)/r.height-.5)*-10).toFixed(1)+'px)'});art.addEventListener('pointerleave',function(){bd.style.transform=''})}})();
+
+/* ---------- start ---------- */
+var au={};B.forEach(function(b){if(b.a)au[b.a]=1});$('#stAu').textContent=nf(Object.keys(au).length);
+var Q=[['யாதும் ஊரே யாவரும் கேளிர்','புறநானூறு 192'],['அகர முதல எழுத்தெல்லாம் ஆதி பகவன் முதற்றே உலகு','திருக்குறள் 1'],['அறம் செய விரும்பு','ஆத்திசூடி'],['யாமறிந்த மொழிகளிலே தமிழ்மொழி போல் இனிதாவது எங்கும் காணோம்','பாரதியார்'],['கற்றது கைம்மண் அளவு கல்லாதது உலகளவு','ஔவையார்']];
+$('#marq').innerHTML=[0,1].map(function(){return Q.map(function(q){return '<span>'+q[0]+' <em style="font:400 15px var(--f-it);font-style:italic;opacity:.7">— '+q[1]+'</em></span>'}).join('')}).join('');
+$('#cnt').textContent=S.kept.length;var sv=store.get('view','cards');if(['cards','grid','list'].indexOf(sv)>-1){S.view=sv;$$('.view button').forEach(function(x){x.setAttribute('aria-pressed',x.dataset.view===sv)})}update(false);
+var m=/^#book-\d+-(\d+)$/.exec(location.hash);if(m&&B[+m[1]])openBook(+m[1],null);
+window.__lib={open:openBook,S:S};
+};
+</script>
+<script>
+/* The catalogue lives in Neon (served by /api/books). If the API is unreachable, the static copy keeps the site working. */
+(function(){var done=false;function go(rows){if(done||!rows||!rows.length)return;done=true;window.PMW=rows;window.__boot()}
+  function fallback(){fetch('/data/books.json').then(function(r){return r.json()}).then(function(j){go(j.books)})}
+  fetch('/api/books').then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(j){if(j&&j.books&&j.books.length)go(j.books);else fallback()}).catch(fallback)})();
+</script>
+</body>
+</html>
