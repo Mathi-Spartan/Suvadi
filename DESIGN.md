@@ -19,10 +19,10 @@ A modern, app-style Tamil library in DigiCert blue with deep blue, orange and re
 - **JetBrains Mono**: numbers, release Nº, keyboard hints
 
 ## Signature
-The letter wall (எழுத்துச் சுவர்): every one of the 1,281 books is one tile showing the first Tamil letter of its title, tinted by section. Hover acts as a magnifying lens (nearby tiles swell), the hovered book's section glows and its name shows below; a click sends a ripple across the tiles before the book opens. When idle, a slow shimmer passes and a few tiles twinkle. Legend chips highlight a section.
+The hero pairs a pride statement (தமிழைப் படி, தலை நிமிர் · Read Tamil, stand tall) with a rotating card of famous lines from the classics, each linking to its book.
 
 ## Layout
-Header (search palette ⌘K / Ctrl K, My shelf, theme) → hero (headline, search, mosaic) → Today bento (Kural of the day, book of the day, collection stats, letter heatmap, recently opened) → Library (filter rail + cards/list) → quick-view drawer for every book.
+Header → hero (headline, search, rotating classics card) → counters (2,000+ years, books, authors, sections) → Did you know? fact cards with count-up numbers → Shelves (Start here, Sangam, Bhakti, Epics, Ethics, Modern) → My reading (Kural of the day, book of the day, reading journey, recently opened, collection, titles by first letter) → Library → quick-view drawer.
 
 ## Motion scale
 `--dur-1` 120ms hover · `--dur-2` 220ms state · `--dur-3` 420ms panels · `--dur-4` 700ms drawer and mosaic entry.
