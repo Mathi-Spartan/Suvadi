@@ -19,7 +19,7 @@ A modern, app-style Tamil library in DigiCert blue with deep blue, orange and re
 - **JetBrains Mono**: numbers, release Nº, keyboard hints
 
 ## Signature
-The hero mosaic: every one of the 1,281 books is one tile, coloured by section. Hover acts as a magnifying lens (nearby tiles swell), the hovered book's section glows and its name shows below; a click sends a ripple across the tiles before the book opens. When idle, a slow shimmer passes and a few tiles twinkle. Legend chips highlight a section.
+The letter wall (எழுத்துச் சுவர்): every one of the 1,281 books is one tile showing the first Tamil letter of its title, tinted by section. Hover acts as a magnifying lens (nearby tiles swell), the hovered book's section glows and its name shows below; a click sends a ripple across the tiles before the book opens. When idle, a slow shimmer passes and a few tiles twinkle. Legend chips highlight a section.
 
 ## Layout
 Header (search palette ⌘K / Ctrl K, My shelf, theme) → hero (headline, search, mosaic) → Today bento (Kural of the day, book of the day, collection stats, letter heatmap, recently opened) → Library (filter rail + cards/list) → quick-view drawer for every book.
