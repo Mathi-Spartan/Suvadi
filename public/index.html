@@ -168,6 +168,34 @@ a{color:inherit}
 @keyframes prog{to{transform:none}}
 @media(max-width:980px){.hero{grid-template-columns:1fr}.qcard{min-height:300px}}
 
+/* ---------------- voices of Tamil: scrolling portraits ---------------- */
+.voices{position:relative;margin:4px 0 18px;padding:18px 0 6px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.vhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+.vhead b{font:800 clamp(1.1rem,1rem + .5vw,1.35rem)/1.3 var(--f-ui);letter-spacing:-.02em}
+.vhead b span{font:700 .85em var(--f-ta);color:var(--ink-3);margin-left:8px}
+.vhead small{font-size:13px;color:var(--ink-3)}
+.vtrack{display:flex;gap:16px;width:max-content;animation:vscroll 90s linear infinite;padding:6px 0 14px}
+.voices:hover .vtrack,.vtrack:focus-within{animation-play-state:paused}
+@keyframes vscroll{to{transform:translateX(-50%)}}
+.vp{flex:none;width:150px;padding:0;border:0;background:none;cursor:pointer;text-align:center}
+.vp .ph{position:relative;width:150px;height:186px;border-radius:80px 80px 18px 18px;overflow:hidden;background:var(--surface-2);box-shadow:0 0 0 1px var(--line),0 14px 26px -16px rgba(11,27,58,.6);transition:transform var(--dur-3) var(--ease-out),box-shadow var(--dur-3)}
+.vp .ph::before{content:"";position:absolute;inset:0;z-index:1;border-radius:inherit;box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--c) 70%,#fff);pointer-events:none}
+.vp .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,color-mix(in srgb,var(--c) 75%,#000) 100%);opacity:.75;transition:opacity var(--dur-3)}
+.vp img{width:100%;height:100%;object-fit:cover;object-position:50% 25%;filter:grayscale(.85) contrast(1.05);transition:filter var(--dur-3),transform var(--dur-4) var(--ease-out)}
+.vp .era{position:absolute;left:0;right:0;bottom:10px;z-index:2;font:600 11px var(--f-ui);color:#fff;letter-spacing:.02em}
+.vp b{display:block;margin-top:10px;font:700 15px/1.3 var(--f-ta)}
+.vp small{display:block;font:500 12px var(--f-ui);color:var(--ink-3)}
+.vp:hover .ph,.vp:focus-visible .ph{transform:translateY(-6px);box-shadow:0 0 0 1px var(--line),0 22px 34px -16px rgba(11,27,58,.7)}
+.vp:hover img,.vp:focus-visible img{filter:none;transform:scale(1.06)}
+.vp:hover .ph::after{opacity:.45}
+.vcredit{margin:0;font-size:11.5px;color:var(--ink-3)}
+.vcredit button{border:0;background:none;padding:0;color:var(--blue);font:inherit;cursor:pointer;text-decoration:underline}
+.vlist{display:none;margin:8px 0 0;padding:12px 14px;border-radius:var(--r-2);background:var(--surface-2);font-size:12px;line-height:1.7;color:var(--ink-2);columns:2 320px}
+.vlist.on{display:block}
+.vlist a{color:var(--blue)}
+@media(max-width:560px){.vp{width:118px}.vp .ph{width:118px;height:148px}.vtrack{gap:12px}}
+@media (prefers-reduced-motion:reduce){.vtrack{animation:none}.voices{overflow-x:auto}}
+
 /* counters */
 .counts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:6px}
 .cnt{padding:18px 20px;border-radius:var(--r-3);background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow-1)}
@@ -606,6 +634,13 @@ footer a{color:var(--blue);font-weight:600}
     </article>
   </section>
 
+  <section class="wrap" aria-label="Voices of Tamil">
+    <div class="vhead"><b>The voices of Tamil<span>தமிழின் குரல்கள்</span></b><small>Tap a poet to read their works</small></div>
+    <div class="voices"><div class="vtrack" id="vtrack"></div></div>
+    <p class="vcredit">Portraits, statues, stamps and paintings from Wikimedia Commons. <button data-act="vcredits">Image credits</button></p>
+    <div class="vlist" id="vlist"></div>
+  </section>
+
   <section class="wrap" aria-label="The collection in numbers">
     <div class="counts">
       <div class="cnt"><b><i class="cn" data-count="2000">0</i><em>+</em></b><span>years of Tamil writing</span><small>இரண்டாயிரம் ஆண்டுகள்</small></div>
@@ -797,6 +832,13 @@ function tick(){if($('#qcard').matches(':hover')){qt=setTimeout(tick,800);return
 $('#qdots').innerHTML=QUOTES.map(function(q,k){return '<button role="tab" aria-label="Line '+(k+1)+'" data-k="'+k+'"><i></i></button>'}).join('');
 document.documentElement.style.setProperty('--qd',QD+'ms');
 $('#qdots').addEventListener('click',function(e){var b=e.target.closest('button');if(b)quote(+b.dataset.k)});
+
+/* ---------- voices of Tamil ---------- */
+var VCOL=['#0174C3','#21468B','#FF7F00','#AE1C28','#2B8BD6','#7B2233','#3D5A80'];
+function voices(){fetch('/data/poets.json').then(function(r){return r.json()}).then(function(V){
+  var card=function(p,k,dup){return '<button class="vp" data-act="poet" data-q="'+esc(p.q)+'" style="--c:'+VCOL[k%VCOL.length]+'"'+(dup?' tabindex="-1" aria-hidden="true"':'')+'><span class="ph"><img src="'+esc(p.src)+'" alt="'+(dup?'':esc(p.en))+'" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.closest(\'.vp\').remove()"><span class="era">'+esc(p.era)+'</span></span><b>'+esc(p.ta)+'</b><small>'+esc(p.en)+'</small></button>'};
+  $('#vtrack').innerHTML=V.map(function(p,k){return card(p,k)}).join('')+V.map(function(p,k){return card(p,k,1)}).join('');
+  $('#vlist').innerHTML=V.map(function(p){return '<div>'+esc(p.en)+': <a href="'+p.page+'" target="_blank" rel="noopener">'+esc(p.file)+'</a>'+(p.license?' · '+esc(p.license)+(p.artist?' · '+esc(p.artist):''):' · see file page for licence')+'</div>'}).join('')}).catch(function(){})}
 
 /* ---------- count-up numbers, run when they scroll into view ---------- */
 function countUp(el){var to=+el.dataset.count,plain=to>=1900&&to<=2100&&el.dataset.year!==undefined,st=performance.now(),d=REDUCED?1:1400;
@@ -1116,6 +1158,8 @@ document.addEventListener('click',function(e){var a=e.target.closest('[data-act]
   if(k==='qopen'){var qb=a.dataset.i;if(qb!=='')openBook(+qb);else{S.q=QUOTES[qi][3];$('#hq').value=S.q;update();goLib()}}
   if(k==='seeAll'){S.secs=a.dataset.secs?a.dataset.secs.split(','):[];S.q='';$('#hq').value='';S.letter=null;S.mine=false;update();goLib()}
   if(k==='shL')shelfScroll(a,-1);if(k==='shR')shelfScroll(a,1);
+  if(k==='poet'){S.q=a.dataset.q;$('#hq').value=S.q;S.secs=[];S.letter=null;S.mine=false;update();goLib()}
+  if(k==='vcredits'){$('#vlist').classList.toggle('on')}
   if(k==='eraPrev')era(ei-1);if(k==='eraNext')era(ei+1);
   if(k==='placePrev'){stopTour();place(pi-1)}if(k==='placeNext'){stopTour();place(pi+1)}if(k==='tour')toggleTour();
   if(k==='labels'){var on=$('#mapc').classList.toggle('labels');a.setAttribute('aria-pressed',on);a.textContent=on?'Hide names':'Show names'}
@@ -1126,7 +1170,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&$('#share')
 
 /* ---------- start ---------- */
 var au0={};B.forEach(function(b){if(b.a)au0[b.a]=1});$('#cBooks').dataset.count=B.length;$('#cAuthors').dataset.count=Object.keys(au0).length;
-quote(qi);facts();eras();mapInit();shelves();badges(false);watchCounts();kural(false);bookOfDay((day*37)%B.length);stats();heat();recent();journey();counter(false);update();
+quote(qi);voices();facts();eras();mapInit();shelves();badges(false);watchCounts();kural(false);bookOfDay((day*37)%B.length);stats();heat();recent();journey();counter(false);update();
 var m=/^#book-\d+-(\d+)$/.exec(location.hash);if(m&&B[+m[1]])openBook(+m[1]);
 window.__lib={open:openBook,S:S,cmd:openCmd,theme:setTheme,quote:quote,covers:function(){return B.map(coverHTML)}};
 };
