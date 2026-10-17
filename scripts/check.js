@@ -17,4 +17,19 @@ const used = new Set([...html.matchAll(/var\((--[\w-]+)\)/g)].map(m => m[1])); /
 const defined = new Set([...html.matchAll(/(--[\w-]+)\s*:/g)].map(m => m[1]));
 const missing = [...used].filter(v => !defined.has(v));
 if (missing.length) fail('undefined CSS tokens: ' + missing.join(', '));
+// Palayakkarar Resistance section: page plus both story files, every item in both languages
+{
+  const r = readFileSync('public/resistance/index.html', 'utf8');
+  const ctx = { window: {} };
+  for (const l of ['en', 'ta']) new Function('window', readFileSync(`public/resistance/stories-${l}.js`, 'utf8'))(ctx.window);
+  const S = ctx.window.STORIES || {};
+  const ids = [...r.matchAll(/id:"(e\w+)"/g)].map(m => m[1]);
+  if (ids.length < 20) fail('resistance: timeline events missing');
+  for (const id of ids) for (const l of ['en', 'ta']) if (!S[l] || !S[l][id]) fail(`resistance: no ${l} story for ${id}`);
+  const usedR = new Set([...r.matchAll(/var\((--[\w-]+)\)/g)].map(m => m[1]));
+  const defR = new Set([...r.matchAll(/(--[\w-]+)\s*:/g)].map(m => m[1]));
+  const missR = [...usedR].filter(v => !defR.has(v));
+  if (missR.length) fail('resistance: undefined CSS tokens: ' + missR.join(', '));
+  console.log(`✓ resistance ok · ${ids.length} events, ${Object.keys(S.en).length} stories in each language`);
+}
 console.log(`✓ page ok · ${data.books.length} books in fallback catalogue`);

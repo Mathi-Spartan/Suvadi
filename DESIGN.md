@@ -41,3 +41,13 @@ Easing: `--ease-out`, `--ease-spring`, `--ease-in-out`. The script reads tokens 
 
 ## Checks
 `npm run check` (the Vercel build command) fails the deploy if the loader, the fallback catalogue or a CSS token is broken.
+
+## Palayakkarar Resistance section (`/resistance`)
+A bilingual (Tamil default, English switch) history of the Tamil resistance to the East India Company, 1755–1801, with a long-form story for every hero and every timeline event.
+
+- Files: `public/resistance/index.html` (page, data and reader), `stories-ta.js` and `stories-en.js` (the stories; same keys in both).
+- Uses the Suvadi palette and fonts, plus Source Serif 4 for English long-form reading.
+- `--ember` (orange family) marks martyrdom and places of execution; `--warn` marks disputed dates; `--leaf` is the palm-leaf strip and the "from tradition" boxes.
+- Story blocks: `h` heading, `p` paragraph, `t` oral tradition (shown in a labelled box), `n` note on the record. Only recorded history goes in `p`; anything from tradition goes in `t`.
+- Language and timeline filter are kept in the visitor's browser (`palayam-lang`, `palayam-filter`); theme follows `suvadi.theme`.
+- `npm run check` fails the deploy if any timeline event lacks a Tamil or English story.

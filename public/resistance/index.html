@@ -1,0 +1,667 @@
+<!doctype html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>பாளையக்காரர் எழுச்சி · Palayakkarar Resistance · Suvadi</title>
+<meta name="description" content="The Tamil chieftains who fought the East India Company, 1755–1801: Puli Thevar, Velu Nachiyar, Kattabomman, the Maruthu brothers and more. Sourced stories in Tamil and English.">
+<meta name="theme-color" content="#F4F7FB" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#071226" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="பாளையக்காரர் எழுச்சி · Palayakkarar Resistance">
+<meta property="og:description" content="Fifty years of Tamil resistance to the East India Company, before 1857. Sourced stories in Tamil and English.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anek+Tamil:wdth,wght@75..125,400..800&family=Hind+Madurai:wght@400;500;600;700&family=Onest:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem('suvadi.theme');if(t)document.documentElement.dataset.theme=JSON.parse(t)}catch(e){}</script>
+<style>
+/* Layout: a palm-leaf (olai) chronicle — one leaf as the hero, a ruled timeline, a register of heroes, a survey-sheet map, and a long-form reader. */
+:root{
+  color-scheme:light;
+  --paper:#F4F7FB; --surface:#FFFFFF; --ink:#0B1B3A; --muted:#47567A; --line:#DCE4EF;
+  --blue:#0174C3; --blue-soft:rgba(1,116,195,.1); --ember:#C25E00; --ember-soft:rgba(255,127,0,.12); --warn:#9a5b00; --warn-soft:#fbf1dc;
+  --leaf:#efe3c4; --leaf-edge:#c9b483; --leaf-ink:#3b2c10;
+  --f-display:'Onest', system-ui, sans-serif;
+  --f-tamil:'Anek Tamil', 'Hind Madurai', sans-serif;
+  --f-body:'Onest', 'Hind Madurai', system-ui, sans-serif;
+  --f-read:"Source Serif 4", Georgia, serif;
+  --r-s:6px; --r-m:12px; --r-pill:999px;
+  --ease-out:cubic-bezier(.2,.7,.2,1); --dur-1:140ms; --dur-2:260ms;
+  --step--1:clamp(.82rem,.8rem + .1vw,.88rem); --step-0:clamp(1rem,.96rem + .2vw,1.08rem);
+  --step-1:clamp(1.2rem,1.1rem + .5vw,1.45rem); --step-2:clamp(1.5rem,1.3rem + 1.1vw,2.1rem);
+  --step-3:clamp(2rem,1.5rem + 2.6vw,3.5rem);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#071226; --surface:#0D1C36; --ink:#EAF1FF; --muted:#A9B8D6; --line:#1E3156;
+  --blue:#3BA0F0; --blue-soft:rgba(59,160,240,.14); --ember:#FFA24D; --ember-soft:rgba(255,127,0,.16); --warn:#f0b75a; --warn-soft:#3a2c12;
+  --leaf:#3a3120; --leaf-edge:#6b5a33; --leaf-ink:#f3e6c6; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#071226; --surface:#0D1C36; --ink:#EAF1FF; --muted:#A9B8D6; --line:#1E3156;
+  --blue:#3BA0F0; --blue-soft:rgba(59,160,240,.14); --ember:#FFA24D; --ember-soft:rgba(255,127,0,.16); --warn:#f0b75a; --warn-soft:#3a2c12;
+  --leaf:#3a3120; --leaf-edge:#6b5a33; --leaf-ink:#f3e6c6; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:var(--step-0);line-height:1.65}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.ta{font-family:var(--f-tamil)}
+h1,h2,h3{text-wrap:balance;line-height:1.2;margin:0}
+.disp{font-family:var(--f-display);font-weight:700;letter-spacing:-.01em}
+html[lang="ta"] .disp{font-family:var(--f-tamil);font-weight:700;line-height:1.35}
+h2.disp{font-size:var(--step-2)}
+p{margin:0}
+a{color:var(--blue)}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
+.eyebrow{font-size:var(--step--1);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
+html[lang="ta"] .eyebrow{letter-spacing:.02em;text-transform:none}
+section{padding-block:clamp(40px,6vw,72px);border-top:1px solid var(--line)}
+.sec-head{display:grid;gap:8px;margin-bottom:24px;max-width:65ch}
+.sec-head .alt{color:var(--muted)}
+
+/* top bar */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;border-bottom:1px solid var(--line);background:var(--surface)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:8px 12px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.brand .mk{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(140deg,var(--blue),#21468B);color:#fff;font-family:var(--f-tamil);font-size:15px;flex:none}
+.crumb{font-size:var(--step--1);color:var(--muted)}
+.crumb b{color:var(--ink);font-weight:700}
+.bar-r{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.nav{display:flex;gap:2px;flex-wrap:wrap}
+.nav a{font-size:var(--step--1);text-decoration:none;color:var(--muted);padding:4px 10px;border-radius:var(--r-pill)}
+.nav a:hover{background:var(--blue-soft);color:var(--blue)}
+.nav a{white-space:nowrap}
+@media (max-width:640px){.bar-r{width:100%;flex-wrap:nowrap}.nav{flex:1;min-width:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}.nav::-webkit-scrollbar{display:none}.bar .crumb{display:none}}
+.lang{display:inline-flex;border:1px solid var(--line);border-radius:var(--r-pill);padding:2px;background:var(--paper)}
+.lang button{border:0;background:transparent;color:var(--muted);padding:4px 12px;border-radius:var(--r-pill);cursor:pointer;font-size:var(--step--1);font-weight:500}
+.lang button[aria-pressed="true"]{background:var(--blue);color:var(--surface)}
+.lang button[lang="ta"]{font-family:var(--f-tamil)}
+
+/* hero */
+.hero{padding-block:clamp(32px,6vw,64px) clamp(28px,4vw,48px);border-top:0}
+.hero .kick{font-family:var(--f-tamil);font-size:var(--step-1);font-weight:700;color:var(--blue);line-height:1.4}
+.hero h1{font-size:var(--step-3);margin-top:10px;max-width:20ch}
+html[lang="ta"] .hero h1{font-size:var(--step-2);max-width:28ch}
+.hero .lede{margin-top:16px;max-width:62ch;color:var(--muted);font-size:var(--step-1);line-height:1.55}
+html[lang="ta"] .hero .lede{font-size:var(--step-0);line-height:1.8}
+.leaf{margin-top:32px;position:relative;background:var(--leaf);border:1px solid var(--leaf-edge);border-radius:40px/50%;
+  padding:22px clamp(48px,8vw,96px);color:var(--leaf-ink);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  background-image:repeating-linear-gradient(0deg,transparent 0 11px,color-mix(in srgb,var(--leaf-edge) 35%,transparent) 11px 12px)}
+.leaf::before,.leaf::after{content:"";position:absolute;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--paper);border:1px solid var(--leaf-edge)}
+.leaf::before{left:clamp(18px,3vw,36px)}.leaf::after{right:clamp(18px,3vw,36px)}
+.leaf .yr{font-family:var(--f-display);font-weight:800;font-size:var(--step-3);line-height:1}
+.leaf .mid{flex:1;min-width:160px;text-align:center;font-family:var(--f-tamil);font-size:var(--step--1)}
+.leaf .mid span{display:block;font-family:var(--f-body);opacity:.85}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:24px}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:16px;display:grid;gap:4px;align-content:start}
+.fact .n{font-family:var(--f-display);font-weight:800;font-size:var(--step-2);color:var(--blue);font-variant-numeric:tabular-nums;line-height:1.1}
+.fact p{font-size:var(--step--1);color:var(--muted)}
+
+/* chips */
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:6px 12px;border-radius:var(--r-pill);cursor:pointer;font-size:var(--step--1);transition:background var(--dur-1) var(--ease-out),border-color var(--dur-1) var(--ease-out)}
+.chip:hover{border-color:var(--blue)}
+.chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--surface)}
+
+/* timeline */
+.tl{list-style:none;margin:0;padding:0;display:grid}
+.ev{display:grid;grid-template-columns:minmax(96px,132px) 1fr;gap:16px;padding-block:18px;border-bottom:1px solid var(--line)}
+.ev .when{font-variant-numeric:tabular-nums;font-weight:700;font-size:var(--step--1)}
+.ev .when span{display:block;font-family:var(--f-display);font-weight:800;font-size:var(--step-1);color:var(--blue)}
+.ev.fall .when span{color:var(--ember)}
+.ev h3{font-size:var(--step-0);font-weight:700}
+html[lang="ta"] .ev h3{font-family:var(--f-tamil);font-weight:600}
+.ev .body{min-width:0;display:grid;gap:6px}
+.ev .body p{color:var(--muted);max-width:65ch}
+.meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:var(--step--1)}
+.place{color:var(--muted)}
+.tag{font-size:.75rem;padding:1px 8px;border-radius:var(--r-pill);font-weight:500}
+.tag.disp-t{background:var(--warn-soft);color:var(--warn)}
+.tag.fallen{background:var(--ember-soft);color:var(--ember)}
+.tag.era{background:var(--blue-soft);color:var(--blue)}
+.read{justify-self:start;border:0;background:none;color:var(--blue);padding:0;font-weight:700;cursor:pointer;font-size:var(--step--1)}
+.read:hover{text-decoration:underline}
+.empty{color:var(--muted);padding:16px 0}
+@media (max-width:520px){.ev{grid-template-columns:1fr;gap:6px}.ev .when span{display:inline;margin-right:8px}}
+
+/* heroes */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.card{text-align:left;color:inherit;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:18px;cursor:pointer;display:grid;gap:6px;align-content:start;transition:border-color var(--dur-1) var(--ease-out),transform var(--dur-2) var(--ease-out)}
+.card:hover{border-color:var(--blue);transform:translateY(-2px)}
+.card .nm{font-family:var(--f-tamil);font-size:var(--step-1);font-weight:700;line-height:1.35}
+.card .sub{font-weight:700;font-size:var(--step--1);color:var(--muted)}
+.card .yrs{font-size:var(--step--1);color:var(--muted);font-variant-numeric:tabular-nums}
+.card .role{font-size:var(--step--1)}
+.card .fate{font-size:var(--step--1);color:var(--ember)}
+.card .more{font-size:var(--step--1);color:var(--blue);font-weight:700;margin-top:6px}
+.subhead{margin:32px 0 12px;font-weight:700}
+.subhead span{display:block;font-weight:400;color:var(--muted);font-size:var(--step--1)}
+
+/* map */
+.mapwrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:760px){.mapwrap{grid-template-columns:1fr}}
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-m);padding:12px}
+.sheet svg{display:block;width:100%;height:auto}
+.sheet .grat{stroke:var(--line);stroke-width:1;fill:none}
+.sheet .glab{fill:var(--muted);font-size:10px;font-family:var(--f-body)}
+.sheet .pt{cursor:pointer}
+.sheet .pt circle{fill:var(--blue);stroke:var(--surface);stroke-width:2}
+.sheet .pt.fall circle{fill:var(--ember)}
+.sheet .pt text{fill:var(--ink);font-size:12px;font-family:var(--f-body)}
+html[lang="ta"] .sheet .pt text{font-family:var(--f-tamil);font-size:11px}
+.sheet .pt.on circle{r:9}
+.sheet .pt:focus-visible{outline:none}
+.sheet .pt:focus-visible circle{stroke:var(--ink)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:var(--step--1);color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.pinfo{display:grid;gap:10px}
+.pinfo h3{font-size:var(--step-1)}
+.pinfo p{color:var(--muted)}
+.plist{display:flex;flex-wrap:wrap;gap:6px}
+
+/* disputes */
+.disputes{display:grid;gap:12px}
+.dsp{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:var(--r-s);padding:16px;display:grid;gap:6px}
+.dsp h3{font-size:var(--step-0)}
+.dsp p{color:var(--muted);font-size:var(--step--1);max-width:75ch}
+
+/* glossary */
+.gloss{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px 24px;margin:0}
+.gloss div{padding-block:12px;border-bottom:1px solid var(--line)}
+.gloss dt{font-weight:700}.gloss dt .alt{font-weight:500;color:var(--blue);margin-left:6px}
+.gloss dd{margin:4px 0 0;color:var(--muted);font-size:var(--step--1)}
+
+.sources{columns:2 280px;column-gap:32px;padding-left:24px;margin:0;font-size:var(--step--1)}
+.sources li{break-inside:avoid;margin-bottom:8px;color:var(--muted)}
+.src{font-size:.78rem;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding-block:32px;color:var(--muted);font-size:var(--step--1)}
+
+/* reader */
+dialog.reader{border:0;padding:0;margin:auto;width:min(760px,100%);max-width:100%;height:min(92vh,100%);max-height:100%;border-radius:var(--r-m);background:var(--surface);color:var(--ink);box-shadow:0 20px 60px rgba(10,20,40,.25)}
+dialog.reader::backdrop{background:rgba(10,20,40,.5)}
+@media (max-width:640px){dialog.reader{height:100%;border-radius:0}}
+.rd{display:flex;flex-direction:column;height:100%}
+.rd-top{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));padding-top:max(10px,env(safe-area-inset-top,0px));border-bottom:1px solid var(--line);flex-wrap:wrap}
+.rd-top .eyebrow{flex:1;min-width:0}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:var(--r-pill);padding:5px 12px;cursor:pointer;font-size:var(--step--1)}
+.btn:hover{border-color:var(--blue);color:var(--blue)}
+.rd-body{overflow:auto;flex:1;padding:clamp(20px,4vw,40px) max(20px,env(safe-area-inset-right,0px)) 40px max(20px,env(safe-area-inset-left,0px))}
+article.story{max-width:62ch;margin:0 auto;display:grid;gap:18px}
+article.story h1{font-size:var(--step-2)}
+article.story .dek{font-size:var(--step-1);color:var(--muted);line-height:1.5}
+html[lang="ta"] article.story .dek{font-size:var(--step-0);line-height:1.85}
+article.story .rmeta{display:flex;gap:8px 16px;flex-wrap:wrap;font-size:var(--step--1);color:var(--muted);padding-bottom:12px;border-bottom:1px solid var(--line)}
+article.story h2{font-family:var(--f-body);font-weight:700;font-size:var(--step-1);margin-top:12px}
+html[lang="ta"] article.story h2{font-family:var(--f-tamil);font-size:var(--step-0)}
+article.story p{font-family:var(--f-read);font-size:1.12rem;line-height:1.75}
+html[lang="ta"] article.story p{font-family:var(--f-body);font-size:1.08rem;line-height:1.95}
+article.story .trad{background:var(--leaf);color:var(--leaf-ink);border-radius:var(--r-s);padding:14px 16px;display:grid;gap:6px}
+article.story .trad b,article.story .note b{font-family:var(--f-body);font-size:var(--step--1);letter-spacing:.04em}
+article.story .trad p{font-size:1rem;font-style:italic}
+html[lang="ta"] article.story .trad p{font-style:normal}
+article.story .note{border-top:1px solid var(--line);padding-top:14px;display:grid;gap:6px}
+article.story .note p{font-family:var(--f-body);font-size:var(--step--1);color:var(--muted);line-height:1.6}
+article.story .rel{display:grid;gap:8px}
+article.story .rel ul{margin:0;padding-left:20px;display:grid;gap:4px;font-size:var(--step--1)}
+.rd-foot{display:flex;justify-content:space-between;gap:8px;padding:10px max(16px,env(safe-area-inset-right,0px)) max(10px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));border-top:1px solid var(--line)}
+.rd-foot .btn{max-width:48%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.linkbtn{border:0;background:none;padding:0;color:var(--blue);cursor:pointer;text-align:left;font-size:inherit}
+.linkbtn:hover{text-decoration:underline}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="bar"><div class="wrap">
+  <a class="brand" href="/" aria-label="Suvadi home"><span class="mk" aria-hidden="true"><b>சு</b></span><span class="crumb"><span data-i="crumb0"></span> <span aria-hidden="true">/</span> <b data-i="crumb1"></b></span></a>
+  <div class="bar-r">
+    <nav class="nav" aria-label="Sections">
+      <a href="#timeline" data-i="nav1"></a><a href="#heroes" data-i="nav2"></a><a href="#map" data-i="nav3"></a><a href="#records" data-i="nav4"></a><a href="#sources" data-i="nav5"></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" lang="ta" data-lang="ta">தமிழ்</button><button type="button" lang="en" data-lang="en">English</button>
+    </div>
+  </div>
+</div></div>
+
+<main>
+<header class="hero"><div class="wrap">
+  <p class="kick" lang="ta">விடுதலையின் முதல் முழக்கம்</p>
+  <h1 class="disp" data-i="h1"></h1>
+  <p class="lede" data-i="lede"></p>
+  <div class="leaf" role="img" aria-label="1755 – 1801">
+    <span class="yr">1755</span>
+    <span class="mid" lang="ta">நெற்கட்டும்செவல் → திருப்பத்தூர்<span data-i="leaf"></span></span>
+    <span class="yr">1801</span>
+  </div>
+  <div class="facts" id="facts"></div>
+</div></header>
+
+<section id="timeline"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow" data-i="tlEy"></p>
+    <h2 class="disp" data-i="tlH"></h2>
+    <p data-i="tlP"></p>
+  </div>
+  <div class="chips" id="tlChips" role="group"></div>
+  <ol class="tl" id="tl"></ol>
+</div></section>
+
+<section id="heroes"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow" data-i="hEy"></p>
+    <h2 class="disp" data-i="hH"></h2>
+    <p data-i="hP"></p>
+  </div>
+  <div class="grid" id="heroGrid"></div>
+  <p class="subhead"><span data-i="oH" style="display:inline;color:var(--ink);font-size:inherit;font-weight:700"></span><span data-i="oP"></span></p>
+  <div class="grid" id="otherGrid"></div>
+</div></section>
+
+<section id="map"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow" data-i="mEy"></p>
+    <h2 class="disp" data-i="mH"></h2>
+    <p data-i="mP"></p>
+  </div>
+  <div class="mapwrap">
+    <div class="sheet">
+      <svg id="mapSvg" viewBox="0 0 420 600" role="group"></svg>
+      <div class="legend"><span><i style="background:var(--blue)"></i><span data-i="lg1"></span></span><span><i style="background:var(--ember)"></i><span data-i="lg2"></span></span></div>
+    </div>
+    <div class="pinfo" id="pinfo" aria-live="polite"></div>
+  </div>
+</div></section>
+
+<section id="records"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow" data-i="rEy"></p>
+    <h2 class="disp" data-i="rH"></h2>
+    <p data-i="rP"></p>
+  </div>
+  <div class="disputes" id="disputes"></div>
+</div></section>
+
+<section id="glossary"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow" data-i="gEy"></p>
+    <h2 class="disp" data-i="gH"></h2>
+  </div>
+  <dl class="gloss" id="gloss"></dl>
+</div></section>
+
+<section id="sources"><div class="wrap">
+  <div class="sec-head">
+    <p class="eyebrow" data-i="sEy"></p>
+    <h2 class="disp" data-i="sH"></h2>
+    <p data-i="sP"></p>
+  </div>
+  <ol class="sources" id="srcList"></ol>
+</div></section>
+</main>
+
+<footer><div class="wrap" data-i="foot"></div></footer>
+
+<dialog class="reader" id="reader" aria-labelledby="rdTitle">
+  <div class="rd">
+    <div class="rd-top"><span class="eyebrow" id="rdKick"></span><button class="btn" type="button" id="rdLang"></button><button class="btn" type="button" id="rdClose"></button></div>
+    <div class="rd-body" id="rdBody"></div>
+    <div class="rd-foot"><button class="btn" type="button" id="rdPrev"></button><button class="btn" type="button" id="rdNext"></button></div>
+  </div>
+</dialog>
+
+<script src="/resistance/stories-en.js"></script>
+<script src="/resistance/stories-ta.js"></script>
+<script>
+const UI = {
+  en:{crumb0:"Suvadi",crumb1:"Palayakkarar Resistance",nav1:"Timeline",nav2:"Heroes",nav3:"Map",nav4:"Records",nav5:"Sources",
+    h1:"Tamil Nadu fought the Company for half a century before 1857",
+    lede:"From Puli Thevar's fort at Nerkattumseval in 1755 to the gallows at Tiruppattur in 1801, the Palayakkarars of the south refused the East India Company's tribute and went to war for it. Every story here is drawn from the recorded history, and where a detail comes from oral tradition, we say so.",
+    leaf:"46 years of armed resistance",
+    tlEy:"Chronicle",tlH:"Timeline of the resistance",tlP:"Filter by hero, and open any event to read its full story. Dates marked disputed differ between sources.",
+    hEy:"Register",hH:"The people who fought",hP:"Open a name to read the full story of their life and war.",
+    oH:"The other side",oP:"Company officers, the Nawab's commanders, and those who helped capture the rebels",
+    mEy:"Survey sheet",mH:"Where it happened",mP:"Positions are approximate, plotted on a latitude and longitude grid. Tap a place.",
+    lg1:"Fort or battle",lg2:"Place of execution",
+    rEy:"For researchers",rH:"Where the records disagree",rP:"Sources differ on some dates and details. The timeline shows the most widely attested version; the alternatives are listed here.",
+    gEy:"Terms",gH:"Words you will meet",sEy:"Bibliography",sH:"Sources",sP:"Numbers in each story point to this list. Government district records and Tamil Nadu state history texts are preferred where they exist.",
+    foot:"Part of Suvadi, a free library of Tamil literature and history.",
+    all:"All",read:"Read the story",fallen:"martyrdom",ctx:"context",disp:"disputed",empty:"No events for this filter.",
+    trad:"FROM TRADITION",note:"ON THE RECORD",srcs:"Sources",close:"Close",prev:"Previous",next:"Next",
+    kHero:"Hero",kOther:"The other side",kEvent:"Event",related:"On the timeline",peopleHere:"People connected to this place",switchTo:"தமிழில் படிக்க"},
+  ta:{crumb0:"சுவடி",crumb1:"பாளையக்காரர் எழுச்சி",nav1:"காலவரிசை",nav2:"மாவீரர்கள்",nav3:"வரைபடம்",nav4:"பதிவுகள்",nav5:"ஆதாரங்கள்",
+    h1:"1857-க்கு அரை நூற்றாண்டுக்கு முன்பே கம்பெனியை எதிர்த்துப் போரிட்ட தமிழ்நாடு",
+    lede:"1755-இல் நெற்கட்டும்செவலில் பூலித்தேவனின் கோட்டை முதல் 1801-இல் திருப்பத்தூர்த் தூக்குமேடை வரை, தெற்கின் பாளையக்காரர்கள் கிழக்கிந்தியக் கம்பெனியின் கப்பத்தை மறுத்து அதற்காகப் போர் தொடுத்தனர். இங்குள்ள ஒவ்வொரு கதையும் பதிவான வரலாற்றிலிருந்தே எடுக்கப்பட்டது; ஏதேனும் ஒரு விவரம் வாய்மொழி மரபிலிருந்து வந்தால், அதை வெளிப்படையாகக் குறிப்பிடுகிறோம்.",
+    leaf:"46 ஆண்டு ஆயுதப் போராட்டம்",
+    tlEy:"வரலாற்றுச் சுவடு",tlH:"எழுச்சியின் காலவரிசை",tlP:"மாவீரர் வாரியாக வடிகட்டுங்கள்; எந்த நிகழ்வையும் திறந்து முழுக் கதையைப் படியுங்கள். முரண் எனக் குறிக்கப்பட்ட தேதிகள் ஆதாரங்களுக்கிடையே வேறுபடுகின்றன.",
+    hEy:"பதிவேடு",hH:"போரிட்டவர்கள்",hP:"ஒரு பெயரைத் திறந்து அவர்தம் வாழ்வும் போரும் பற்றிய முழுக் கதையைப் படியுங்கள்.",
+    oH:"மறுபக்கம்",oP:"கம்பெனி அதிகாரிகள், நவாபின் தளபதிகள், கிளர்ச்சியாளர்களைப் பிடித்துக் கொடுக்க உதவியவர்கள்",
+    mEy:"நில அளவைத் தாள்",mH:"நிகழ்ந்த இடங்கள்",mP:"இடங்கள் அட்ச, தீர்க்கக் கோடுகளின் மேல் தோராயமாகக் குறிக்கப்பட்டுள்ளன. ஓர் இடத்தைத் தொடுங்கள்.",
+    lg1:"கோட்டை அல்லது போர்க்களம்",lg2:"உயிர்த்தியாக இடம்",
+    rEy:"ஆய்வாளர்களுக்கு",rH:"முரண்படும் பதிவுகள்",rP:"சில தேதிகளிலும் விவரங்களிலும் ஆதாரங்கள் வேறுபடுகின்றன. காலவரிசை மிகப் பரவலாக உறுதிப்படுத்தப்பட்ட பதிப்பைக் காட்டுகிறது; மாற்றுக் கணக்குகள் இங்கே.",
+    gEy:"சொற்கள்",gH:"நீங்கள் சந்திக்கும் சொற்கள்",sEy:"நூற்பட்டியல்",sH:"ஆதாரங்கள்",sP:"ஒவ்வொரு கதையிலும் உள்ள எண்கள் இந்தப் பட்டியலைக் குறிக்கின்றன. அரசு மாவட்டப் பதிவுகளுக்கும் தமிழ்நாட்டு அரசு வரலாற்றுப் பாடநூல்களுக்கும் முன்னுரிமை தரப்படுகிறது.",
+    foot:"தமிழ் இலக்கியமும் வரலாறும் இலவசமாகக் கிடைக்கும் சுவடி நூலகத்தின் ஒரு பகுதி.",
+    all:"அனைத்தும்",read:"கதையைப் படிக்க",fallen:"உயிர்த்தியாகம்",ctx:"பின்னணி",disp:"முரண்",empty:"இந்த வடிகட்டலுக்கு நிகழ்வுகள் இல்லை.",
+    trad:"மரபுவழிச் செய்தி",note:"பதிவுக் குறிப்பு",srcs:"ஆதாரங்கள்",close:"மூடு",prev:"முந்தையது",next:"அடுத்தது",
+    kHero:"மாவீரர்",kOther:"மறுபக்கம்",kEvent:"நிகழ்வு",related:"காலவரிசையில்",peopleHere:"இந்த இடத்துடன் தொடர்புடையவர்கள்",switchTo:"Read in English"}
+};
+
+const SRC = {
+  1:["Tamil Nadu state history text: Palayakkarars' Revolt 1755–1801","https://www.brainkart.com/article/Palayakkarars--Revolt-1755-1801_41659/"],
+  2:["Tamil Nadu state history text: Early Resistance of Southern Palayakkarars against the British","https://www.brainkart.com/article/Early-Resistance-of-Southern-Palayakkarars-against-the-British_36979/"],
+  3:["Manonmaniam Sundaranar University, History of Tamil Nadu since 1801 CE","https://www.msuniv.ac.in/images/distance%20education/learning%20materials/ug%20pg%202023/ug%202021/JMHY32IIISemHistoryofTamilNaduSince1801CE.pdf"],
+  4:["Sivaganga District Administration, Eminent Personalities","https://sivaganga.nic.in/?p=24614"],
+  5:["Dindigul District Administration, History","https://dindigul.nic.in/history/"],
+  6:["Indian Culture portal (Ministry of Culture), Velu Nachiyar and Kuyili","https://indianculture.gov.in/node/2790246"],
+  7:["Scroll.in, Remembering the Maruthu Pandiyar brothers (citing K. Rajayyan)","https://scroll.in/magazine/851114/remembering-the-maruthu-pandiyar-brothers-the-leaders-of-the-south-indian-rebellion-of-1801"],
+  8:["India Post stamp citation, Veerapandiya Kattabomman (1999), via iStampGallery","https://istampgallery.com/veerapandia-kattabomman/"],
+  9:["GKToday, Poligar Revolts in South India","https://www.gktoday.in/poligar-revolts-in-south-india/"],
+  10:["Wikipedia, Veerapandiya Kattabomman","https://en.wikipedia.org/wiki/Veerapandiya_Kattabomman"],
+  11:["Wikipedia, Oomaithurai","https://en.wikipedia.org/wiki/Oomaithurai"],
+  12:["Wikipedia, Carnatic Treaty","https://en.wikipedia.org/wiki/Carnatic_Treaty"],
+  13:["Wikipedia, Dheeran Chinnamalai","https://en.wikipedia.org/wiki/Dheeran_Chinnamalai"],
+  14:["Wikipedia, Maruthanayagam Pillai (Yusuf Khan)","https://en.wikipedia.org/wiki/Maruthanayagam_Pillai"],
+  15:["Lok Sabha debates: monument for Gopal Naicker of Virupakshi","https://eparlib.sansad.in/bitstream/123456789/730587/1/8202.pdf"],
+  16:["Live History India, Velu Nachiyar","https://livehistoryindia.com/story/people/velu-nachiyar"],
+  17:["Wikipedia, Veeran Sundaralingam","https://en.wikipedia.org/wiki/Veeran_Sundaralingam"],
+  18:["Wikipedia, Ondiveeran","https://en.wikipedia.org/wiki/Ondiveeran"],
+  19:["Wikipedia, Velu Nachiyar","https://en.wikipedia.org/wiki/Velu_Nachiyar"],
+  20:["Wikipedia, Kuyili","https://en.wikipedia.org/wiki/Kuyili"],
+  21:["Wikipedia, Maruthu Pandiyar","https://en.wikipedia.org/wiki/Maruthu_Pandiyar"],
+  22:["RJISAC journal, The Poligar Rebellion of 1799–1801","https://www.rjisacjournal.com/the-poligar-rebellion-of-1799-1801/"],
+  23:["Swarajya, Srirangam proclamation letter found in Tamil Nadu Archives","https://swarajyamag.com/amp/story/news-brief/222-years-of-marudu-brothers-famous-srirangam-proclamation-letter-alerting-english-east-india-company-discovered"],
+  24:["The Hindu (2022), Maruthu brothers, via TNPSC Thervupettagam","https://www.tnpscthervupettagam.com/ta/articles-detail/மருது-சகோதரர்கள்-போற்றப்பட-வேண்டிய-வீரம்"],
+  25:["Sadashree, Dheeran Chinnamalai (popular account)","https://sadashree.substack.com/p/dheeran-chinnamalai"],
+  26:["Wikipedia, Puli Thevar","https://en.wikipedia.org/wiki/Puli_Thevar"],
+  27:["India Post stamp citation, Dheeran Chinnamalai, via iStampGallery","https://istampgallery.com/dheeran-chinnamalai/"],
+  28:["India Post stamp citation, Ondiveeran (2022), via iStampGallery","https://istampgallery.com/ondiveeran/"],
+  29:["India Post stamp citation, Marudhu Pandiar Brothers (2004), via iStampGallery","https://istampgallery.com/marudhu-pandiar-brothers/"]
+};
+
+const P = {
+  puli:{ta:"பூலித்தேவன்",en:"Puli Thevar",yrs:"1715 – c. 1767",place:"nerk",
+    role:{en:"Palayakkarar of Nerkattumseval",ta:"நெற்கட்டும்செவல் பாளையக்காரர்"},
+    fate:{en:"Escaped after 1767; last days unknown",ta:"1767-க்குப் பின் தப்பினார்; இறுதி நாட்கள் அறியப்படவில்லை"},src:[1,2,3,26]},
+  ondi:{ta:"ஒண்டிவீரன்",en:"Ondiveeran",yrs:"– 1771",place:"nerk",
+    role:{en:"Commander in Puli Thevar's army",ta:"பூலித்தேவனின் படைத்தலைவர்"},
+    fate:{en:"Fell in battle near Manur, 20 Aug 1771",ta:"1771 ஆகஸ்ட் 20, மானூர் அருகே போரில் வீழ்ந்தார்"},src:[1,18,28]},
+  velu:{ta:"வேலு நாச்சியார்",en:"Rani Velu Nachiyar",yrs:"1730 – 1796",place:"siva",
+    role:{en:"Queen of Sivaganga",ta:"சிவகங்கை அரசி"},
+    fate:{en:"Retook Sivaganga in 1780; died 25 Dec 1796",ta:"1780-இல் சிவகங்கையை மீட்டார்; 1796 டிசம்பர் 25 மறைந்தார்"},src:[4,1,3,16,19]},
+  kuyili:{ta:"குயிலி",en:"Kuyili",yrs:"– 1780",place:"siva",
+    role:{en:"Commander of Velu Nachiyar's women's guard",ta:"வேலு நாச்சியாரின் பெண் படைத்தளபதி"},
+    fate:{en:"Gave her life destroying the Company armoury, 1780",ta:"1780-இல் கம்பெனி ஆயுதக் கிடங்கை அழித்து உயிர் நீத்தார்"},src:[6,2,20]},
+  maruthu:{ta:"மருது பாண்டியர்",en:"Maruthu Pandiyar brothers",yrs:"1748 · 1753 – 1801",place:"siva",
+    role:{en:"Commander and minister of Sivaganga",ta:"சிவகங்கையின் படைத்தலைவரும் அமைச்சரும்"},
+    fate:{en:"Hanged at Tiruppattur fort, 24 Oct 1801",ta:"1801 அக்டோபர் 24, திருப்பத்தூர்க் கோட்டையில் தூக்கிலிடப்பட்டனர்"},src:[4,1,2,7,21,23,29]},
+  katta:{ta:"வீரபாண்டிய கட்டபொம்மன்",en:"Veerapandiya Kattabomman",yrs:"1760 – 1799",place:"panch",
+    role:{en:"Palayakkarar of Panchalankurichi",ta:"பாஞ்சாலங்குறிச்சி பாளையக்காரர்"},
+    fate:{en:"Hanged at Kayathar, 16 Oct 1799",ta:"1799 அக்டோபர் 16, கயத்தாற்றில் தூக்கிலிடப்பட்டார்"},src:[1,2,3,8,10,22]},
+  sundar:{ta:"வீரன் சுந்தரலிங்கம்",en:"Veeran Sundaralingam",yrs:"– 1799",place:"panch",
+    role:{en:"Commander in Kattabomman's army",ta:"கட்டபொம்மனின் தளபதி"},
+    fate:{en:"Died blowing up a Company ammunition dump",ta:"கம்பெனி வெடிமருந்துக் கிடங்கைத் தகர்த்து உயிர் நீத்தார்"},src:[17,9]},
+  oomai:{ta:"ஊமைத்துரை",en:"Oomaithurai",yrs:"– 1801",place:"panch",
+    role:{en:"Younger brother of Kattabomman",ta:"கட்டபொம்மனின் தம்பி"},
+    fate:{en:"Executed at Panchalankurichi, 16 Nov 1801",ta:"1801 நவம்பர் 16, பாஞ்சாலங்குறிச்சியில் கொல்லப்பட்டார்"},src:[1,2,11,22]},
+  gopala:{ta:"கோபால நாயக்கர்",en:"Gopala Nayak of Virupachi",yrs:"– 1801",place:"virup",
+    role:{en:"Palayakkarar of Virupachi, Dindigul division",ta:"விருப்பாட்சி பாளையக்காரர், திண்டுக்கல் பிரிவு"},
+    fate:{en:"Executed in 1801, aged seventy-three",ta:"1801-இல், எழுபத்து மூன்று வயதில் தூக்கிலிடப்பட்டார்"},src:[1,5,15,7]},
+  chinna:{ta:"தீரன் சின்னமலை",en:"Dheeran Chinnamalai",yrs:"1756 – 1805",place:"odan",
+    role:{en:"Kongu chieftain",ta:"கொங்குத் தலைவன்"},
+    fate:{en:"Hanged at Sankagiri fort, 31 Jul 1805",ta:"1805 ஜூலை 31, சங்ககிரிக் கோட்டையில் தூக்கிலிடப்பட்டார்"},src:[1,3,13,27,25]}
+};
+const O = {
+  yusuf:{ta:"யூசுப்கான் (மருதநாயகம்)",en:"Yusuf Khan (Maruthanayagam)",yrs:"1725 – 1764",role:{en:"Company commandant, later a rebel",ta:"கம்பெனித் தளபதி, பின்னர் கலகக்காரர்"},fate:{en:"Hanged near Madurai, 15 Oct 1764",ta:"1764 அக்டோபர் 15, மதுரை அருகே தூக்கிலிடப்பட்டார்"},src:[1,2,14]},
+  heron:{ta:"கர்னல் ஹெரான்",en:"Col. Alexander Heron",yrs:"1755",role:{en:"Led the first expedition into Tirunelveli",ta:"திருநெல்வேலிக்கான முதல் படையெடுப்பின் தளபதி"},fate:{en:"Withdrew, then dismissed",ta:"பின்வாங்கினார்; பதவி நீக்கப்பட்டார்"},src:[1,3]},
+  jackson:{ta:"ஜாக்சன்",en:"W. C. Jackson",yrs:"1798",role:{en:"Collector of Ramnad",ta:"இராமநாதபுரக் கலெக்டர்"},fate:{en:"Dismissed after the Ramanathapuram incident",ta:"இராமநாதபுர நிகழ்வுக்குப் பின் பதவி நீக்கம்"},src:[1,2]},
+  banner:{ta:"மேஜர் பானர்மேன்",en:"Maj. John Bannerman",yrs:"1799",role:{en:"Commanded the 1799 campaign",ta:"1799 படையெடுப்பின் தளபதி"},fate:{en:"Took Panchalankurichi; hanged Kattabomman",ta:"பாஞ்சாலங்குறிச்சியைக் கைப்பற்றினார்; கட்டபொம்மனைத் தூக்கிலிட்டார்"},src:[1,2,8]},
+  agnew:{ta:"லெப். கர்னல் அக்னியூ",en:"Lt. Col. P. A. Agnew",yrs:"1801",role:{en:"Commanded the 1801 campaign",ta:"1801 படையெடுப்பின் தளபதி"},fate:{en:"Took Panchalankurichi and Kalaiyarkoil",ta:"பாஞ்சாலங்குறிச்சியையும் காளையார்கோவிலையும் கைப்பற்றினார்"},src:[1,22,23]},
+  tondai:{ta:"விஜயரகுநாதத் தொண்டைமான்",en:"Vijaya Raghunatha Tondaiman",yrs:"1799",role:{en:"Raja of Pudukkottai",ta:"புதுக்கோட்டை மன்னர்"},fate:{en:"Handed Kattabomman to the Company",ta:"கட்டபொம்மனைக் கம்பெனியிடம் ஒப்படைத்தார்"},src:[2,10]}
+};
+
+const PL = {
+  nerk:{en:"Nerkattumseval",ta:"நெற்கட்டும்செவல்",lat:9.23,lon:77.45,w:["puli","ondi"],x:{en:"Puli Thevar's fort, besieged by Yusuf Khan in 1761 and taken by Captain Campbell in 1767.",ta:"பூலித்தேவனின் கோட்டை; 1761-இல் யூசுப்கானும் 1767-இல் கேப்டன் கேம்பெலும் முற்றுகையிட்டனர்."}},
+  kalak:{en:"Kalakkad",ta:"களக்காடு",lat:8.52,lon:77.55,w:["puli"],x:{en:"Where Mahfuz Khan's army was routed after Travancore's soldiers joined Puli Thevar.",ta:"திருவிதாங்கூர் வீரர்கள் பூலித்தேவனுடன் இணைந்த பின் மாபூஸ்கானின் படை சிதறிய இடம்."}},
+  manur:{en:"Manur",ta:"மானூர்",lat:8.86,lon:77.62,w:["ondi"],fall:1,lx:-1,x:{en:"Ondiveeran fell in battle near here on 20 August 1771.",ta:"1771 ஆகஸ்ட் 20 அன்று ஒண்டிவீரன் இதன் அருகே போரில் வீழ்ந்தார்."}},
+  palay:{en:"Palayamkottai",ta:"பாளையங்கோட்டை",lat:8.72,lon:77.74,w:["oomai"],x:{en:"Company fort and prison. Oomaithurai and Sevathaiah escaped from it on 2 February 1801.",ta:"கம்பெனிக் கோட்டையும் சிறையும். 1801 பிப்ரவரி 2 அன்று ஊமைத்துரையும் சிவத்தையாவும் இங்கிருந்து தப்பினர்."}},
+  kaya:{en:"Kayathar",ta:"கயத்தாறு",lat:8.95,lon:77.77,w:["katta"],fall:1,x:{en:"Kattabomman was tried before the palayakkarars and hanged here on 16 October 1799.",ta:"பாளையக்காரர்கள் முன் விசாரிக்கப்பட்டு 1799 அக்டோபர் 16 அன்று கட்டபொம்மன் இங்கே தூக்கிலிடப்பட்டார்."}},
+  panch:{en:"Panchalankurichi",ta:"பாஞ்சாலங்குறிச்சி",lat:8.86,lon:78.03,w:["katta","oomai","sundar"],fall:1,x:{en:"Kattabomman's mud fort. Besieged in 1799, rebuilt in six days in 1801, taken again, and ploughed up. Oomaithurai was executed here.",ta:"கட்டபொம்மனின் மண்கோட்டை. 1799-இல் முற்றுகையிடப்பட்டது; 1801-இல் ஆறு நாட்களில் மீண்டும் கட்டப்பட்டது; மீண்டும் கைப்பற்றப்பட்டு உழப்பட்டது. ஊமைத்துரை இங்கே கொல்லப்பட்டார்."}},
+  ramn:{en:"Ramanathapuram",ta:"இராமநாதபுரம்",lat:9.37,lon:78.83,w:["katta","velu"],lx:-1,x:{en:"Scene of the confrontation with Collector Jackson on 19 September 1798, and Velu Nachiyar's birthplace.",ta:"1798 செப்டம்பர் 19 அன்று கலெக்டர் ஜாக்சனுடனான மோதல் நடந்த இடம்; வேலு நாச்சியாரின் பிறப்பிடம்."}},
+  siva:{en:"Sivaganga",ta:"சிவகங்கை",lat:9.85,lon:78.48,w:["velu","kuyili","maruthu"],lx:-1,x:{en:"The kingdom Velu Nachiyar won back in 1780, and the Maruthu brothers' seat.",ta:"1780-இல் வேலு நாச்சியார் மீட்ட அரசு; மருது சகோதரர்களின் இருப்பிடம்."}},
+  kalai:{en:"Kalaiyarkoil",ta:"காளையார்கோவில்",lat:9.85,lon:78.63,w:["velu","maruthu","oomai"],x:{en:"Muthu Vaduganatha Thevar was killed here in 1772. The rebels' jungle stronghold fell here in October 1801. The Maruthu brothers are buried here.",ta:"1772-இல் முத்துவடுகநாதத் தேவர் இங்கே கொல்லப்பட்டார். 1801 அக்டோபரில் கிளர்ச்சியாளர்களின் காட்டுக் கோட்டை இங்கே வீழ்ந்தது. மருது சகோதரர்கள் இங்கே அடக்கம் செய்யப்பட்டனர்."}},
+  tiru:{en:"Tiruppattur",ta:"திருப்பத்தூர்",lat:10.12,lon:78.60,w:["maruthu"],fall:1,x:{en:"The Maruthu brothers were hanged at the fort on 24 October 1801.",ta:"1801 அக்டோபர் 24 அன்று மருது சகோதரர்கள் இந்தக் கோட்டையில் தூக்கிலிடப்பட்டனர்."}},
+  pudu:{en:"Pudukkottai",ta:"புதுக்கோட்டை",lat:10.38,lon:78.82,w:["katta"],x:{en:"Kattabomman was captured in the Kalapur jungles of this country in 1799.",ta:"1799-இல் இந்தச் சீமையின் களப்பூர்க் காடுகளில் கட்டபொம்மன் பிடிபட்டார்."}},
+  trichy:{en:"Tiruchirappalli",ta:"திருச்சிராப்பள்ளி",lat:10.80,lon:78.69,w:["maruthu"],x:{en:"The proclamation of 16 June 1801 was posted on the Nawab's palace here and at nearby Srirangam temple.",ta:"1801 ஜூன் 16 பிரகடனம் இங்குள்ள நவாப் அரண்மனையிலும் அருகிலுள்ள ஸ்ரீரங்கம் கோயிலிலும் ஒட்டப்பட்டது."}},
+  ding:{en:"Dindigul",ta:"திண்டுக்கல்",lat:10.36,lon:77.98,w:["velu","gopala"],x:{en:"Hyder Ali's commandant at Dindigul fort supplied troops for Velu Nachiyar's march in 1780.",ta:"1780-இல் வேலு நாச்சியாரின் படையெடுப்புக்குத் திண்டுக்கல் கோட்டையின் ஹைதர் அலி தளபதி படை அளித்தார்."}},
+  virup:{en:"Virupachi",ta:"விருப்பாட்சி",lat:10.47,lon:77.79,w:["velu","gopala","maruthu"],lx:-1,x:{en:"Gopala Nayak's seat. Velu Nachiyar lived here in exile for eight years, and the confederacy met here in April 1800.",ta:"கோபால நாயக்கரின் இருப்பிடம். வேலு நாச்சியார் எட்டு ஆண்டுகள் இங்கே தலைமறைவாக வாழ்ந்தார்; 1800 ஏப்ரலில் கூட்டணி இங்கே கூடியது."}},
+  odan:{en:"Odanilai",ta:"ஓடாநிலை",lat:11.13,lon:77.67,w:["chinna"],lx:-1,x:{en:"Dheeran Chinnamalai's fort. He defeated the Company here in 1802 and at nearby Arachalur in 1804.",ta:"தீரன் சின்னமலையின் கோட்டை. 1802-இல் இங்கும் 1804-இல் அருகிலுள்ள அரச்சலூரிலும் கம்பெனியை வென்றார்."}},
+  sank:{en:"Sankagiri",ta:"சங்ககிரி",lat:11.47,lon:77.87,w:["chinna"],fall:1,x:{en:"Dheeran Chinnamalai and his brothers were hanged at the top of the fort on 31 July 1805.",ta:"1805 ஜூலை 31 அன்று தீரன் சின்னமலையும் சகோதரர்களும் கோட்டை உச்சியில் தூக்கிலிடப்பட்டனர்."}}
+};
+
+const EV = [
+  {id:"e1529",y:"1529",d:{en:"c. 1529",ta:"சு. 1529"},p:"madurai",w:[],s:[2,9],era:1},
+  {id:"e1755",y:"1755",d:{en:"March 1755",ta:"1755 மார்ச்"},p:"nerk",w:["puli"],s:[1,3],disp:1},
+  {id:"e1756",y:"1756",d:{en:"1756 – 1763",ta:"1756 – 1763"},p:"kalak",w:["puli","ondi"],s:[1,2,3]},
+  {id:"e1761",y:"1761",d:{en:"16 May 1761",ta:"1761 மே 16"},p:"nerk",w:["puli"],s:[1,2,14]},
+  {id:"e1764",y:"1764",d:{en:"1764",ta:"1764"},p:"nerk",w:["puli"],s:[2,14]},
+  {id:"e1767",y:"1767",d:{en:"1767",ta:"1767"},p:"nerk",w:["puli","ondi"],s:[1,2],disp:1},
+  {id:"e1771",y:"1771",d:{en:"20 Aug 1771",ta:"1771 ஆகஸ்ட் 20"},p:"manur",w:["ondi"],s:[18,28],fall:1},
+  {id:"e1772",y:"1772",d:{en:"1772",ta:"1772"},p:"kalai",w:["velu","maruthu","gopala"],s:[4,1,16]},
+  {id:"e1780",y:"1780",d:{en:"1780",ta:"1780"},p:"siva",w:["velu","kuyili","maruthu","gopala"],s:[4,6,2,16]},
+  {id:"e1792",y:"1792",d:{en:"1781 · 1792",ta:"1781 · 1792"},p:"madras",w:["katta"],s:[9,1,22],era:1},
+  {id:"e1798",y:"1798",d:{en:"19 Sep 1798",ta:"1798 செப். 19"},p:"ramn",w:["katta","oomai"],s:[1,2,3]},
+  {id:"e1799a",y:"1799",d:{en:"5 Sep 1799",ta:"1799 செப். 5"},p:"panch",w:["katta","oomai","sundar"],s:[22,2,8],disp:1},
+  {id:"e1799s",y:"1799",d:{en:"1799",ta:"1799"},p:"panch",w:["sundar","katta"],s:[17],fall:1,disp:1},
+  {id:"e1799k",y:"1799",d:{en:"13 Sep 1799",ta:"1799 செப். 13"},p:"panch",w:["katta"],s:[22,3,1],fall:1},
+  {id:"e1799c",y:"1799",d:{en:"Sep – Oct 1799",ta:"1799 செப். – அக்."},p:"pudu",w:["katta"],s:[2,10],disp:1},
+  {id:"e1799h",y:"1799",d:{en:"16 Oct 1799",ta:"1799 அக். 16"},p:"kaya",w:["katta"],s:[1,2,8],fall:1,disp:1},
+  {id:"e1800a",y:"1800",d:{en:"April 1800",ta:"1800 ஏப்ரல்"},p:"virup",w:["gopala","maruthu","chinna"],s:[1,15]},
+  {id:"e1800b",y:"1800",d:{en:"June 1800",ta:"1800 ஜூன்"},p:"coim",w:["chinna","gopala"],s:[1,3]},
+  {id:"e1801a",y:"1801",d:{en:"2 Feb 1801",ta:"1801 பிப். 2"},p:"palay",w:["oomai","maruthu"],s:[1,11]},
+  {id:"e1801r",y:"1801",d:{en:"Feb – Mar 1801",ta:"1801 பிப். – மார்ச்"},p:"panch",w:["oomai"],s:[22]},
+  {id:"e1801f",y:"1801",d:{en:"May 1801",ta:"1801 மே"},p:"panch",w:["oomai","maruthu"],s:[11,1,22],disp:1},
+  {id:"e1801p",y:"1801",d:{en:"16 Jun 1801",ta:"1801 ஜூன் 16"},p:"trichy",w:["maruthu"],s:[7,23,1]},
+  {id:"e1801t",y:"1801",d:{en:"July 1801",ta:"1801 ஜூலை"},p:"madras",w:[],s:[12,1,23],era:1,disp:1},
+  {id:"e1801k",y:"1801",d:{en:"Oct 1801",ta:"1801 அக்."},p:"kalai",w:["maruthu","oomai"],s:[7,1,21]},
+  {id:"e1801m",y:"1801",d:{en:"24 Oct 1801",ta:"1801 அக். 24"},p:"tiru",w:["maruthu"],s:[4,7,24],fall:1},
+  {id:"e1801o",y:"1801",d:{en:"16 Nov 1801",ta:"1801 நவ. 16"},p:"panch",w:["oomai"],s:[1,9,11],fall:1},
+  {id:"e1805",y:"1805",d:{en:"31 Jul 1805",ta:"1805 ஜூலை 31"},p:"sank",w:["chinna"],s:[1,27,13],fall:1,disp:1}
+];
+const XPL = {madurai:{en:"Madurai",ta:"மதுரை"},madras:{en:"Madras",ta:"சென்னை"},coim:{en:"Coimbatore",ta:"கோயம்புத்தூர்"}};
+const placeName = (k,l) => (PL[k]||XPL[k])[l];
+
+const FACTS = [
+  {n:"72",en:"Palayams created under the Madurai Nayaks around 1529, each held by a palayakkarar",ta:"சுமார் 1529-இல் மதுரை நாயக்கர் காலத்தில் உருவான பாளையங்கள்; ஒவ்வொன்றும் ஒரு பாளையக்காரர் வசம்"},
+  {n:"1780",en:"Velu Nachiyar retakes Sivaganga, the first Indian queen to defeat the Company in war",ta:"கம்பெனியைப் போரில் வென்ற முதல் இந்திய அரசியாக வேலு நாச்சியார் சிவகங்கையை மீட்கிறார்"},
+  {n:{en:"16 Jun 1801",ta:"1801 ஜூன் 16"},en:"The Tiruchirappalli Proclamation calls people of every caste and creed to unite",ta:"எல்லாச் சாதியினரும் மதத்தினரும் ஒன்றுபட வேண்டும் என்று திருச்சிராப்பள்ளிப் பிரகடனம் அழைக்கிறது"},
+  {n:"73",en:"Rebel leaders deported to Penang after the Second Palayakkarar War",ta:"இரண்டாம் பாளையக்காரர் போருக்குப் பின் பினாங்குக்கு நாடுகடத்தப்பட்ட கிளர்ச்சித் தலைவர்கள்"}
+];
+
+const DISPUTES = [
+  {q:{en:"When did Puli Thevar's war begin?",ta:"பூலித்தேவனின் போர் எப்போது தொடங்கியது?"},a:{en:"Wikipedia dates his fight from May 1752; Tamil Nadu state texts and most histories begin with Heron's expedition of March 1755. The timeline uses 1755.",ta:"விக்கிப்பீடியா அவரது போரை 1752 மே முதல் கணக்கிடுகிறது; தமிழ்நாட்டு அரசுப் பாடநூல்களும் பெரும்பாலான வரலாறுகளும் 1755 மார்ச் ஹெரான் படையெடுப்பிலிருந்து தொடங்குகின்றன. காலவரிசை 1755-ஐப் பயன்படுத்துகிறது."},s:[26,1]},
+  {q:{en:"Did Heron's guns fail at Nerkattumseval?",ta:"நெற்கட்டும்செவலில் ஹெரானின் பீரங்கிகள் தோற்றனவா?"},a:{en:"Some popular accounts say Heron's artillery could not breach the fort. The state history texts say he abandoned the attack because he had no cannon, supplies or pay. We follow the state texts.",ta:"ஹெரானின் பீரங்கிகளால் கோட்டையை உடைக்க முடியவில்லை என்று சில பிரபலக் கணக்குகள் கூறுகின்றன. பீரங்கியும் உணவும் சம்பளமும் இல்லாததால் அவர் தாக்குதலைக் கைவிட்டார் என்று அரசுப் பாடநூல்கள் கூறுகின்றன. அரசுப் பாடநூல்களைப் பின்பற்றுகிறோம்."},s:[1,3]},
+  {q:{en:"How did Puli Thevar die?",ta:"பூலித்தேவன் எப்படி மறைந்தார்?"},a:{en:"The state text says he escaped and died in exile, and that nothing certain is known of his last days. Some accounts give 16 October 1767 as his date of death. We treat it as unknown.",ta:"அவர் தப்பித் தலைமறைவில் மறைந்தார், இறுதி நாட்கள் பற்றி உறுதியாக எதுவும் தெரியவில்லை என்று அரசுப் பாடநூல் கூறுகிறது. சில கணக்குகள் 1767 அக்டோபர் 16 எனத் தருகின்றன. அதை அறியப்படாதது எனக் கருதுகிறோம்."},s:[2,26]},
+  {q:{en:"Who was Udaiyaal?",ta:"உடையாள் யார்?"},a:{en:"One state text says Velu Nachiyar's women's regiment was named after a shepherd girl killed for refusing to betray Kuyili. Another says Udaiyaal was the queen's adopted daughter who blew up a British arsenal.",ta:"குயிலியைக் காட்டிக்கொடுக்க மறுத்துக் கொல்லப்பட்ட ஓர் இடைச்சிறுமியின் பெயரால் வேலு நாச்சியாரின் பெண்கள் படை அழைக்கப்பட்டது என்று ஒரு அரசுப் பாடநூல் கூறுகிறது. உடையாள் அரசியின் வளர்ப்பு மகள், அவரே ஓர் ஆங்கிலேய ஆயுதக் கிடங்கைத் தகர்த்தார் என்று மற்றொன்று கூறுகிறது."},s:[1,2]},
+  {q:{en:"How much is known about Kuyili?",ta:"குயிலி பற்றி எவ்வளவு தெரியும்?"},a:{en:"The destruction of the armoury is in the state texts and on the Ministry of Culture portal. Her birth date, family and earlier deeds come mainly from folk songs and oral history.",ta:"ஆயுதக் கிடங்கு அழிக்கப்பட்டது அரசுப் பாடநூல்களிலும் பண்பாட்டு அமைச்சகத் தளத்திலும் பதிவாகியுள்ளது. அவரது பிறந்த நாள், குடும்பம், முந்தைய செயல்கள் பெரும்பாலும் நாட்டுப்புறப் பாடல்களிலிருந்தும் வாய்மொழி வரலாற்றிலிருந்தும் வருகின்றன."},s:[6,20]},
+  {q:{en:"When did Kattabomman's garrison leave Panchalankurichi?",ta:"கட்டபொம்மனின் காவற்படை பாஞ்சாலங்குறிச்சியை எப்போது விட்டது?"},a:{en:"A journal study says the fort was evacuated by night about two days after the 5 September assault. A state text says reinforcements arrived on 16 September, when the walls broke and the garrison withdrew to Kadalkudi.",ta:"செப்டம்பர் 5 தாக்குதலுக்குச் சுமார் இரண்டு நாட்களில் கோட்டை இரவில் கைவிடப்பட்டது என்று ஓர் ஆய்விதழ்க் கட்டுரை கூறுகிறது. செப்டம்பர் 16 அன்று கூடுதல் படை வந்து சுவர் உடைந்ததும் காவற்படை கடலக்குடிக்குப் பின்வாங்கியது என்று ஓர் அரசுப் பாடநூல் கூறுகிறது."},s:[22,2]},
+  {q:{en:"When was Kattabomman captured?",ta:"கட்டபொம்மன் எப்போது பிடிபட்டார்?"},a:{en:"Accounts give 24 September or 1 October 1799. All agree he was seized in the Pudukkottai country and handed to the Company.",ta:"1799 செப்டம்பர் 24 என்றும் அக்டோபர் 1 என்றும் கணக்குகள் தருகின்றன. புதுக்கோட்டைச் சீமையில் பிடிபட்டுக் கம்பெனியிடம் ஒப்படைக்கப்பட்டார் என்பதில் அனைத்தும் ஒத்துப்போகின்றன."},s:[10,2]},
+  {q:{en:"Was Kattabomman hanged on 16 or 17 October, and how?",ta:"கட்டபொம்மன் அக்டோபர் 16-ஆ 17-ஆ, எப்படித் தூக்கிலிடப்பட்டார்?"},a:{en:"Most sources give 16 October 1799; one state text says he was tried on the 16th and hanged on the 17th. The 1999 stamp citation, based on a Kattabomman association's text, says he put the noose round his own neck.",ta:"பெரும்பாலான ஆதாரங்கள் 1799 அக்டோபர் 16 எனத் தருகின்றன; 16 அன்று விசாரிக்கப்பட்டு 17 அன்று தூக்கிலிடப்பட்டார் என்று ஓர் அரசுப் பாடநூல் கூறுகிறது. கட்டபொம்மன் கழகக் குறிப்பை அடிப்படையாகக் கொண்ட 1999 அஞ்சல் தலைக் குறிப்பு, அவர் தானே கயிற்றைக் கழுத்தில் மாட்டிக்கொண்டார் என்கிறது."},s:[1,2,8]},
+  {q:{en:"Did Sundaralingam die in 1799 or 1801?",ta:"சுந்தரலிங்கம் 1799-இல் மறைந்தாரா, 1801-இலா?"},a:{en:"Most accounts place his death at the 1799 siege. Another view places it in the second war while serving Oomaithurai.",ta:"பெரும்பாலான கணக்குகள் 1799 முற்றுகையில் அவர் மறைந்ததாகக் கூறுகின்றன. இரண்டாம் போரில் ஊமைத்துரையுடன் இருந்தபோது மறைந்தார் என்பது மற்றொரு பார்வை."},s:[17]},
+  {q:{en:"Who took Panchalankurichi in 1801, and when?",ta:"1801-இல் பாஞ்சாலங்குறிச்சியை யார், எப்போது கைப்பற்றினார்?"},a:{en:"One state text says Colin Macaulay retook it in April 1801. Wikipedia and the journal study say Macaulay's attacks failed and Agnew took it in May 1801.",ta:"1801 ஏப்ரலில் கோலின் மெக்காலே அதை மீட்டார் என்று ஓர் அரசுப் பாடநூல் கூறுகிறது. மெக்காலேயின் தாக்குதல்கள் தோற்றன, 1801 மேயில் அக்னியூ கைப்பற்றினார் என்று விக்கிப்பீடியாவும் ஆய்விதழ்க் கட்டுரையும் கூறுகின்றன."},s:[1,11,22]},
+  {q:{en:"When were the Maruthu brothers executed?",ta:"மருது சகோதரர்கள் எப்போது தூக்கிலிடப்பட்டனர்?"},a:{en:"Some summaries say 16 November 1801, together with Oomaithurai. The Sivaganga district record and the 2004 stamp give 24 October 1801 at Tiruppattur; Oomaithurai died on 16 November at Panchalankurichi.",ta:"ஊமைத்துரையுடன் சேர்த்து 1801 நவம்பர் 16 என்று சில சுருக்கங்கள் கூறுகின்றன. சிவகங்கை மாவட்டப் பதிவும் 2004 அஞ்சல் தலையும் 1801 அக்டோபர் 24, திருப்பத்தூர் எனத் தருகின்றன; ஊமைத்துரை நவம்பர் 16 அன்று பாஞ்சாலங்குறிச்சியில் மறைந்தார்."},s:[4,29,11]},
+  {q:{en:"What was the date of the Carnatic Treaty?",ta:"கர்நாடக உடன்படிக்கையின் தேதி என்ன?"},a:{en:"Sources give both 26 July and 31 July 1801.",ta:"1801 ஜூலை 26 என்றும் ஜூலை 31 என்றும் ஆதாரங்கள் தருகின்றன."},s:[12,1]},
+  {q:{en:"When was Dheeran Chinnamalai hanged?",ta:"தீரன் சின்னமலை எப்போது தூக்கிலிடப்பட்டார்?"},a:{en:"Most records give 31 July 1805; some give 2 or 3 August 1805.",ta:"பெரும்பாலான பதிவுகள் 1805 ஜூலை 31 எனத் தருகின்றன; சில ஆகஸ்ட் 2 அல்லது 3 எனத் தருகின்றன."},s:[27,13]}
+];
+
+const GLOSS = [
+  {en:"Palayam",ta:"பாளையம்",d:{en:"A military fief. The Madurai country had seventy-two.",ta:"படைப் பணிக்காக வழங்கப்பட்ட நிலப்பகுதி. மதுரைச் சீமையில் எழுபத்திரண்டு இருந்தன."}},
+  {en:"Palayakkarar",ta:"பாளையக்காரர்",d:{en:"Holder of a palayam; anglicised by the British as 'Polygar'.",ta:"பாளையத்தின் தலைவர்; ஆங்கிலேயர் 'பாலிகர்' என்று அழைத்தனர்."}},
+  {en:"Kappam / Kisti",ta:"கப்பம் / கிஸ்தி",d:{en:"The tribute or tax demanded from each palayam.",ta:"ஒவ்வொரு பாளையத்திடமும் கோரப்பட்ட திறை அல்லது வரி."}},
+  {en:"Desakaval",ta:"தேசகாவல்",d:{en:"The village watch and its fees, taken over by the Company in 1799.",ta:"கிராமக் காவலும் அதன் கட்டணமும்; 1799-இல் கம்பெனி கைப்பற்றியது."}},
+  {en:"Pagoda",ta:"வராகன்",d:{en:"A gold coin, worth about three and a half rupees; the unit of tribute.",ta:"சுமார் மூன்றரை ரூபாய் மதிப்புள்ள தங்க நாணயம்; கப்பம் இதில் கணக்கிடப்பட்டது."}},
+  {en:"Nawab of Arcot",ta:"ஆற்காடு நவாப்",d:{en:"Ruler of the Carnatic who sold his tribute rights to the Company.",ta:"தன் கப்ப உரிமைகளைக் கம்பெனியிடம் ஒப்படைத்த கர்நாடகத்தின் ஆட்சியாளர்."}},
+  {en:"Valari",ta:"வளரி",d:{en:"A curved Tamil throwing weapon.",ta:"தமிழரின் வளைந்த எறிகருவி."}},
+  {en:"Jambudweepa",ta:"ஜம்புத்தீவு",d:{en:"Old name for the Indian peninsula, used in the 1801 proclamation.",ta:"இந்தியத் தீபகற்பத்தின் பழம்பெயர்; 1801 பிரகடனத்தில் பயன்படுத்தப்பட்டது."}},
+  {en:"Zamindari",ta:"ஜமீன்தாரி",d:{en:"The landholding system that replaced the palayams after 1801.",ta:"1801-க்குப் பின் பாளையங்களுக்குப் பதிலாக வந்த நில உடைமை முறை."}}
+];
+
+/* ───────── state ───────── */
+let lang = "ta", filter = "all";
+try{ const h=location.hash.slice(1); const s=localStorage.getItem("palayam-lang"); lang = (h==="en"||h==="ta") ? h : (s==="en"||s==="ta") ? s : "ta"; }catch(e){}
+try{ const f=localStorage.getItem("palayam-filter"); if(f && (f==="all"||P[f])) filter=f }catch(e){}
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const T = k => UI[lang][k];
+const S = id => (window.STORIES && window.STORIES[lang] && window.STORIES[lang][id]) || window.STORIES.en[id];
+const srcLinks = ids => ids.map(i => `<a href="#src-${i}">[${i}]</a>`).join(" ");
+const nm = p => lang==="ta" ? p.ta : p.en;
+const nm2 = p => lang==="ta" ? p.en : p.ta;
+
+function renderStatic(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i]").forEach(el => { el.textContent = T(el.dataset.i) });
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", b.dataset.lang===lang));
+  $("#facts").innerHTML = FACTS.map(f => `<div class="fact"><span class="n">${esc(typeof f.n==="object"?f.n[lang]:f.n)}</span><p>${esc(f[lang])}</p></div>`).join("");
+}
+function chips(){
+  const opts = [["all",T("all")], ...Object.entries(P).map(([k,v]) => [k, nm(v)])];
+  $("#tlChips").innerHTML = opts.map(([k,l]) => `<button class="chip" type="button" data-k="${k}" aria-pressed="${k===filter}">${esc(l)}</button>`).join("");
+}
+function timeline(){
+  const list = EV.filter(e => filter==="all" || e.w.includes(filter));
+  $("#tl").innerHTML = list.length ? list.map(e => { const st=S(e.id); return `
+    <li class="ev${e.fall?" fall":""}">
+      <div class="when"><span>${esc(e.y)}</span>${esc(e.d[lang])}</div>
+      <div class="body">
+        <h3>${esc(st.title)}</h3>
+        <p>${esc(st.dek)}</p>
+        <div class="meta">
+          <span class="place">${esc(placeName(e.p,lang))}</span>
+          ${e.fall?`<span class="tag fallen">${T("fallen")}</span>`:""}${e.era?`<span class="tag era">${T("ctx")}</span>`:""}${e.disp?`<span class="tag disp-t">${T("disp")}</span>`:""}
+          <span class="src">${srcLinks(e.s)}</span>
+        </div>
+        <button class="read" type="button" data-open="E:${e.id}">${T("read")} →</button>
+      </div>
+    </li>`}).join("") : `<li class="empty">${T("empty")}</li>`;
+}
+function card(k,v,set){
+  return `<button class="card" type="button" data-open="${set}:${k}">
+    <span class="nm" lang="ta">${esc(v.ta)}</span>
+    <span class="sub">${esc(v.en)}</span>
+    <span class="yrs">${esc(v.yrs)}</span>
+    <span class="role">${esc(v.role[lang])}</span>
+    <span class="fate">${esc(v.fate[lang])}</span>
+    <span class="more">${T("read")} →</span>
+  </button>`;
+}
+function heroes(){
+  $("#heroGrid").innerHTML = Object.entries(P).map(([k,v]) => card(k,v,"P")).join("");
+  $("#otherGrid").innerHTML = Object.entries(O).map(([k,v]) => card(k,v,"O")).join("");
+}
+
+/* map */
+const LON0=77.2, LAT1=11.7, K=165, OX=40, OY=24;
+const px = lon => OX + (lon-LON0)*K, py = lat => OY + (LAT1-lat)*K;
+let curPlace = "panch";
+function drawMap(){
+  let s = "";
+  for(let lon=77.5; lon<=79.0; lon+=0.5){ const x=px(lon); s += `<line class="grat" x1="${x}" y1="${OY}" x2="${x}" y2="${py(8.5)}"/><text class="glab" x="${x}" y="${py(8.5)+14}" text-anchor="middle">${lon.toFixed(1)}°E</text>`; }
+  for(let lat=9.0; lat<=11.5; lat+=0.5){ const y=py(lat); s += `<line class="grat" x1="${OX}" y1="${y}" x2="${px(79.5)}" y2="${y}"/><text class="glab" x="${OX-6}" y="${y+3}" text-anchor="end">${lat.toFixed(1)}°N</text>`; }
+  Object.entries(PL).forEach(([k,p]) => {
+    const x=px(p.lon), y=py(p.lat), left=p.lx===-1;
+    s += `<g class="pt${p.fall?" fall":""}${k===curPlace?" on":""}" data-p="${k}" tabindex="0" role="button" aria-label="${esc(p[lang])}">
+      <circle cx="${x}" cy="${y}" r="6"/>
+      <text x="${left?x-10:x+10}" y="${y+4}" text-anchor="${left?"end":"start"}">${esc(p[lang])}</text></g>`;
+  });
+  $("#mapSvg").innerHTML = s;
+  $("#mapSvg").setAttribute("aria-label", T("mH"));
+}
+function showPlace(k){
+  curPlace = k; const p = PL[k];
+  document.querySelectorAll(".pt").forEach(g => g.classList.toggle("on", g.dataset.p===k));
+  const evs = EV.filter(e => e.p===k);
+  $("#pinfo").innerHTML = `<p class="eyebrow">${esc(nm2(p))}</p><h3 class="disp">${esc(p[lang])}</h3><p>${esc(p.x[lang])}</p>
+    <p class="eyebrow">${T("peopleHere")}</p>
+    <div class="plist">${p.w.map(h => `<button class="chip" type="button" data-open="P:${h}">${esc(nm(P[h]))}</button>`).join("")}</div>
+    ${evs.length?`<p class="eyebrow">${T("related")}</p><div class="plist">${evs.map(e => `<button class="chip" type="button" data-open="E:${e.id}">${esc(e.d[lang])}</button>`).join("")}</div>`:""}`;
+}
+
+function records(){
+  $("#disputes").innerHTML = DISPUTES.map(d => `<div class="dsp"><h3>${esc(d.q[lang])}</h3><p>${esc(d.a[lang])}</p><p class="src">${srcLinks(d.s)}</p></div>`).join("");
+  $("#gloss").innerHTML = GLOSS.map(g => `<div><dt>${esc(lang==="ta"?g.ta:g.en)}<span class="alt">${esc(lang==="ta"?g.en:g.ta)}</span></dt><dd>${esc(g.d[lang])}</dd></div>`).join("");
+  $("#srcList").innerHTML = Object.entries(SRC).map(([i,[t,u]]) => `<li id="src-${i}"><a href="${esc(u)}" target="_blank" rel="noopener">${esc(t)}</a></li>`).join("");
+}
+
+/* reader */
+const rd = $("#reader");
+let cur = null; // {set, id}
+const seq = set => set==="E" ? EV.map(e=>e.id) : Object.keys(set==="P"?P:O);
+function openStory(set,id){
+  cur = {set,id};
+  const st = S(id);
+  const list = seq(set), i = list.indexOf(id);
+  let meta = "", rel = "", srcs = [];
+  if(set==="E"){
+    const e = EV.find(x=>x.id===id); srcs = e.s;
+    meta = `<span>${esc(e.d[lang])}</span><span>${esc(placeName(e.p,lang))}</span>${e.w.map(h=>`<button class="linkbtn" type="button" data-open="P:${h}">${esc(nm(P[h]))}</button>`).join("")}`;
+    $("#rdKick").textContent = T("kEvent");
+  } else {
+    const v = (set==="P"?P:O)[id]; srcs = v.src;
+    meta = `<span lang="ta" class="ta">${esc(v.ta)}</span><span>${esc(v.en)}</span><span>${esc(v.yrs)}</span>`;
+    $("#rdKick").textContent = set==="P" ? T("kHero") : T("kOther");
+    const evs = EV.filter(e => e.w.includes(id));
+    if(evs.length) rel = `<div class="rel"><b class="eyebrow">${T("related")}</b><ul>${evs.map(e => `<li><button class="linkbtn" type="button" data-open="E:${e.id}">${esc(e.d[lang])} · ${esc(S(e.id).title)}</button></li>`).join("")}</ul></div>`;
+  }
+  const body = st.body.map(([k,txt]) =>
+    k==="h" ? `<h2>${esc(txt)}</h2>` :
+    k==="t" ? `<div class="trad"><b>${T("trad")}</b><p>${esc(txt)}</p></div>` :
+    k==="n" ? `<div class="note"><b>${T("note")}</b><p>${esc(txt)}</p></div>` :
+    `<p>${esc(txt)}</p>`).join("");
+  $("#rdBody").innerHTML = `<article class="story">
+    <h1 class="disp" id="rdTitle">${esc(st.title)}</h1>
+    <p class="dek">${esc(st.dek)}</p>
+    <div class="rmeta">${meta}</div>
+    ${body}
+    <p class="src">${T("srcs")}: ${srcs.map(n => `<a href="${esc(SRC[n][1])}" target="_blank" rel="noopener">[${n}] ${esc(SRC[n][0])}</a>`).join(" · ")}</p>
+    ${rel}
+  </article>`;
+  $("#rdBody").scrollTop = 0;
+  const pv = list[i-1], nx = list[i+1];
+  const lab = k => set==="E" ? S(k).title : nm((set==="P"?P:O)[k]);
+  $("#rdPrev").hidden = !pv; $("#rdNext").hidden = !nx;
+  if(pv){ $("#rdPrev").textContent = "← " + lab(pv); $("#rdPrev").dataset.open = set+":"+pv; }
+  if(nx){ $("#rdNext").textContent = lab(nx) + " →"; $("#rdNext").dataset.open = set+":"+nx; }
+  $("#rdClose").textContent = T("close");
+  $("#rdLang").textContent = T("switchTo");
+  if(!rd.open) rd.showModal();
+}
+$("#rdClose").addEventListener("click", () => rd.close());
+rd.addEventListener("click", ev => { if(ev.target === rd) rd.close() });
+$("#rdLang").addEventListener("click", () => { setLang(lang==="ta"?"en":"ta"); if(cur) openStory(cur.set,cur.id) });
+$("#rdBody").addEventListener("click", ev => { const a = ev.target.closest('a[href^="#src-"]'); if(a) rd.close() });
+
+document.addEventListener("click", ev => {
+  const b = ev.target.closest("[data-open]"); if(!b) return;
+  const [set,id] = b.dataset.open.split(":"); openStory(set,id);
+});
+$("#tlChips").addEventListener("click", ev => {
+  const b = ev.target.closest(".chip"); if(!b) return;
+  filter = b.dataset.k; chips(); timeline();
+  try{ localStorage.setItem("palayam-filter", filter) }catch(e){}
+});
+$("#mapSvg").addEventListener("click", ev => { const g = ev.target.closest(".pt"); if(g) showPlace(g.dataset.p) });
+$("#mapSvg").addEventListener("keydown", ev => { const g = ev.target.closest(".pt"); if(g && (ev.key==="Enter"||ev.key===" ")){ ev.preventDefault(); showPlace(g.dataset.p) } });
+document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+
+function setLang(l){
+  lang = l;
+  try{ localStorage.setItem("palayam-lang", l) }catch(e){}
+  renderAll();
+}
+function renderAll(){ renderStatic(); chips(); timeline(); heroes(); drawMap(); showPlace(curPlace); records(); }
+renderAll();
+</script>
+
+</body>
+</html>

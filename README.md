@@ -3,6 +3,7 @@
 A modern, bilingual (Tamil + English) library of all 1,281 Project Madurai books, with search, section and letter filters, cards, covers and list views, and a page for every book with Read online (Unicode) and PDF links.
 
 - **Site:** static page in `public/` (no framework)
+- **Palayakkarar Resistance:** `/resistance`, a bilingual sourced history of the Tamil resistance to the East India Company, 1755–1801
 - **API:** `api/books.js`, `api/sections.js` (Vercel functions, reading Neon Postgres)
 - **Database:** Neon project `suvadi`, tables `sections`, `books`
 - **Env:** `DATABASE_URL` (set in Vercel)
